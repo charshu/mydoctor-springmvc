@@ -1,4 +1,4 @@
-package com.das.obj;
+package com.mydoctor.model;
 
 public class Schedule {
 	
