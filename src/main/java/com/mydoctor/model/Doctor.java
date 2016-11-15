@@ -11,13 +11,13 @@ public class Doctor extends User {
 		// TODO Auto-generated constructor stub
 		super();
 	}
-	public Doctor(String username,String password, String type) {
+	public Doctor(String id,String username,String password, String role) {
 		// TODO Auto-generated constructor stub
-		super(username, password, type);
+		super(id,username, password, role);
 	}
-	public Doctor(String username,String password, String type,String name ,String surname, String department) {
+	public Doctor(String id,String username,String password, String role,String name ,String surname, String department) {
 		// TODO Auto-generated constructor stub
-		super(username, password, type);
+		super(id,username, password, role);
 		this.department = department;
 		this.name = name;
 		this.surname = surname;
