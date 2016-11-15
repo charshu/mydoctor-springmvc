@@ -2,6 +2,8 @@ package com.mydoctor.model;
 
 import java.util.ArrayList;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 public class Doctor extends User {
 	
 	private String department;
@@ -11,13 +13,13 @@ public class Doctor extends User {
 		// TODO Auto-generated constructor stub
 		super();
 	}
-	public Doctor(String id,String username,String password, String role) {
+	public Doctor(String id,String username,String password, String type) {
 		// TODO Auto-generated constructor stub
-		super(id,username, password, role);
+		super(id,username, password, type);
 	}
-	public Doctor(String id,String username,String password, String role,String name ,String surname, String department) {
+	public Doctor(String id,String username,String password, String type,String name ,String surname, String department) {
 		// TODO Auto-generated constructor stub
-		super(id,username, password, role);
+		super(id,username, password, type);
 		this.department = department;
 		this.name = name;
 		this.surname = surname;
@@ -43,9 +45,16 @@ public class Doctor extends User {
 	
 	public void addSchedule(Schedule schedule){
 		schedule_arr.add(schedule);
+		//DAO
 		
 	}
-	public void remove(String schedule_id){
+	public void addSchedules(ArrayList<Schedule> schedules){
+		for(Schedule schedule:schedules ){
+			this.addSchedule(schedule);
+		}
+		
+	}
+	public void removeSchedule(String schedule_id){
 		for(int i=0; i < schedule_arr.size() ;i++){
 			if( schedule_id.equals(schedule_arr.get(i).getSchedule_id() ) ){
 				schedule_arr.remove(i);
