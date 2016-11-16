@@ -39,6 +39,9 @@
 	  <bean id="DoctorServiceImpl" class="com.mydoctor.service.DoctorServiceImpl">
 		<property name="userDao" ref="userDao"></property>
 	</bean>
+	<bean id="NurseServiceImpl" class="com.mydoctor.service.NursesServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
 	<bean id="LoginServiceImpl" class="com.mydoctor.service.LoginServiceImpl">
 		<property name="userDao" ref="userDao"></property>
 	</bean>
