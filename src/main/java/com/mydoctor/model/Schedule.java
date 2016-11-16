@@ -1,32 +1,30 @@
 package com.mydoctor.model;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 public class Schedule {
 	
-	private String start_time,end_time,work_date,schedule_id;
-	public Schedule(String schedule_id,String start_time,String end_time, String work_date) {
+	private String schedule_id;
+	private Date start,end;
+	public Schedule(String schedule_id,Date start,Date end) {
 		// TODO Auto-generated constructor stub
 		this.schedule_id = schedule_id;
-		this.start_time = start_time;
-		this.end_time = end_time;
-		this.work_date = work_date;
+		this.start = start;
+		this.end = end;
 	}
-	public String getStart_time() {
-		return start_time;
+	public Date getStart_time() {
+		return start;
 	}
-	public String getEnd_time() {
-		return end_time;
+	public Date getEnd_time() {
+		return end;
 	}
-	public String getWork_date() {
-		return work_date;
+
+	public void setStart_time(Date start_time) {
+		this.start = start_time;
 	}
-	public void setStart_time(String start_time) {
-		this.start_time = start_time;
-	}
-	public void setEnd_time(String end_time) {
-		this.end_time = end_time;
-	}
-	public void setWork_date(String work_date) {
-		this.work_date = work_date;
+	public void setEnd_time(Date end_time) {
+		this.end = end_time;
 	}
 	public String getSchedule_id() {
 		return schedule_id;
@@ -35,5 +33,29 @@ public class Schedule {
 		this.schedule_id = schedule_id;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "The schedule id : " + this.schedule_id + " Start time : " + this.start.toString() + " End time : " + this.end.toString();
+	}
+	
+	
+	public boolean isAvailable(Date date){
+		
+		boolean start_time,end_time;
+		start_time = date.after(this.start) || date.equals(this.start);
+		end_time = date.before(this.end);
+			
+		return start_time && end_time;
+		
+	}
+	public class main {
+	
+		
+		
+		
 
+	}
+
+	
 }
