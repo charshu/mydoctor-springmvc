@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ public class LoginController
 	
 		
 		@Autowired
+		@Qualifier("LoginServiceImpl")
 		private UserService userService;
 
 		@RequestMapping(value="/login", method=RequestMethod.GET)

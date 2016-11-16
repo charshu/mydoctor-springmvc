@@ -21,16 +21,16 @@ import com.mydoctor.service.UserService;
 
 @Controller
 @SessionAttributes("username")
-public class PatientController
+public class DoctorController
 {
 		@Autowired
-		@Qualifier("PatientServiceImpl")
+		@Qualifier("DoctorServiceImpl")
 		private UserService userService;
 
-		@RequestMapping(value="/patient-profile",method=RequestMethod.GET)
+		@RequestMapping(value="/doctor/profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
 		{
-				model.addAttribute("patient",userService.retrieveUser((String)model.get("username")));
+				model.addAttribute("doctor",userService.retrieveUser((String)model.get("username")));
 				return "patientProfile";
 		}
 		

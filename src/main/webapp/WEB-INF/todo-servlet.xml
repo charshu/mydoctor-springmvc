@@ -20,7 +20,7 @@
         </property>
     </bean>
     
-    <bean id="userService" class="com.mydoctor.service.PatientServiceImpl">
+    <bean id="PatientServiceImpl" class="com.mydoctor.service.PatientServiceImpl">
 		<property name="userDao" ref="userDao"></property>
 	</bean>
 
@@ -34,6 +34,13 @@
 		<property name="url" value="jdbc:mysql://localhost:3306/mydoctor" />
 		<property name="username" value="root" />
 		<property name="password" value="admin" />
+	</bean>
+	
+	  <bean id="DoctorServiceImpl" class="com.mydoctor.service.DoctorServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean id="LoginServiceImpl" class="com.mydoctor.service.LoginServiceImpl">
+		<property name="userDao" ref="userDao"></property>
 	</bean>
 
     <mvc:resources mapping="/webjars/**" location="/webjars/"/>
