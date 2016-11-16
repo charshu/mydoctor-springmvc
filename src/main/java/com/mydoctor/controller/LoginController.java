@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 import com.mydoctor.model.LoginBean;
+import com.mydoctor.service.LoginServiceImpl;
 import com.mydoctor.service.UserService;
 
 
@@ -25,8 +26,7 @@ public class LoginController
 	
 		
 		@Autowired
-		@Qualifier("LoginServiceImpl")
-		private UserService userService;
+		private LoginServiceImpl loginServiceImpl;
 
 		@RequestMapping(value="/login", method=RequestMethod.GET)
 		public String showLoginPage(ModelMap model)
@@ -46,10 +46,10 @@ public class LoginController
 				}
 				String username = loginBean.getUsername();
 				String password = loginBean.getPassword();
-				boolean isValidUser = userService.isValidUser(username, password);
+				boolean isValidUser = loginServiceImpl.isValidUser(username, password);
 				if(isValidUser)
 				{
-					String role = userService.getUserRole(username);
+					String role = loginServiceImpl.getUserRole(username);
 					model.remove("loginBean");
 						if("patient".equals(role)){
 							model.put("username",username);

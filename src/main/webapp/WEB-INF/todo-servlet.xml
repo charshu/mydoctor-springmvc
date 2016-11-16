@@ -1,30 +1,48 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <context:component-scan base-package="com.mydoctor" />
+	<context:component-scan base-package="com.mydoctor" />
 
-    <mvc:annotation-driven />
+	<mvc:annotation-driven />
 
-    <bean
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix">
-            <value>/WEB-INF/views/</value>
-        </property>
-        <property name="suffix">
-            <value>.jsp</value>
-        </property>
-    </bean>
-    
-    <bean id="PatientServiceImpl" class="com.mydoctor.service.PatientServiceImpl">
-		<property name="userDao" ref="userDao"></property>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
 	</bean>
-
-	<bean name="userDao" class="com.mydoctor.dao.PatientDaoImpl">
+	
+	
+	<bean id="LoginServiceImpl" class="com.mydoctor.service.LoginServiceImpl">
+		<property name="loginDaoImpl" ref="loginDaoImpl"></property>
+	</bean>
+	
+	
+	<bean id="DoctorServiceImpl" class="com.mydoctor.service.DoctorServiceImpl"
+		autowire="byName">
+		<property name="doctorDaoImpl" ref="doctorDaoImpl"></property>
+	</bean>
+	<bean id="PatientServiceImpl" class="com.mydoctor.service.PatientServiceImpl"
+		autowire="byName">
+		<property name="patientDaoImpl" ref="patientDaoImpl"></property>
+	</bean>
+	<bean name="loginDaoImpl" class="com.mydoctor.dao.LoginDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean name="doctorDaoImpl" class="com.mydoctor.dao.DoctorDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean name="patientDaoImpl" class="com.mydoctor.dao.PatientDaoImpl"
+		autowire="byName">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
@@ -35,14 +53,9 @@
 		<property name="username" value="root" />
 		<property name="password" value="admin" />
 	</bean>
-	
-	  <bean id="DoctorServiceImpl" class="com.mydoctor.service.DoctorServiceImpl">
-		<property name="userDao" ref="userDao"></property>
-	</bean>
-	<bean id="LoginServiceImpl" class="com.mydoctor.service.LoginServiceImpl">
-		<property name="userDao" ref="userDao"></property>
-	</bean>
 
-    <mvc:resources mapping="/webjars/**" location="/webjars/"/>
+
+
+	<mvc:resources mapping="/webjars/**" location="/webjars/" />
 
 </beans>

@@ -1,37 +1,53 @@
 package com.mydoctor.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-import com.mydoctor.dao.UserDao;
+import com.mydoctor.dao.DoctorDaoImpl;
+import com.mydoctor.dao.HospitalDao;
+import com.mydoctor.dao.LoginDaoImpl;
+import com.mydoctor.model.Doctor;
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Schedule;
+import com.mydoctor.model.User;
 
 
-public class DoctorServiceImpl implements UserService
+public class DoctorServiceImpl
 {
 		
 		
-		private UserDao userDao;
+		private DoctorDaoImpl doctorDaoImpl;
 		
-		public UserDao getUserDao() {
-			return userDao;
+		
+		public DoctorDaoImpl getDoctorDaoImpl() {
+			return doctorDaoImpl;
 		}
-		public void setUserDao(UserDao userDao) {
-			this.userDao = userDao;
+		public void setDoctorDaoImpl(DoctorDaoImpl doctorDaoImpl) {
+			this.doctorDaoImpl = doctorDaoImpl;
 		}
 		
-		@Override
-		public boolean isValidUser(String username, String password) throws SQLException
-		{
-				return userDao.isValidUser(username, password);
+		
+		public ArrayList<Schedule> retriveAllSchedules(String username)throws SQLException{
+			return doctorDaoImpl.retriveAllSchedules(username);
 		}
-		@Override
-		public String getUserRole(String username) throws SQLException {
-				return userDao.getUserRole(username);
+	
+		public ArrayList<Patient> retrievePatient(String username) throws SQLException {
+		return null;
 		}
-		@Override
-		public Patient retrieveUser(String username) throws SQLException {
-				return userDao.getPatient(username);
+	
+		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
+		return null;
 		}
+	
+		public Doctor retrieveDoctor(String username) throws SQLException {
+		return doctorDaoImpl.retrieveDoctor(username);
+		}
+		public void test(){
+			
+		}
+		
+		
+	
 		
 
 }

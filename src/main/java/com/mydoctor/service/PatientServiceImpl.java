@@ -2,35 +2,26 @@ package com.mydoctor.service;
 
 import java.sql.SQLException;
 
-import com.mydoctor.dao.UserDao;
+import com.mydoctor.dao.PatientDaoImpl;
+
 import com.mydoctor.model.Patient;
 
 
-public class PatientServiceImpl implements UserService
+public class PatientServiceImpl
 {
 		
 		
-		private UserDao userDao;
+		private PatientDaoImpl patientDaoImpl;
 		
-		public UserDao getUserDao() {
-			return userDao;
+		public PatientDaoImpl getUserDao() {
+			return patientDaoImpl;
 		}
-		public void setUserDao(UserDao userDao) {
-			this.userDao = userDao;
+		public void setPatientDaoImpl(PatientDaoImpl patientDaoImpl) {
+			this.patientDaoImpl = patientDaoImpl;
 		}
 		
-		@Override
-		public boolean isValidUser(String username, String password) throws SQLException
-		{
-				return userDao.isValidUser(username, password);
-		}
-		@Override
-		public String getUserRole(String username) throws SQLException {
-				return userDao.getUserRole(username);
-		}
-		@Override
-		public Patient retrieveUser(String username) throws SQLException {
-				return userDao.getPatient(username);
+		public Patient retrievePatient(String username) throws SQLException {
+				return patientDaoImpl.retrievePatient(username);
 		}
 		
 
