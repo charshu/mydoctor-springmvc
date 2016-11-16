@@ -7,9 +7,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import com.mydoctor.model.Patient;
 
 

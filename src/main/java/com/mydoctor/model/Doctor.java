@@ -2,8 +2,6 @@ package com.mydoctor.model;
 
 import java.util.ArrayList;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
-
 public class Doctor extends User {
 	
 	private String department;
