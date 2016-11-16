@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-
+import com.mydoctor.service.NurseServiceImpl;
 import com.mydoctor.service.UserService;
 
 
@@ -24,15 +24,15 @@ import com.mydoctor.service.UserService;
 public class NurseController
 {
 		@Autowired
-		@Qualifier("NurseServiceImpl")
-		private UserService userService;
+		private NurseServiceImpl nurseServiceImpl;
 
 		@RequestMapping(value="/nurse-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
 		{
-				model.addAttribute("nurse",userService.retrieveUser((String)model.get("username")));
+				model.addAttribute("nurse",nurseServiceImpl.retrieveNurse((String)model.get("username")));
 				return "nurseProfile";
 		}
+		
 		
 		
 		

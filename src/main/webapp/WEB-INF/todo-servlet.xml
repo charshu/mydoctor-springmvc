@@ -23,8 +23,6 @@
 	<bean id="LoginServiceImpl" class="com.mydoctor.service.LoginServiceImpl">
 		<property name="loginDaoImpl" ref="loginDaoImpl"></property>
 	</bean>
-	
-	
 	<bean id="DoctorServiceImpl" class="com.mydoctor.service.DoctorServiceImpl"
 		autowire="byName">
 		<property name="doctorDaoImpl" ref="doctorDaoImpl"></property>
@@ -32,6 +30,10 @@
 	<bean id="PatientServiceImpl" class="com.mydoctor.service.PatientServiceImpl"
 		autowire="byName">
 		<property name="patientDaoImpl" ref="patientDaoImpl"></property>
+	</bean>
+		<bean id="NurseServiceImpl" class="com.mydoctor.service.NurseServiceImpl"
+		autowire="byName">
+		<property name="nurseDaoImpl" ref="nurseDaoImpl"></property>
 	</bean>
 	<bean name="loginDaoImpl" class="com.mydoctor.dao.LoginDaoImpl"
 		autowire="byName">
@@ -42,6 +44,10 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<bean name="patientDaoImpl" class="com.mydoctor.dao.PatientDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean name="nurseDaoImpl" class="com.mydoctor.dao.NurseDaoImpl"
 		autowire="byName">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
