@@ -3,6 +3,7 @@ package com.mydoctor.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
@@ -19,11 +20,21 @@ public class PatientDaoImpl {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-	
-	public String getId(String username) throws SQLException {
+	public String retrieveUserId(String username) throws SQLException {
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, username);
+		ResultSet resultSet = pstmt.executeQuery();
+		if (resultSet.next())
+			return resultSet.getString(1);
+		else
+			return null;
+	}
+	public String retrievePatientId(String username) throws SQLException {
+		String user_id = retrieveUserId(username);
+		String query = "Select patient_id from patient where user_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, user_id);
 		ResultSet resultSet = pstmt.executeQuery();
 		if (resultSet.next())
 			return resultSet.getString(1);
@@ -41,10 +52,10 @@ public class PatientDaoImpl {
 			return 0;
 
 	}
-	public Patient retrievePatient(String username) throws SQLException {
+
+	public Patient retrievePatient(String patient_id) throws SQLException {
 		String query = "Select * from patient where patient_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		String patient_id = getId(username);
 		pstmt.setString(1, patient_id);
 		ResultSet resultSet = pstmt.executeQuery();
 		Patient patient = new Patient();
@@ -52,12 +63,6 @@ public class PatientDaoImpl {
 			patient.setId(patient_id);
 			patient.setSsn(resultSet.getString("ssn"));
 			patient.setName(resultSet.getString("name"));
-
-			String str = "";
-			for (int i = 0; i < getPatientPasswordLength(username); i++) {
-				str = str + "*";
-			}
-			patient.setPassword(str);
 			patient.setSurname(resultSet.getString("surname"));
 			patient.setGender(resultSet.getString("gender"));
 			patient.setBirthdate(resultSet.getString("birth_date"));
@@ -68,6 +73,11 @@ public class PatientDaoImpl {
 			return patient;
 		} else
 			return null;
+	}
+	
+	public ArrayList<Patient> retrieveAllPatients() throws SQLException {
+		
+		return null;
 	}
 
 }

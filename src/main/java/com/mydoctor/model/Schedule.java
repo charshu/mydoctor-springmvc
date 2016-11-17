@@ -1,60 +1,60 @@
 package com.mydoctor.model;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Schedule {
 	
-	private String schedule_id;
+	private String id;
+	//Date stores in format milliseconds -> 1000022311231
 	private Date start,end;
-	public Schedule(String schedule_id,Date start,Date end) {
-		// TODO Auto-generated constructor stub
-		this.schedule_id = schedule_id;
+	private final DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+	
+	public Schedule(){
+	
+	}
+
+	public Schedule(String id, Date start, Date end) {
+		super();
+		this.id = id;
 		this.start = start;
 		this.end = end;
 	}
-	public Date getStart_time() {
+
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public Date getStart() {
 		return start;
 	}
-	public Date getEnd_time() {
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	public Date getEnd() {
 		return end;
 	}
+	public void setEnd(Date end) {
+		this.end = end;
+	}
 
-	public void setStart_time(Date start_time) {
-		this.start = start_time;
-	}
-	public void setEnd_time(Date end_time) {
-		this.end = end_time;
-	}
-	public String getSchedule_id() {
-		return schedule_id;
-	}
-	public void setSchedule_id(String schedule_id) {
-		this.schedule_id = schedule_id;
-	}
-	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "The schedule id : " + this.schedule_id + " Start time : " + this.start.toString() + " End time : " + this.end.toString();
+		return "The schedule id : " + this.id + " Start time : " + df.format(start) + " End time : " + df.format(end);
 	}
 	
 	
-	public boolean isAvailable(Date date){
-		
-		boolean start_time,end_time;
-		start_time = date.after(this.start) || date.equals(this.start);
-		end_time = date.before(this.end);
-			
-		return start_time && end_time;
-		
+	public boolean isWithinRange(Date date){
+		return date.after(start) && date.before(end);
 	}
-	public class main {
-	
-		
-		
-		
-
+	public String printStart(){
+		return df.format(this.start);
 	}
-
+	public String printEnd(){
+		return df.format(this.end);
+	}
 	
 }

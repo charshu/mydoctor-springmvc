@@ -1,6 +1,7 @@
 package com.mydoctor.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.mydoctor.dao.PatientDaoImpl;
 
@@ -21,8 +22,12 @@ public class PatientServiceImpl
 		}
 		
 		public Patient retrievePatient(String username) throws SQLException {
-				return patientDaoImpl.retrievePatient(username);
+				String patient_id = patientDaoImpl.retrievePatientId(username);
+				return patientDaoImpl.retrievePatient(patient_id);
 		}
+		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
+			return patientDaoImpl.retrieveAllPatients();
+			}
 		
 
 }

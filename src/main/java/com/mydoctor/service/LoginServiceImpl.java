@@ -21,11 +21,11 @@ public class LoginServiceImpl
 
 		public boolean isValidUser(String username, String password) throws SQLException
 		{
-				return loginDaoImpl.isValidUser(username, password);
+			return loginDaoImpl.isValidUser(username, password);
 		}
 
 		public String getUserRole(String username) throws SQLException {
-				return loginDaoImpl.getUserRole(username);
+			return loginDaoImpl.getUserRole(username);
 		}
 		
 		
