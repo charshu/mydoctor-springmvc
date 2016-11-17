@@ -6,8 +6,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import com.mydoctor.model.Patient;
-
 /**
  * @author CENTAUR
  * This interface will be used to communicate with the

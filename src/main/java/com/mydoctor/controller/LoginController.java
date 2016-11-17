@@ -5,18 +5,17 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.mydoctor.model.LoginBean;
 import com.mydoctor.service.LoginServiceImpl;
-import com.mydoctor.service.UserService;
 
 
 @Controller
@@ -37,6 +36,7 @@ public class LoginController
 			return "login";
 		}
 		
+		
 		@RequestMapping(value="/login",method=RequestMethod.POST)
 		public String executeLogin(ModelMap model, @Valid LoginBean loginBean, BindingResult result) throws SQLException
 		{
@@ -50,9 +50,10 @@ public class LoginController
 				if(isValidUser)
 				{
 					String role = loginServiceImpl.getUserRole(username);
+					model.put("username",username);
 					model.remove("loginBean");
 						if("patient".equals(role)){
-							model.put("username",username);
+							
 							return "welcomePatient";
 						}
 						else if("doctor".equals(role)){
@@ -74,11 +75,10 @@ public class LoginController
 		}
 		
 		@RequestMapping(value="/logout",method=RequestMethod.GET)
-		public String logout(ModelMap model)
+		public String logout(@ModelAttribute("username") String username,ModelMap model,SessionStatus status)
 		{	
-			
-			
-			model.clear();
+			System.out.println(username);
+			status.setComplete();
 			return "redirect:/login";
 		}
 		

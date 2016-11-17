@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.sql.DataSource;
 
 import com.mydoctor.model.Doctor;
-import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 
 public class DoctorDaoImpl {
@@ -23,34 +22,7 @@ public class DoctorDaoImpl {
 		this.dataSource = dataSource;
 	}
 
-	public Patient retrievePatient(String patient_id) throws SQLException {
-		String query = "Select * from patient where patient_id = ? ";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, patient_id);
-		ResultSet resultSet = pstmt.executeQuery();
-		Patient patient = new Patient();
-		if (resultSet.next()) {
-			patient.setId(patient_id);
-			patient.setSsn(resultSet.getString("ssn"));
-			patient.setName(resultSet.getString("name"));
-			patient.setSurname(resultSet.getString("surname"));
-			patient.setGender(resultSet.getString("gender"));
-			patient.setBirthdate(resultSet.getString("birth_date"));
-			patient.setAddress(resultSet.getString("address"));
-			patient.setTel(resultSet.getString("tel"));
-			patient.setEmail(resultSet.getString("email"));
-			patient.setHospitalNumber(resultSet.getString("hospitalNumber"));
-			return patient;
-		} else
-			return null;
-	}
-	
-	public ArrayList<Patient> retrieveAllPatients() throws SQLException {
-		
-		return null;
-	}
-
-	public String getDoctorId(String username)throws SQLException {
+	public String retrieveDoctorId(String username)throws SQLException {
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, username);
@@ -60,31 +32,50 @@ public class DoctorDaoImpl {
 		}
 		return null;
 	}
-	public Schedule getSchedule(String sche_id)throws SQLException {
-		String query = "Select * from schedule where schedule_id = ? ";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, sche_id);
-		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()){
-			return new Schedule(rs.getString("sche_id"), rs.getDate("start_time"), rs.getDate("end_time"));
-		}
-		return null;
-	}
+
 
 	public Doctor retrieveDoctor(String username) throws SQLException {
 		return null;
 	}
 
-	public ArrayList<Schedule> retriveSchedules(String username, String schedule_id) throws SQLException {
-		String query = "Select sch_id from doctor_schedule where doctor_id = ? ";
+	public Schedule retriveSchedule(String schedule_id) throws SQLException {
+		String query = "Select * from schedule where schedule_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, getDoctorId(username));
-		ResultSet resultSet = pstmt.executeQuery();
+		pstmt.setString(1, schedule_id);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return new Schedule(schedule_id, rs.getDate("start_date"), rs.getDate("end_date"));
+		}
 		return null;
 	}
-
-	public ArrayList<Schedule> retriveAllSchedules(String username) throws SQLException {
-		return new ArrayList<Schedule>();
+	
+	public ArrayList<Schedule> retriveAllSchedules(String doctor_id) throws SQLException {
+		
+		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
+				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
+				+ "WHERE doctor_schedule.doctor_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, doctor_id);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+		while(rs.next()){
+			Schedule schedule = new Schedule();
+			schedule.setId(rs.getString("sch_id"));
+			schedule.setStart(rs.getDate("start_date"));
+			schedule.setEnd(rs.getDate("end_date"));
+			schedules.add(schedule);
+		}
+		return schedules;
+	}
+	public String retrieveId(String username)throws SQLException {
+		String query = "Select user_id from user where username = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, username);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return rs.getString("user_id");
+		}
+		return null;
 
 	}
 	

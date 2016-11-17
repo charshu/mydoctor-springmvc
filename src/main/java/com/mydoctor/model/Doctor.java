@@ -6,7 +6,7 @@ public class Doctor extends User {
 	
 	private String department;
 	private String name,surname;
-	private ArrayList<Schedule> schedule_arr;
+	private ArrayList<Schedule> schedules;
 	
 	public Doctor() {
 
@@ -41,9 +41,15 @@ public class Doctor extends User {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
+	public ArrayList<Schedule> getSchedules() {
+		return schedules;
+	}
+	public void setSchedules(ArrayList<Schedule> schedules) {
+		this.schedules = schedules;
+	}
 	
 	public void addSchedule(Schedule schedule){
-		schedule_arr.add(schedule);
+		schedules.add(schedule);
 		//DAO
 	}
 	public void addSchedules(ArrayList<Schedule> schedules){
@@ -53,21 +59,17 @@ public class Doctor extends User {
 	}
 	
 	public void removeSchedule(String schedule_id){
-		for(int i=0; i < schedule_arr.size() ;i++){
-			if( schedule_id.equals(schedule_arr.get(i).getSchedule_id() ) ){
-				schedule_arr.remove(i);
+		for(int i=0; i < schedules.size() ;i++){
+			if( schedule_id.equals(schedules.get(i).getId() ) ){
+				schedules.remove(i);
 			}
 		}
 	}
 	public void clearAllSchedule() {
-		this.schedule_arr = new ArrayList<Schedule>();
+		this.schedules = new ArrayList<Schedule>();
 	}
-	public ArrayList<Schedule> getSchedule_arr() {
-		return schedule_arr;
-	}
-	public void setSchedule_arr(ArrayList<Schedule> schedule_arr) {
-		this.schedule_arr = schedule_arr;
-	}
+	
+	
 	
 	
 	

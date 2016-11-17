@@ -4,12 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mydoctor.dao.DoctorDaoImpl;
-import com.mydoctor.dao.HospitalDao;
-import com.mydoctor.dao.LoginDaoImpl;
+
 import com.mydoctor.model.Doctor;
-import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
-import com.mydoctor.model.User;
 
 
 public class DoctorServiceImpl
@@ -26,25 +23,19 @@ public class DoctorServiceImpl
 			this.doctorDaoImpl = doctorDaoImpl;
 		}
 		
-		
-		public ArrayList<Schedule> retriveAllSchedules(String username)throws SQLException{
-			return doctorDaoImpl.retriveAllSchedules(username);
-		}
-	
-		public ArrayList<Patient> retrievePatient(String username) throws SQLException {
-		return null;
-		}
-	
-		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
-		return null;
-		}
-	
 		public Doctor retrieveDoctor(String username) throws SQLException {
-		return doctorDaoImpl.retrieveDoctor(username);
+			return doctorDaoImpl.retrieveDoctor(username);
+			}
+		public String retrieveId(String username)throws SQLException{
+			return doctorDaoImpl.retrieveId(username);
 		}
-		public void test(){
-			
+		public ArrayList<Schedule> retriveAllSchedules(String username)throws SQLException{
+			String doctor_id = retrieveId(username);
+			return doctorDaoImpl.retriveAllSchedules(doctor_id);
 		}
+	
+		
+		
 		
 		
 	

@@ -17,16 +17,21 @@ public class Nurse extends User  {
 		this.name = name;
 		this.surname = surname;
 	}
+
 	public String getName() {
 		return name;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getSurname() {
 		return surname;
 	}
-	public void setName() {
-		this.name = name;
-	}
-	public void setSurname() {
+
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
 }
