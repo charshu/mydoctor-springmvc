@@ -1,10 +1,12 @@
 package com.mydoctor.model;
 
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,13 +15,13 @@ public class Schedule {
 	
 	private String id;
 	//Date stores in format milliseconds -> 1000022311231
-	@Size(min = 1, message = "Enter Username.")
-	@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	@NotNull
+	//@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
 	private Timestamp start;
-	@Size(min = 1, message = "Enter Username.")
-	@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	@NotNull
+	//@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
 	private Timestamp end;
-	private final DateFormat df = new SimpleDateFormat("E dd-MM-YYYY HH:mm");
+	private final DateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
 	
 	public Schedule(){
 	
@@ -52,7 +54,7 @@ public class Schedule {
 
 	@Override
 	public String toString() {
-		return "The schedule id : " + this.id + " Start time : " + df.format(start) + " End time : " + df.format(end);
+		return "The schedule id : " + this.id + " Start time : " + df.format(this.start) + " End time : " + df.format(this.end);
 	}
 	
 	public boolean isWithinRange(Date date){

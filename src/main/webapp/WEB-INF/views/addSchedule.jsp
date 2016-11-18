@@ -33,7 +33,7 @@
 			<fieldset class="form-group">
 				<form:label path="end" class="control-label">End Date</form:label>
 				<div class="input-group date" id="datetimepicker2">
-					<form:input path="start" type="text" class="form-control" />
+					<form:input path="end" type="text" class="form-control" />
 					<span class="input-group-addon"><span
 						class="glyphicon-calendar glyphicon"></span></span>
 				</div>
@@ -57,7 +57,7 @@
 		src="webjars/eonasdan-bootstrap-datetimepicker/4.17.43/build/js/bootstrap-datetimepicker.min.js"></script>
 	<script>
 		$('#datetimepicker1').datetimepicker({
-			format : 'ddd DD-MM-YYYY HH:mm',
+			format : 'DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
 			maxDate : moment().add(5, 'day'),
@@ -65,7 +65,7 @@
 
 		});
 		$('#datetimepicker2').datetimepicker({
-			format : 'ddd DD-MM-YYYY HH:mm',
+			format : 'DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
 			maxDate : moment().add(5, 'day'),

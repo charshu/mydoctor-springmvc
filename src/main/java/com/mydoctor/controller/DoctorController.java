@@ -58,11 +58,13 @@ public class DoctorController
 		}
 		
 		@InitBinder
-		public void binder(WebDataBinder binder) {binder.registerCustomEditor(Timestamp.class,
+		public void binder(WebDataBinder binder) {
+			binder.registerCustomEditor(Timestamp.class,
 		    new PropertyEditorSupport() {
 		        public void setAsText(String value) {
 		            try {
-		                Date parsedDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(value);
+		                Date parsedDate = new SimpleDateFormat("dd-MM-YYYY HH:mm").parse(value);
+		               
 		                setValue(new Timestamp(parsedDate.getTime()));
 		            } catch (ParseException e) {
 		                setValue(null);
@@ -76,6 +78,7 @@ public class DoctorController
 		{
 				//System.out.println(schedule.toString());
 				System.out.println(schedule.toString());
+				model.clear();
 				return "redirect:/list-schedule";
 		}
 		
