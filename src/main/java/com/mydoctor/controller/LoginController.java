@@ -53,11 +53,13 @@ public class LoginController
 					model.put("username",username);
 					model.remove("loginBean");
 						if("patient".equals(role)){
-							
 							return "welcomePatient";
 						}
 						else if("doctor".equals(role)){
 							return "welcomeDoctor";
+						}
+						else if("staff".equals(role)){
+							return "welcomeStaff";
 						}
 						else if("nurse".equals(role)){
 							return "welcomeNurse";
