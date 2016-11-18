@@ -5,12 +5,21 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Schedule {
 	
 	private String id;
 	//Date stores in format milliseconds -> 1000022311231
-	private Timestamp start,end;
-	private final DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	@Size(min = 1, message = "Enter Username.")
+	@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	private Timestamp start;
+	@Size(min = 1, message = "Enter Username.")
+	@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	private Timestamp end;
+	private final DateFormat df = new SimpleDateFormat("E dd-MM-YYYY HH:mm");
 	
 	public Schedule(){
 	
