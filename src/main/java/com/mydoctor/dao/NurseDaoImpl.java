@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Nurse;
 
 public class NurseDaoImpl {
@@ -25,7 +26,10 @@ public class NurseDaoImpl {
 		return new Nurse();
 	}
 	
-	
+	public void addinfo(GeneralInfo generalinfo)throws SQLException{
+		
+
+	}
 	
 
 }
