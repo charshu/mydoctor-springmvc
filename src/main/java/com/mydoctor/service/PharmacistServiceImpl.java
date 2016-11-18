@@ -4,7 +4,6 @@ package com.mydoctor.service;
 import java.sql.SQLException;
 
 import com.mydoctor.dao.PharmacistDaoImpl;
-import com.mydoctor.model.Nurse;
 import com.mydoctor.model.Pharmacist;
 
 
@@ -13,7 +12,7 @@ public class PharmacistServiceImpl
 		
 		private PharmacistDaoImpl pharmacistDaoImpl;
 
-		public PharmacistDaoImpl getNurseDaoImpl() {
+		public PharmacistDaoImpl getPharmacistDaoImpl() {
 			return pharmacistDaoImpl;
 		}
 

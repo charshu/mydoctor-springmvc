@@ -64,7 +64,9 @@ public class LoginController
 						else if("nurse".equals(role)){
 							return "welcomeNurse";
 						}
-						
+						else if("pharmacist".equals(role)){
+							return "welcomePharmacist";
+						}
 				}
 				else
 				{

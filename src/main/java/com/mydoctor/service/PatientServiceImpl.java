@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.mydoctor.dao.PatientDaoImpl;
 
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Prescription;
 
 
 public class PatientServiceImpl
@@ -27,7 +28,13 @@ public class PatientServiceImpl
 		}
 		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
 			return patientDaoImpl.retrieveAllPatients();
-			}
+		}
+		
+//		public ArrayList<Prescription> retrivePrescriptionHistory(String patient_id) throws SQLException {
+//			Patient patient = patientDaoImpl.retrievePatient(patient_id);
+//			String id = patientDaoImpl.retrievePatientId(patient.getId());
+//			return "";
+//		}
 		
 
 }
