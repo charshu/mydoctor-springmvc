@@ -31,9 +31,13 @@
 		autowire="byName">
 		<property name="patientDaoImpl" ref="patientDaoImpl"></property>
 	</bean>
-		<bean id="NurseServiceImpl" class="com.mydoctor.service.NurseServiceImpl"
-		autowire="byName">
-		<property name="nurseDaoImpl" ref="nurseDaoImpl"></property>
+	<bean id="NurseServiceImpl" class="com.mydoctor.service.NurseServiceImpl"
+	autowire="byName">
+	<property name="nurseDaoImpl" ref="nurseDaoImpl"></property>
+	</bean>
+	<bean id="PharmacistServiceImpl" class="com.mydoctor.service.PharmacistServiceImpl"
+	autowire="byName">
+	<property name="pharmacistDaoImpl" ref="pharmacistDaoImpl"></property>
 	</bean>
 	<bean name="loginDaoImpl" class="com.mydoctor.dao.LoginDaoImpl"
 		autowire="byName">
@@ -51,7 +55,10 @@
 		autowire="byName">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-
+<bean name="pharmacistDaoImpl" class="com.mydoctor.dao.PharmacistDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />

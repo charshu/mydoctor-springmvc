@@ -44,7 +44,7 @@ public class DoctorDaoImpl {
 		pstmt.setString(1, schedule_id);
 		ResultSet rs = pstmt.executeQuery();
 		if(rs.next()){
-			return new Schedule(schedule_id, rs.getDate("start_date"), rs.getDate("end_date"));
+			return new Schedule(schedule_id, rs.getTimestamp("start_date"), rs.getTimestamp("end_date"));
 		}
 		return null;
 	}
@@ -61,8 +61,8 @@ public class DoctorDaoImpl {
 		while(rs.next()){
 			Schedule schedule = new Schedule();
 			schedule.setId(rs.getString("sch_id"));
-			schedule.setStart(rs.getDate("start_date"));
-			schedule.setEnd(rs.getDate("end_date"));
+			schedule.setStart(rs.getTimestamp("start_date"));
+			schedule.setEnd(rs.getTimestamp("end_date"));
 			schedules.add(schedule);
 		}
 		return schedules;
