@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mydoctor.dao.PatientDaoImpl;
-
+import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
 
 
@@ -28,6 +28,9 @@ public class PatientServiceImpl
 		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
 			return patientDaoImpl.retrieveAllPatients();
 			}
+		public ArrayList<Appointment> retrieveAllAppointments(String username)throws SQLException{
+			
+		}
 		
 
 }

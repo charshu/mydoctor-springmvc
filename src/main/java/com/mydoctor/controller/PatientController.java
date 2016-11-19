@@ -31,6 +31,13 @@ public class PatientController
 				return "patientProfile";
 		}
 		
+		@RequestMapping(value="/list-appointment",method=RequestMethod.GET)
+		public String showAppointmentPage(ModelMap model) throws SQLException 
+		{
+				model.addAttribute("appointments",patientServiceImpl.retrieveAllAppointments((String)model.get("username")));
+				return "patientProfile";
+		}
+		
 		
 		
 }
