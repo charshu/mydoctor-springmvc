@@ -49,6 +49,24 @@ public class DoctorServiceImpl
 			
 			return 0;
 		}
+		public int deleteSchedule(String username,int schedule_id)throws SQLException{
+			int doctor_id = doctorDaoImpl.retrieveId(username);
+			
+			int updateCount = doctorDaoImpl.deleteDoctorSchedule(doctor_id,schedule_id);
+			if( updateCount == 0 ){
+				System.out.println("[ERROR] cannot delete doctor_schedule "
+						+ "(doctor_id:"+doctor_id+",schedule_id:"+schedule_id+")");
+			}
+			
+			updateCount = doctorDaoImpl.deleteSchedule(schedule_id);
+			if( updateCount == 0){
+				System.out.println("[ERROR] cannot delete schedule, schedule_id:"+schedule_id);
+			}
+			
+			System.out.println("[SUCCESS] delete doctor_schedule "
+					+ "(doctor_id:"+doctor_id+",schedule_id:"+schedule_id+")");
+			return 1;
+		}
 	
 		
 		

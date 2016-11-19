@@ -6,6 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
+import javax.validation.Valid;
+
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mydoctor.model.Doctor;
 import com.mydoctor.model.Schedule;
@@ -103,7 +110,26 @@ public class DoctorDaoImpl {
 		if(updateCount>0)return updateCount;
 		return -1;
 	}
-	
-	
+	public int deleteDoctorSchedule(int doctor_id,int schedule_id) throws SQLException{
+		String query = "DELETE FROM mydoctor.doctor_schedule "
+				+ "WHERE doctor_schedule.doctor_id = ? and doctor_schedule.sch_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		pstmt.setInt(2, schedule_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if(updateCount>0)return updateCount;
+		return -1;
+	}
+	public int deleteSchedule(int schedule_id) throws SQLException{
+		String query = "DELETE FROM mydoctor.schedule "
+				+ "WHERE sch_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, schedule_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if(updateCount>0)return updateCount;
+		return -1;
+	}
 
 }
