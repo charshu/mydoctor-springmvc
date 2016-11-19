@@ -20,7 +20,7 @@ public class GeneralInfo {
 	private String congemital;
 	private String med_allergy;
 	private String symptom;
-	private Date date;
+	
 	//private final DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 	
 	public GeneralInfo(){
@@ -98,15 +98,10 @@ public class GeneralInfo {
 	public void setSymptom(String symptom) {
 		this.symptom = symptom;
 	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	public Date getDate(Date date) {
-		return date;
-	}
+
 
 	public GeneralInfo(String hospitalNumber, double weight, double height, int heart_rate, int pressureH,
-			int pressureL, String congemital, String med_allergy, String symptom, Date date) {
+			int pressureL, String congemital, String med_allergy, String symptom) {
 		super();
 		this.hospitalNumber = hospitalNumber;
 		this.weight = weight;
@@ -117,7 +112,7 @@ public class GeneralInfo {
 		this.congemital = congemital;
 		this.med_allergy = med_allergy;
 		this.symptom = symptom;
-		this.date = date;
+		
 	}
 
 }
