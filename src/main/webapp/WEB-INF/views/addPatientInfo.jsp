@@ -7,7 +7,7 @@
 			<fieldset class="form-group row">
 				<form:label path="hospitalNumber" class="col-sm-4 control-label" >Patient Hospital Number </form:label>
 				<div class="col-sm-14">
-				<form:input path="hospitalNumber" type="double" required="required" placeholder="Patient hospital number"/><br>
+				<form:input path="hospitalNumber" type="text" required="required" placeholder="Patient hospital number"/><br>
 				<form:errors path="hospitalNumber" cssClass="text-warning" />
 				</div>
 			</fieldset>
@@ -25,6 +25,14 @@
 				<div class="col-sm-14">
 				<form:input path="height" type="double" required="required" placeholder=" please fill in m"/> m<br>
 				<form:errors path="height" cssClass="text-warning" />
+				</div>
+			</fieldset>
+			
+			<fieldset class="form-group row">
+				<form:label path="heart_rate" class="col-sm-4 control-label" >Weight</form:label>
+				<div class="col-sm-14">
+				<form:input path="heart_rate" type="int" required="required" placeholder=" please fill in mmHg"/> bpm<br>
+				<form:errors path="heart_rate" cssClass="text-warning" />
 				</div>
 			</fieldset>
 			

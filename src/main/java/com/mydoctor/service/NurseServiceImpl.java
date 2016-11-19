@@ -31,7 +31,7 @@ public class NurseServiceImpl
 			return nurseDaoImpl.retrieveId(username);
 		}
 		
-		public int add_info(String username, GeneralInfo generalInfo)throws SQLException{
+		public int add_info(GeneralInfo generalInfo)throws SQLException{
 			//dao 1 fn to insert general infp
 			//get patient id then insert to patient_info table
 			String hospitalNumber = generalInfo.getHospitalNumber();

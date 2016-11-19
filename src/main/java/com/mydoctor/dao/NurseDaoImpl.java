@@ -48,6 +48,10 @@ public class NurseDaoImpl {
 		pstmt.executeUpdate();
 		int updateCount = pstmt.getUpdateCount();
 		if(updateCount>0)return updateCount;
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if(rs.next()){
+			return rs.getInt(1);
+		}
 		return -1;
 	}
 	
@@ -63,7 +67,7 @@ public class NurseDaoImpl {
 
 	}
 	public int retrievePatientId(String hostpitalNumber)throws SQLException {
-		String query = "Select patient_id from patient where hospitalNumber = hostpitalNumber ";
+		String query = "Select patient_id from patient where hospitalNumber = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, hostpitalNumber);
 		ResultSet rs = pstmt.executeQuery();
