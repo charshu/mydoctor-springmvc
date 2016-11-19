@@ -13,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Schedule {
 	
-	private String id;
+	private int id;
 	//Date stores in format milliseconds -> 1000022311231
 	@NotNull
 	//@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
@@ -27,16 +27,16 @@ public class Schedule {
 	
 	}
 
-	public Schedule(String id, Timestamp start, Timestamp end) {
+	public Schedule(int id, Timestamp start, Timestamp end) {
 		super();
 		this.id = id;
 		this.start = start;
 		this.end = end;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public Timestamp getStart() {

@@ -26,16 +26,28 @@ public class DoctorServiceImpl
 		public Doctor retrieveDoctor(String username) throws SQLException {
 			return doctorDaoImpl.retrieveDoctor(username);
 			}
-		public String retrieveId(String username)throws SQLException{
+		public int retrieveId(String username)throws SQLException{
 			return doctorDaoImpl.retrieveId(username);
 		}
 		public ArrayList<Schedule> retriveAllSchedules(String username)throws SQLException{
-			String doctor_id = retrieveId(username);
+			int doctor_id = retrieveId(username);
 			return doctorDaoImpl.retriveAllSchedules(doctor_id);
 		}
-		public boolean saveSchedule(String username,Schedule schedule)throws SQLException{
-			String doctor_id = retrieveId(username);
-			return doctorDaoImpl.saveSchedule(doctor_id,schedule);
+		public int saveSchedule(String username,Schedule schedule)throws SQLException{
+			
+			int schedule_id = doctorDaoImpl.insertSchedule(schedule);
+			if(schedule_id == -1){
+				System.out.println("[ERROR] cannot retrieve schedule_id");
+				return 0;
+			}
+			int doctor_id = doctorDaoImpl.retrieveId(username);
+			if(doctor_id == -1){
+				System.out.println("[ERROR] cannot retrieve doctor_id");
+				return 0;
+			}
+			if(doctorDaoImpl.insertDoctorSchedule(doctor_id, schedule_id) > 0)return 1;
+			
+			return 0;
 		}
 	
 		

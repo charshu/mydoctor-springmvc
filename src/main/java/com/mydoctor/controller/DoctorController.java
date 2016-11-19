@@ -86,9 +86,20 @@ public class DoctorController
 		public String addSchedule(ModelMap model,@Valid Schedule schedule, BindingResult result) throws SQLException 
 		{
 				System.out.println("[Request]" + schedule.toString());
-				model.clear();
-				return "redirect:/list-schedule";
+				
+				if(result.hasErrors()){
+					return "addSchedule";
+				}
+				int updateCount = doctorServiceImpl.saveSchedule((String)model.get("username"), schedule);
+				if(updateCount > 0){
+					model.clear();
+					return "redirect:/list-schedule";
+				} 
+				
+				return "addSchedule";
+				
 		}
+		
 		
 		
 		
