@@ -3,17 +3,23 @@ package com.mydoctor.service;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.mydoctor.dao.PatientDaoImpl;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Schedule;
 
-
-public class PatientServiceImpl
+@Service
+public class AppointmentServiceImpl
 {
 		
-		
 		private PatientDaoImpl patientDaoImpl;
+		private static String department;
+		private static int doctor_id;
+		private static List<Schedule> schedules = new ArrayList<Schedule>();
 		
 		public PatientDaoImpl getUserDao() {
 			return patientDaoImpl;
@@ -22,7 +28,7 @@ public class PatientServiceImpl
 			this.patientDaoImpl = patientDaoImpl;
 		}
 		
-		public Patient retrievePatient(String username) throws SQLException {
+		public Patient retrieveDepartmentSchedule(String department) throws SQLException {
 				int patient_id = patientDaoImpl.retrievePatientId(username);
 				return patientDaoImpl.retrievePatient(patient_id);
 		}

@@ -54,14 +54,13 @@ public class PatientDaoImpl {
 
 	}
 
-	public Patient retrievePatient(String patient_id) throws SQLException {
+	public Patient retrievePatient(int patient_id) throws SQLException {
 		String query = "Select * from patient where patient_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, patient_id);
+		pstmt.setInt(1, patient_id);
 		ResultSet resultSet = pstmt.executeQuery();
 		Patient patient = new Patient();
 		if (resultSet.next()) {
-			patient.setId(patient_id);
 			patient.setSsn(resultSet.getString("ssn"));
 			patient.setName(resultSet.getString("name"));
 			patient.setSurname(resultSet.getString("surname"));
@@ -81,10 +80,23 @@ public class PatientDaoImpl {
 		return null;
 	}
 	public ArrayList<Appointment> retrieveAllAppointments(int patient_id)throws SQLException{
-		String query = "Select * from patient where patient_id = ? ";
+		String query = "SELECT patient_id,doctor_id,appointment.app_id,appointment.date,appointment.symptom "
+				+ "FROM make_appointment INNER JOIN appointment "
+				+ "WHERE make_appointment.app_id = appointment.app_id and patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, patient_id);
-		ResultSet resultSet = pstmt.executeQuery();
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+		while(rs.next()){
+			Appointment appointment = new Appointment();
+			appointment.setId(rs.getInt("app_id"));
+			appointment.setDate(rs.getTimestamp("date"));
+			appointment.setSymptom(rs.getString("symptom"));
+			appointments.add(appointment);
+			
+		}
+		return appointments;
+		
 		
 	}
 }

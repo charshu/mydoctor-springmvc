@@ -1,11 +1,15 @@
 package com.mydoctor.model;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Appointment {
 	private int id;
 	private Timestamp date;
 	private  String symptom;
+	private final DateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
+	
 	public int getId() {
 		return id;
 	}
@@ -32,6 +36,9 @@ public class Appointment {
 		this.id = id;
 		this.date = date;
 		this.symptom = symptom;
+	}
+	public String printDate(){
+		return df.format(this.date);
 	}
 	
 	
