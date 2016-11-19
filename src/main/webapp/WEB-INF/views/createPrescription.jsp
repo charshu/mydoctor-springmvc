@@ -3,37 +3,31 @@
 
 <div class="container-fluid">
 
-      <th>Prescription ID</th>
-   	<th>Patient Name</th>
-   	<th>surname</th>
-   	<th>department</th>
-   	<th>tel</th>
-
 
 <div class="container">
-		<form:form id="loginForm" method="post" action="login" commandName="loginBean">
-			<fieldset class="form-group">
-			
-				<form:label path="username">Enter your user-name</form:label>
-				<form:input path="username" type="text" class="form-control" required="required"/><br>
-				<form:errors path="username" cssClass="text-warning" />
-				</fieldset>
-				
-			<fieldset class="form-group">
-				<form:label path="password">Please enter your password</form:label>
-				<form:password path="password" class="form-control" /><br>
-				<form:errors path="password" cssClass="text-warning" />
-			</fieldset>
-			 <button type="submit" class="btn btn-success">Submit</button>
-		</form:form>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1>Prescription</h1>
+		</div>
+		<div class="panel-body">
+      		<p>Prescription Id :</p>
+	  		<p>Patient Id : </p>
+	  		<p>Patient Name : </p>
+	  		<p>Doctor Name : </p>
+		</div>
 	</div>
+	 
+</div>
+
+<div class="container">
 
 <table class="table">
 <thead>
 		<tr>
-			<th>ID </th>
-			<th>Start Date </th>
-			<th>End Date</th>
+			<th>Medicine ID </th>
+			<th>Medicine Name </th>
+			<th>Amount</th>
 		</tr>
 	</thead>
 <c:forEach items="${schedules}" var="schedule">
@@ -47,5 +41,5 @@
 </div>
 
 
-
+</div>
 <%@ include file="common/footer.jspf"%>

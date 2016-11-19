@@ -22,6 +22,7 @@ public class PrescriptionServiceImpl
 			this.prescriptionDaoImpl = prescriptionDaoImpl;
 		}
 		
+		
 		public Prescription retrievePrescription(String username)throws SQLException{
 			return prescriptionDaoImpl.retrievePrescription(username);
 		}
