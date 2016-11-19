@@ -30,7 +30,6 @@ public class LoginController
 		@RequestMapping(value="/login", method=RequestMethod.GET)
 		public String showLoginPage(ModelMap model)
 		{
-			
 			LoginBean loginBean = new LoginBean();
 			model.addAttribute("loginBean", loginBean);
 			return "login";

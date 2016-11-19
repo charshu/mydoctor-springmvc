@@ -2,6 +2,7 @@ package com.mydoctor.model;
 
 public class Prescription  {
 	private String prescriptionId, medicineId, instruction, amount;
+	private Medicine medicine;
 	
 	public Prescription() {
 		
@@ -45,7 +46,6 @@ public class Prescription  {
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-
 
 
 }

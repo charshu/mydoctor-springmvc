@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.mydoctor.model.Prescription;
 import com.mydoctor.service.PharmacistServiceImpl;
 
 
@@ -38,7 +39,13 @@ public class PharmacistController
 				return "welcomePharmacist";
 		}
 		
-
+		@RequestMapping(value="/show_prescription",method=RequestMethod.GET)
+		public String showPrescription(ModelMap model)
+		{
+			Prescription prescription = new Prescription();
+			model.addAttribute("prescription", prescription);
+			return "showPrescription";
+		}
 		
 		
 		
