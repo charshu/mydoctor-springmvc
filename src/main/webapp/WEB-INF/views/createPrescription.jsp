@@ -22,22 +22,44 @@
 
 <div class="container">
 
-<table class="table">
-<thead>
-		<tr>
-			<th>Medicine ID </th>
-			<th>Medicine Name </th>
-			<th>Amount</th>
-		</tr>
-	</thead>
-<c:forEach items="${schedules}" var="schedule">
-   <tr>
-       <td>${schedule.id}</td>
-       <td>${schedule.printStart()}</td>
-       <td>${schedule.printEnd()}</td>
-    </tr>
-</c:forEach>
-</table>
+
+<form class="form-horizontal">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-highlight">
+			<thead>
+					<tr>
+						<th>Medicine ID </th>
+						<th>Medicine Name </th>
+						<th>Amount</th>
+						<th>Instruction</th>
+						<th>Add</th>
+						<th>Delete</th>
+					</tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="form-control" value="Medicine Id"/></td>
+                    <td><input type="text" class="form-control" value="Medicine Name"/></td>
+                    <td><input type="text" class="form-control" value="Amount"/></td>
+                    <td><input type="text" class="form-control" value="Instruction"/></td>
+                    <td class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                    </td>
+                    <td class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>    
+	<div class="pull-right">
+		<button type="submit" class="btn btn-success" >Submit</button>
+    </div>
 </div>
 
 

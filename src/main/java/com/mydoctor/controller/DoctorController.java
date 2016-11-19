@@ -113,7 +113,7 @@ public class DoctorController
 		@RequestMapping(value="/create_prescription",method=RequestMethod.GET)
 		public String showCreatePrescriptionPage(ModelMap model)
 		{
-			
+			System.out.println((String)model.get("prescription_id"));
 			Prescription prescription = new Prescription();
 			model.addAttribute("prescription", prescription);
 			return "createPrescription";
@@ -125,7 +125,7 @@ public class DoctorController
 		{
 				
 				if(result.hasErrors()){
-					return "prescription";
+					return "createPrescription";
 				}
 				// prescriptionId, medicineId, instruction, amount
 				String medicineId = prescription.getMedicineId();
