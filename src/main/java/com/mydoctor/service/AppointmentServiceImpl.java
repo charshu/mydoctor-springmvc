@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mydoctor.dao.DoctorDaoImpl;
 import com.mydoctor.dao.PatientDaoImpl;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
@@ -17,6 +18,7 @@ public class AppointmentServiceImpl
 {
 		
 		private PatientDaoImpl patientDaoImpl;
+		private DoctorDaoImpl doctorDaoImpl;
 		private static String department;
 		private static int doctor_id;
 		private static List<Schedule> schedules = new ArrayList<Schedule>();
@@ -28,9 +30,9 @@ public class AppointmentServiceImpl
 			this.patientDaoImpl = patientDaoImpl;
 		}
 		
-		public Patient retrieveDepartmentSchedule(String department) throws SQLException {
-				int patient_id = patientDaoImpl.retrievePatientId(username);
-				return patientDaoImpl.retrievePatient(patient_id);
+		public void setDepartmentSchedule(String department) throws SQLException {
+				
+				return doctorDaoImpl.
 		}
 		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
 			return patientDaoImpl.retrieveAllPatients();
