@@ -18,7 +18,9 @@
        <td>${schedule.printEnd()}</td>
     </tr>
 </c:forEach>
+
 </table>
+<a href="/add-schedule" class="btn btn-success">Add</a>
 </div>
 
 
