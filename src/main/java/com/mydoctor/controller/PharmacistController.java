@@ -38,12 +38,7 @@ public class PharmacistController
 				return "welcomePharmacist";
 		}
 		
-		@RequestMapping(value="/view_prescription",method=RequestMethod.POST)
-		public String createPrescription(ModelMap model) throws SQLException 
-		{
-				return "createPrescription";
-		}
-		
+
 		
 		
 		
