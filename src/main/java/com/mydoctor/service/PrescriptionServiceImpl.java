@@ -26,9 +26,10 @@ public class PrescriptionServiceImpl
 			return prescriptionDaoImpl.retrievePrescription(username);
 		}
 		
-		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {
-			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount);
-		}
+		
+//		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {
+//			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount);
+//		}
 		
 		
 		

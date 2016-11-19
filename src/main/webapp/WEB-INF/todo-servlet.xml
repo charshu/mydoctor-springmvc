@@ -67,7 +67,14 @@
 		<property name="password" value="admin" />
 	</bean>
 
-
+	<bean id="PrescriptionServiceImpl" class="com.mydoctor.service.PrescriptionServiceImpl"
+	autowire="byName">
+	<property name="prescriptionDaoImpl" ref="prescriptionDaoImpl"></property>
+	</bean>
+	<bean name="prescriptionDaoImpl" class="com.mydoctor.dao.PrescriptionDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 
 	<mvc:resources mapping="/webjars/**" location="/webjars/" />
 

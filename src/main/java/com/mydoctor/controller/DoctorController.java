@@ -47,6 +47,7 @@ public class DoctorController
 		}
 		
 		
+		
 		@RequestMapping(value="/create_prescription",method=RequestMethod.GET)
 		public String showCreatePrescriptionPage(ModelMap model)
 		{

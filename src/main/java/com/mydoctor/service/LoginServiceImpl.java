@@ -15,6 +15,7 @@ public class LoginServiceImpl
 		public LoginDaoImpl getLoginDaoImpl() {
 			return loginDaoImpl;
 		}
+		
 		public void setLoginDaoImpl(LoginDaoImpl loginDaoImpl) {
 			this.loginDaoImpl = loginDaoImpl;
 		}
