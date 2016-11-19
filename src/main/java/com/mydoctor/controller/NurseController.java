@@ -58,10 +58,10 @@ public class NurseController
 			if(result.hasErrors()){
 				return "addPatientInfo";
 			}
-			int updateCount = nurseServiceImpl.add_info(generalInfo);
+			int updateCount = nurseServiceImpl.add_info((String)model.get("username"),generalInfo);
 			if(updateCount > 0){
 				model.clear();
-				return "redirect:/addPatientInfo";
+				return "redirect:/add-info";
 			} 
 			
 			

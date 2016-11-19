@@ -55,6 +55,16 @@ public class NurseDaoImpl {
 		return -1;
 	}
 	
+	public int addToCreatePatientInfo(int patient_id,int nurse_id,int record_id)throws SQLException{
+		String query = "INSERT INTO create_patient_info (patient_id, nurse_id.record_id)" + "VALUES (?,?,?);";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1,patient_id);
+		pstmt.setInt(2,nurse_id);
+		pstmt.setInt(3,record_id);
+		ResultSet rs = pstmt.executeQuery();
+		return -1;
+	}
+	
 	public int retrieveId(String username)throws SQLException {
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -64,6 +74,7 @@ public class NurseDaoImpl {
 			return rs.getInt("user_id");
 		}
 		return -1;
+		
 
 	}
 	public int retrievePatientId(String hostpitalNumber)throws SQLException {
