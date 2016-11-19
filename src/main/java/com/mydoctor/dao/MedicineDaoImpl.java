@@ -3,14 +3,10 @@ package com.mydoctor.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.sql.DataSource;
 
-import com.mydoctor.model.Medicine;
-import com.mydoctor.model.Patient;
-import com.mydoctor.model.Pharmacist;
-import com.mydoctor.model.Prescription;
+import com.mydoctor.model.MedicineBean;
+
 
 public class MedicineDaoImpl {
 
@@ -24,9 +20,9 @@ public class MedicineDaoImpl {
 		this.dataSource = dataSource;
 	}
 	
-	public Medicine retrieveMedicine(String medicine_id)throws SQLException{
+	public MedicineBean retrieveMedicine(String medicine_id)throws SQLException{
 		
-		return new Medicine();
+		return new MedicineBean();
 	}
 	
 	public String getMedicineName(String medicine_id) throws SQLException {

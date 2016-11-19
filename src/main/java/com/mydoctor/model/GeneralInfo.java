@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import javax.validation.constraints.Size;
-
 public class GeneralInfo {
 
 	// @Size(min = 1, message = "Enter Username.")

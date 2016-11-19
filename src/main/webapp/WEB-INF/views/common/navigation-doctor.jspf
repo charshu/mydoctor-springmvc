@@ -9,6 +9,7 @@
             <li><a href="/login">Home</a></li>
             <li><a href="/doctor-profile">Profile</a></li>
             <li><a href="/list-schedule">Schedule</a></li>
+             <li><a href="/add-prescription">Add Prescription</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <li><a href="/logout">Logout</a></li>

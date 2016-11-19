@@ -4,11 +4,8 @@ package com.mydoctor.service;
 import java.sql.SQLException;
 
 import com.mydoctor.dao.MedicineDaoImpl;
-import com.mydoctor.dao.PharmacistDaoImpl;
-import com.mydoctor.dao.PrescriptionDaoImpl;
-import com.mydoctor.model.Medicine;
-import com.mydoctor.model.Pharmacist;
-import com.mydoctor.model.Prescription;
+import com.mydoctor.model.MedicineBean;
+
 
 
 public class MedicineServiceImpl
@@ -24,7 +21,7 @@ public class MedicineServiceImpl
 			this.medicineDaoImpl = medicineDaoImpl;
 		}
 		
-		public Medicine retrieveMedicine(String medicine_id)throws SQLException{
+		public MedicineBean retrieveMedicine(String medicine_id)throws SQLException{
 			return medicineDaoImpl.retrieveMedicine(medicine_id);
 		}
 		

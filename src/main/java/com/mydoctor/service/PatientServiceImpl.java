@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.mydoctor.dao.PatientDaoImpl;
 
 import com.mydoctor.model.Patient;
-import com.mydoctor.model.Prescription;
+
 
 
 public class PatientServiceImpl

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.mydoctor.dao.PharmacistDaoImpl;
 import com.mydoctor.model.Pharmacist;
-import com.mydoctor.model.Prescription;
+
 
 
 public class PharmacistServiceImpl
@@ -25,12 +25,7 @@ public class PharmacistServiceImpl
 			return pharmacistDaoImpl.retrievePharmacist(username);
 		}
 		
-		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {
-			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount);
-		}
-		
-		
-		
+
 		
 
 }
