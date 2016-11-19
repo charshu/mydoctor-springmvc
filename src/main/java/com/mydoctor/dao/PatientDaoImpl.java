@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
 
 public class PatientDaoImpl {
@@ -20,26 +21,26 @@ public class PatientDaoImpl {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-	public String retrieveUserId(String username) throws SQLException {
+	public int retrieveUserId(String username) throws SQLException {
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, username);
 		ResultSet resultSet = pstmt.executeQuery();
 		if (resultSet.next())
-			return resultSet.getString(1);
+			return resultSet.getInt("user_id");
 		else
-			return null;
+			return -1;
 	}
-	public String retrievePatientId(String username) throws SQLException {
-		String user_id = retrieveUserId(username);
+	public int retrievePatientId(String username) throws SQLException {
+		int user_id = retrieveUserId(username);
 		String query = "Select patient_id from patient where user_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, user_id);
+		pstmt.setInt(1, user_id);
 		ResultSet resultSet = pstmt.executeQuery();
 		if (resultSet.next())
-			return resultSet.getString(1);
+			return resultSet.getInt(1);
 		else
-			return null;
+			return -1;
 	}
 	public int getPatientPasswordLength(String username) throws SQLException {
 		String query = "Select password from user where username = ? ";
@@ -79,5 +80,11 @@ public class PatientDaoImpl {
 		
 		return null;
 	}
-
+	public ArrayList<Appointment> retrieveAllAppointments(int patient_id)throws SQLException{
+		String query = "Select * from patient where patient_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		ResultSet resultSet = pstmt.executeQuery();
+		
+	}
 }

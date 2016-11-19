@@ -29,8 +29,13 @@ public class PatientServiceImpl
 			return patientDaoImpl.retrieveAllPatients();
 			}
 		public ArrayList<Appointment> retrieveAllAppointments(String username)throws SQLException{
+			int patient_id = patientDaoImpl.retrievePatientId(username);
+			return patientDaoImpl.retrieveAllAppointments(patient_id);
 			
+			
+
 		}
+		
 		
 
 }
