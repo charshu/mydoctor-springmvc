@@ -1,5 +1,6 @@
 package com.mydoctor.service;
 
+import java.util.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,44 +15,57 @@ import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 
 @Service
-public class AppointmentServiceImpl
-{
+public class AppointmentServiceImpl {
+
+	private PatientDaoImpl patientDaoImpl;
+	private DoctorDaoImpl doctorDaoImpl;
+	// private static String department;
+	// private static int doctor_id;
+	private static List<Schedule> schedules = new ArrayList<Schedule>();
+
+	static {
+
+	}
+
+	public PatientDaoImpl getUserDao() {
+		return patientDaoImpl;
+	}
+
+	public void setPatientDaoImpl(PatientDaoImpl patientDaoImpl) {
+		this.patientDaoImpl = patientDaoImpl;
+	}
+
+	public void loadAllSchedule() throws SQLException {
+		schedules = doctorDaoImpl.retriveAllSchedules();
 		
-		private PatientDaoImpl patientDaoImpl;
-		private DoctorDaoImpl doctorDaoImpl;
-		private static String department;
-		private static int doctor_id;
-		private static List<Schedule> schedules = new ArrayList<Schedule>();
+	}
+	public void loadAllDoctorSchedule(int doctor_id) throws SQLException {
+		schedules = doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
 		
-		public PatientDaoImpl getUserDao() {
-			return patientDaoImpl;
-		}
-		public void setPatientDaoImpl(PatientDaoImpl patientDaoImpl) {
-			this.patientDaoImpl = patientDaoImpl;
-		}
+	}
+	public void loadDepartmentSchedule(String department) throws SQLException {
+		schedules = doctorDaoImpl.retriveAllDepartmentSchedules(department);
+	}
+
+	
+	public Timestamp findDoctorAvailableTime(int doctor_id) throws SQLException {
+		loadAllDoctorSchedule(doctor_id);
+		Timestamp today = new Timestamp(new Date().getTime());
 		
-		public void setDepartmentSchedule(String department) throws SQLException {
+		for(Schedule schedule:schedules){
+			
+			if(schedule.getStart().after(today) ){
 				
-				return doctorDaoImpl.
-		}
-		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
-			return patientDaoImpl.retrieveAllPatients();
 			}
-		public ArrayList<Appointment> retrieveAllAppointments(String username)throws SQLException{
-			int patient_id = patientDaoImpl.retrievePatientId(username);
-			return patientDaoImpl.retrieveAllAppointments(patient_id);
+			
 			
 		}
-		public Timestamp findNearestTime(String username,Appointment appointment)throws SQLException{
-			
-			return 0;
-		}
-		public int cancelAppointment(String username,int appointment_id)throws SQLException{
-			
-			
-			return 0;
-		}
-		
-		
+		return new Timestamp(1);
+	}
+
+	public int cancelAppointment(String username, int appointment_id) throws SQLException {
+
+		return 0;
+	}
 
 }
