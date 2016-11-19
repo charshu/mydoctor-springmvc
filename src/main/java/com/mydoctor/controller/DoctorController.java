@@ -3,9 +3,11 @@ package com.mydoctor.controller;
 
 
 import java.beans.PropertyEditorSupport;
+import java.util.Calendar;
 import java.util.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -63,8 +65,15 @@ public class DoctorController
 		    new PropertyEditorSupport() {
 		        public void setAsText(String value) {
 		            try {
-		                Date parsedDate = new SimpleDateFormat("dd-MM-YYYY HH:mm").parse(value);
-		               
+		            	DateFormat df = new SimpleDateFormat("E dd-MM-YYYY HH:mm");
+		                Date parsedDate = df.parse(value);
+		                Calendar c = Calendar.getInstance(); 
+		                c.setTime(parsedDate); 
+		                c.add(Calendar.DATE, -7);
+		                c.add(Calendar.MONTH, -1);
+		                c.add(Calendar.YEAR, 1);
+		                parsedDate = c.getTime();
+		               System.out.println(df.format(parsedDate));
 		                setValue(new Timestamp(parsedDate.getTime()));
 		            } catch (ParseException e) {
 		                setValue(null);
@@ -76,8 +85,7 @@ public class DoctorController
 		@RequestMapping(value="/add-schedule",method=RequestMethod.POST)
 		public String addSchedule(ModelMap model,@Valid Schedule schedule, BindingResult result) throws SQLException 
 		{
-				//System.out.println(schedule.toString());
-				System.out.println(schedule.toString());
+				System.out.println("[Request]" + schedule.toString());
 				model.clear();
 				return "redirect:/list-schedule";
 		}

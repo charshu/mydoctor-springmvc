@@ -78,6 +78,10 @@ public class DoctorDaoImpl {
 		return null;
 
 	}
+	public boolean saveSchedule(String doctor_id,Schedule schedule)throws SQLException{
+		
+		return true;
+	}
 	
 
 }

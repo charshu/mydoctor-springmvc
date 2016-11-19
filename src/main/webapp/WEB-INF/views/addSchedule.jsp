@@ -57,19 +57,19 @@
 		src="webjars/eonasdan-bootstrap-datetimepicker/4.17.43/build/js/bootstrap-datetimepicker.min.js"></script>
 	<script>
 		$('#datetimepicker1').datetimepicker({
-			format : 'DD-MM-YYYY HH:mm',
+			format : 'ddd DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
 			maxDate : moment().add(5, 'day'),
-			minDate : moment().add(1, 'day')
+			minDate : moment()
 
 		});
 		$('#datetimepicker2').datetimepicker({
-			format : 'DD-MM-YYYY HH:mm',
+			format : 'ddd DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
 			maxDate : moment().add(5, 'day'),
-			minDate : moment().add(1, 'day')
+			minDate : moment()
 		});
 	</script>
 </body>

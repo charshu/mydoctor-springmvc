@@ -33,6 +33,10 @@ public class DoctorServiceImpl
 			String doctor_id = retrieveId(username);
 			return doctorDaoImpl.retriveAllSchedules(doctor_id);
 		}
+		public boolean saveSchedule(String username,Schedule schedule)throws SQLException{
+			String doctor_id = retrieveId(username);
+			return doctorDaoImpl.saveSchedule(doctor_id,schedule);
+		}
 	
 		
 		
