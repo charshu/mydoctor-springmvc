@@ -3,6 +3,10 @@ package com.mydoctor.model;
 public class Medicine  {
 	private String medicineId, medicine;
 	
+	public Medicine(){
+		
+	}
+	
 	public Medicine(String medicineId,String medicine) {
 		this.medicineId = medicineId;
 		this.medicine = medicine;

@@ -31,9 +31,7 @@ public class PatientServiceImpl
 		}
 		
 //		public ArrayList<Prescription> retrivePrescriptionHistory(String patient_id) throws SQLException {
-//			Patient patient = patientDaoImpl.retrievePatient(patient_id);
-//			String id = patientDaoImpl.retrievePatientId(patient.getId());
-//			return "";
+//			return patient;
 //		}
 		
 

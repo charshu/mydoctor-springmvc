@@ -3,6 +3,10 @@ package com.mydoctor.model;
 public class Prescription  {
 	private String prescriptionId, medicineId, instruction, amount;
 	
+	public Prescription() {
+		
+	}
+	
 	public Prescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {
 		this.prescriptionId = prescriptionId;
 		this.medicineId = medicineId;
