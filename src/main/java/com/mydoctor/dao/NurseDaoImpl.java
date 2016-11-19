@@ -56,12 +56,18 @@ public class NurseDaoImpl {
 	}
 	
 	public int addToCreatePatientInfo(int patient_id,int nurse_id,int record_id)throws SQLException{
-		String query = "INSERT INTO create_patient_info (patient_id, nurse_id.record_id)" + "VALUES (?,?,?);";
+		String query = "INSERT INTO create_patient_info (patient_id, nurse_id,record_id)" + "VALUES (?,?,?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1,patient_id);
 		pstmt.setInt(2,nurse_id);
 		pstmt.setInt(3,record_id);
-		ResultSet rs = pstmt.executeQuery();
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if(updateCount>0)return updateCount;
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if(rs.next()){
+			return rs.getInt(1);
+		}
 		return -1;
 	}
 	
