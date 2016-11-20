@@ -6,7 +6,7 @@ public class Doctor extends User {
 	
 	
 	private String department;
-	private String name,surname;
+	private String name,surname,tel;
 	private ArrayList<Schedule> schedules;
 	
 	public Doctor() {
@@ -17,12 +17,20 @@ public class Doctor extends User {
 
 		super(id,username, password, type);
 	}
-	public Doctor(int id,String username,String password, String type,String name ,String surname, String department) {
+	public Doctor(int id,String username,String password, String type,String name ,String surname, String department,String tel) {
 		
 		super(id,username, password, type);
 		this.department = department;
 		this.name = name;
 		this.surname = surname;
+		this.tel = tel;
+	}
+	
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 	public String getName() {
 		return name;

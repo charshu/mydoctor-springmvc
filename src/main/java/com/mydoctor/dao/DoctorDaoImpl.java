@@ -42,8 +42,20 @@ public class DoctorDaoImpl {
 		return null;
 	}
 
-	public Doctor retrieveDoctor(String username) throws SQLException {
-		return null;
+
+	public Doctor retrieveDoctor(int doctor_id) throws SQLException {
+		String query = "Select * from doctor where doctor_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		ResultSet rs = pstmt.executeQuery();
+		Doctor doctor = new Doctor();
+		if (rs.next()) {
+			doctor.setName(rs.getString("name"));
+			doctor.setSurname(rs.getString("surname"));
+			doctor.setDepartment(rs.getString("department"));
+			doctor.setTel(rs.getString("tel"));
+		}
+		return doctor;
 	}
 	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
 		String query = "Select * from doctor ";
@@ -149,6 +161,7 @@ public class DoctorDaoImpl {
 		pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if (rs.next()) {
+			
 			return rs.getInt(1);
 		}
 		return -1;

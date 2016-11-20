@@ -1,7 +1,9 @@
 package com.mydoctor.service;
 
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mydoctor.dao.DoctorDaoImpl;
 
@@ -11,6 +13,7 @@ import com.mydoctor.model.Schedule;
 public class DoctorServiceImpl {
 
 	private DoctorDaoImpl doctorDaoImpl;
+	private static ArrayList<Doctor> doctors = new ArrayList<Doctor>();
 
 	public DoctorDaoImpl getDoctorDaoImpl() {
 		return doctorDaoImpl;
@@ -20,13 +23,26 @@ public class DoctorServiceImpl {
 		this.doctorDaoImpl = doctorDaoImpl;
 	}
 
+	public static ArrayList<Doctor> getDoctors() {
+		return doctors;
+	}
+	public static void setDoctors(ArrayList<Doctor> doctors) {
+		DoctorServiceImpl.doctors = doctors;
+	}
+
 	public Doctor retrieveDoctor(String username) throws SQLException {
-		return doctorDaoImpl.retrieveDoctor(username);
+		int doctor_id = retrieveId(username);
+		return doctorDaoImpl.retrieveDoctor(doctor_id);
+	}
+	public Doctor retrieveDoctor(int doctor_id) throws SQLException {
+		
+		return doctorDaoImpl.retrieveDoctor(doctor_id);
+	}
+	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
+		setDoctors(doctorDaoImpl.retrieveAllDoctors());
+		return doctors;
 	}
 	
-	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
-		return doctorDaoImpl.retrieveAllDoctors();
-	}
 	public int retrieveId(String username) throws SQLException {
 		return doctorDaoImpl.retrieveId(username);
 	}

@@ -1,7 +1,7 @@
 <nav role="navigation" class="navbar navbar-default">
 
     <div class="">
-        <a href="http://www.google.com" class="navbar-brand">MyDoctor</a>
+        <a href="http://www.google.com" class="navbar-brand">MyDoctor <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
 
     <div class="navbar-collapse">

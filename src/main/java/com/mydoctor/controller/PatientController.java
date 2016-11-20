@@ -92,9 +92,9 @@ public class PatientController
 		@RequestMapping(value="/new-appointment",method=RequestMethod.GET)
 		public String addSchedule(@RequestParam("doctorId") String doctor_id,ModelMap model) throws SQLException 
 		{
-
-				Timestamp suggestDateTime = appointmentServiceImpl.findDoctorAvailableTime(Integer.parseInt(doctor_id));	
-				model.addAttribute("suggestDateTime", suggestDateTime);
+				model.addAttribute("suggestDateTimes", appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id)));
+				model.addAttribute("doctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
+				
 				return "confirmAppointment";
 				
 		}
