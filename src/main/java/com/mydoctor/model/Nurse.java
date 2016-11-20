@@ -7,11 +7,11 @@ public class Nurse extends User  {
 		super();
 	}
 	
-	public Nurse(String id,String username,String password, String type) {
+	public Nurse(int id,String username,String password, String type) {
 
 		super(id,username, password, type);
 	}
-	public Nurse(String id,String username,String password,String name ,String surname,String type) {
+	public Nurse(int id,String username,String password,String name ,String surname,String type) {
 		
 		super(id,username, password, type);
 		this.name = name;

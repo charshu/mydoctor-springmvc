@@ -2,7 +2,7 @@ package com.mydoctor.model;
 
 public abstract class User {
 	
-	protected String id;
+	protected int id;
 	protected String username;
 	protected String password;
 	protected String role;
@@ -10,7 +10,7 @@ public abstract class User {
 		public User() {
 			// TODO Auto-generated constructor stub
 		}
-		public User(String id,String username,String password,String role) {
+		public User(int id,String username,String password,String role) {
 			// TODO Auto-generated method stub
 			this.id = id;
 			this.username = username;
@@ -18,10 +18,10 @@ public abstract class User {
 			this.role = role;
 
 		}
-		public void setId(String id) {
+		public void setId(int id) {
 		this.id = id;
 		}
-		public String getId() {
+		public int getId() {
 		return id;
 		}	
 		public String getPassword() {
