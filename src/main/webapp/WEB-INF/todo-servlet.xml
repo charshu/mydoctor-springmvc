@@ -41,6 +41,7 @@
 		<property name="patientDaoImpl" ref="patientDaoImpl"></property>
 		<property name="doctorDaoImpl" ref="doctorDaoImpl"></property>
 	</bean>
+	
 	<bean name="loginDaoImpl" class="com.mydoctor.dao.LoginDaoImpl"
 		autowire="byName">
 		<property name="dataSource" ref="dataSource"></property>

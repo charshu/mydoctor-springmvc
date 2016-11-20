@@ -21,9 +21,10 @@ import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 
-@Service
+
 public class AppointmentServiceImpl {
 
+	
 	private PatientDaoImpl patientDaoImpl;
 	private DoctorDaoImpl doctorDaoImpl;
 
@@ -35,7 +36,7 @@ public class AppointmentServiceImpl {
 	private static final int WALK_IN_LIMIT = 5;
 
 	static {
-
+			schedules.add(new Schedule(4,new Timestamp(new Date().getTime()),new Timestamp(new Date().getTime())));
 	}
 
 	public DoctorDaoImpl getDoctorDaoImpl() {
@@ -61,9 +62,9 @@ public class AppointmentServiceImpl {
 	}
 
 	public void loadAllDoctorSchedules(int doctor_id) throws SQLException {
-		System.out.println("load all doctor schedules weeeeeee");
-		 doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
 
+		schedules = doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
+		
 	}
 
 	public void loadAllDepartmentSchedules(String department) throws SQLException {
@@ -88,21 +89,26 @@ public class AppointmentServiceImpl {
 	}
 
 	public Timestamp findDoctorAvailableTime(int doctor_id) throws SQLException {
-		System.out.println("find doctor available time" + doctor_id);
+		System.out.println("find doctor available time: " + doctor_id);
 		System.out.println("load all doctor schedules");
 		loadAllDoctorSchedules(doctor_id);
+		System.out.println("schedules: " + schedules.toString());
 		System.out.println("load all doctor schedules success");
 		System.out.println("load all doctor appointment");
 		loadAllDoctorAppointment(doctor_id);
+		System.out.println("appointments: " + appointments.toString());
 		System.out.println("load all doctor appointment success");
 		DateTimeZone timeZone = DateTimeZone.forID("Asia/Bangkok");
 		DateTime now = DateTime.now(timeZone);
+		System.out.println("Now: "+now.toString());
 		DateTime minDateTime = now.plusDays(1).withTimeAtStartOfDay(); // tomorrow
 		DateTime maxDateTime = now.plusDays(7).withTimeAtStartOfDay(); // tomorrow +6
 		for (Schedule schedule : schedules) {
-
+			System.out.println("consider schedule: "+schedule.toString());
 			DateTime startTime = new DateTime(schedule.getStart(), DateTimeZone.forID("Asia/Bangkok"));
 			DateTime endTime = new DateTime(schedule.getEnd(), DateTimeZone.forID("Asia/Bangkok"));
+			System.out.println("start time is : "+startTime);
+			System.out.println("end time is : "+endTime);
 			if (!startTime.isBefore(minDateTime) || !endTime.isAfter(maxDateTime))
 				continue; // skip if cannot make appointment in schedule
 

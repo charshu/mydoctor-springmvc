@@ -40,6 +40,9 @@ public class Appointment {
 	public String printDate(){
 		return df.format(this.date);
 	}
-	
+	@Override
+	public String toString() {
+		return "ID: " + this.id + " ,Date: " + df.format(this.date) + " ,Symptom: " + this.symptom +"\n";
+	}
 	
 }

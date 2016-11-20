@@ -54,7 +54,7 @@ public class Schedule {
 
 	@Override
 	public String toString() {
-		return "The schedule id : " + this.id + " Start time : " + df.format(this.start) + " End time : " + df.format(this.end);
+		return "ID: " + this.id + " ,Start: " + df.format(this.start) + " ,End: " + df.format(this.end) + "\n";
 	}
 	public long duration(){
 		return this.end.getTime() - this.start.getTime();
