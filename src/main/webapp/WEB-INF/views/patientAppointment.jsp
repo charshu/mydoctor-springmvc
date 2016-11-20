@@ -21,7 +21,7 @@
 </c:forEach>
 
 </table>
-<a href="/add-schedule" class="btn btn-success">Add</a>
+<a href="/choose-doctor" class="btn btn-success">New appointment</a>
 </div>
 
 

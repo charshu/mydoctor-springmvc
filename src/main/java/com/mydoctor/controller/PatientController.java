@@ -38,7 +38,9 @@ public class PatientController
 {
 		@Autowired
 		private PatientServiceImpl patientServiceImpl;
+		@Autowired
 		private AppointmentServiceImpl appointmentServiceImpl;
+		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
 		
 		@RequestMapping(value="/patient-profile",method=RequestMethod.GET)
@@ -55,12 +57,13 @@ public class PatientController
 				model.addAttribute("appointments",patientServiceImpl.retrieveAllAppointments((String)model.get("username")));
 				return "patientAppointment";
 		}
-		@RequestMapping(value="/add-appointment",method=RequestMethod.GET)
-		public String showAddAppointmentPage(ModelMap model) throws SQLException 
+		@RequestMapping(value="/choose-doctor",method=RequestMethod.GET)
+		public String showDoctorListPage(ModelMap model) throws SQLException 
 		{
 				System.out.println((String)model.get("username"));
+				System.out.println("[REQUEST] retrieve all doctors");
 				model.addAttribute("doctors",doctorServiceImpl.retrieveAllDoctors());
-				return "addAppointment";
+				return "chooseDoctor";
 		}
 		
 		@InitBinder
@@ -86,16 +89,12 @@ public class PatientController
 		    });
 		}
 		
-		@RequestMapping(value="/add-appointment",method=RequestMethod.POST)
-		public String addSchedule(ModelMap model,@Valid Appointment appointment, BindingResult result) throws SQLException 
+		@RequestMapping(value="/new-appointment",method=RequestMethod.GET)
+		public String addSchedule(@RequestParam("doctorId") String doctor_id,ModelMap model) throws SQLException 
 		{
-				System.out.println("[Request]" + appointment.toString());
-				
-				if(result.hasErrors()){
-					return "addAppointment";
-				}
-				
-				Timestamp suggestDateTime = appointmentServiceImpl.findDoctorAvailableTime(Integer.parseInt(doctor_id));		
+
+				Timestamp suggestDateTime = appointmentServiceImpl.findDoctorAvailableTime(Integer.parseInt(doctor_id));	
+				model.addAttribute("suggestDateTime", suggestDateTime);
 				return "confirmAppointment";
 				
 		}

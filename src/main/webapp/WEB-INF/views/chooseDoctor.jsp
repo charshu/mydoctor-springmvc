@@ -6,9 +6,9 @@
 <table class="table">
 <thead>
 		<tr>
-			<th>ID </th>
-			<th>Appointment Date </th>
-			<th>Symptom</th>
+			<th>Name </th>
+			<th>Surname </th>
+			<th>Department</th>
 		</tr>
 	</thead>
 <c:forEach items="${doctors}" var="doctor">
@@ -16,12 +16,12 @@
        <td>${doctor.name}</td>
        <td>${doctor.surname}</td>
        <td>${doctor.department}</td>
-       <td><a href="/add-appointment?doctorId=${doctor.id}" class="btn btn-danger">Cancel</a></td>
+       <td><a href="/new-appointment?doctorId=${doctor.id}" class="btn btn-success">select</a></td>
     </tr>
 </c:forEach>
 
 </table>
-<a href="/add-schedule" class="btn btn-success">Add</a>
+
 </div>
 
 

@@ -46,19 +46,20 @@ public class DoctorDaoImpl {
 		return null;
 	}
 	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
-		String query = "Select * from doctor where 1 ";
+		String query = "Select * from doctor ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Doctor> doctors = new ArrayList<Doctor>();
-		if (rs.next()) {
+		while (rs.next()) {
 			Doctor doctor = new Doctor();
 			doctor.setId(rs.getInt("doctor_id"));
 			doctor.setName(rs.getString("name"));
 			doctor.setSurname(rs.getString("surname"));
+			doctor.setDepartment(rs.getString("department"));
 			doctors.add(doctor);
 			
 		}
+		//System.out.print(doctors.size());
 		return doctors;
 	}
 	public Schedule retriveSchedule(int schedule_id) throws SQLException {
@@ -73,7 +74,7 @@ public class DoctorDaoImpl {
 	}
 
 	public ArrayList<Schedule> retriveAllDoctorSchedules(int doctor_id) throws SQLException {
-
+		System.out.println("retrieve All Doctor Schedules");
 		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
 				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
 				+ "WHERE doctor_schedule.doctor_id = ? ORDER BY schedule.start_date ASC";
@@ -88,6 +89,7 @@ public class DoctorDaoImpl {
 			schedule.setEnd(rs.getTimestamp("end_date"));
 			schedules.add(schedule);
 		}
+		
 		return schedules;
 	}
 	public ArrayList<Schedule> retriveAllDepartmentSchedules(String department) throws SQLException {

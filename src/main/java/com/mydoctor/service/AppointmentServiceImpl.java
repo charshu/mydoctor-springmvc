@@ -53,18 +53,20 @@ public class AppointmentServiceImpl {
 	public void setPatientDaoImpl(PatientDaoImpl patientDaoImpl) {
 		this.patientDaoImpl = patientDaoImpl;
 	}
+	
 
-	public void loadAllSchedule() throws SQLException {
+	public void loadAllSchedules() throws SQLException {
 		schedules = doctorDaoImpl.retriveAllSchedules();
 
 	}
 
-	public void loadAllDoctorSchedule(int doctor_id) throws SQLException {
-		schedules = doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
+	public void loadAllDoctorSchedules(int doctor_id) throws SQLException {
+		System.out.println("load all doctor schedules weeeeeee");
+		 doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
 
 	}
 
-	public void loadDepartmentSchedule(String department) throws SQLException {
+	public void loadAllDepartmentSchedules(String department) throws SQLException {
 		schedules = doctorDaoImpl.retriveAllDepartmentSchedules(department);
 	}
 
@@ -86,9 +88,13 @@ public class AppointmentServiceImpl {
 	}
 
 	public Timestamp findDoctorAvailableTime(int doctor_id) throws SQLException {
-		loadAllDoctorSchedule(doctor_id);
+		System.out.println("find doctor available time" + doctor_id);
+		System.out.println("load all doctor schedules");
+		loadAllDoctorSchedules(doctor_id);
+		System.out.println("load all doctor schedules success");
+		System.out.println("load all doctor appointment");
 		loadAllDoctorAppointment(doctor_id);
-
+		System.out.println("load all doctor appointment success");
 		DateTimeZone timeZone = DateTimeZone.forID("Asia/Bangkok");
 		DateTime now = DateTime.now(timeZone);
 		DateTime minDateTime = now.plusDays(1).withTimeAtStartOfDay(); // tomorrow
