@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Pharmacist;
 import com.mydoctor.model.Prescription;
+import com.mydoctor.model.Schedule;
 
 public class PrescriptionDaoImpl {
 
@@ -26,6 +27,25 @@ public class PrescriptionDaoImpl {
 	public Prescription retrievePrescription(String prescription_id)throws SQLException{
 		//Find Prescription
 		return new Prescription();
+	}
+	public ArrayList<String> retriveDoctorPatientName(String prescrip_id) throws SQLException {
+		
+		String query = "SELECT diagnose.patient_id diagnose.doctor_id FROM create_prescription "
+				+ "INNER JOIN diagnose ON create_prescription.diagnose_id = diagnose.diagnose_id "
+				+ "INNER JOIN patient ON diagnose.patient_id = patient.user_id "
+				+ "INNER JOIN user ON user.user_id = diagnose.doctor_id "
+				+ "WHERE create_prescription = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, prescrip_id);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<String> name = new ArrayList<String>();
+		
+		
+		if(rs.next()){
+			String patId = rs.getString("patient_id");
+			String docId = rs.getString("doctor_id");
+		}
+		return name;
 	}
 	
 //	public ArrayList<Prescription> retrieveAllPrescriptions(String patient_id) throws SQLException {

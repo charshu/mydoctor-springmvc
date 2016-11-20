@@ -54,8 +54,7 @@ public class DoctorController
 		public String showDoctorSchedule(ModelMap model) throws SQLException 
 		{
 				System.out.println((String)model.get("username"));
-				model.addAttribute("schedules",doctorServiceImpl.retriveAllSchedules((String)model.get("username")));
-				
+				model.addAttribute("schedules",doctorServiceImpl.retriveAllSchedules((String)model.get("username")));	
 				return "schedules";
 		}
 		@RequestMapping(value="/add-schedule",method=RequestMethod.GET)
