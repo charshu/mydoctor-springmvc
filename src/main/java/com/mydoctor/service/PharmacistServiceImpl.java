@@ -25,8 +25,8 @@ public class PharmacistServiceImpl
 			return pharmacistDaoImpl.retrievePharmacist(username);
 		}
 		
-		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {
-			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount);
+		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount,String status) {
+			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount,status);
 		}
 		
 		

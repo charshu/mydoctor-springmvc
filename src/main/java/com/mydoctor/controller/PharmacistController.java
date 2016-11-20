@@ -42,8 +42,8 @@ public class PharmacistController
 		@RequestMapping(value="/show-prescription",method=RequestMethod.GET)
 		public String showPrescription(ModelMap model)
 		{
-			Prescription prescription = new Prescription();
-			model.addAttribute("prescription", prescription);
+			Prescription pres = new Prescription();
+			model.addAttribute("Prescription", pres);
 			return "showPrescription";
 		}
 		

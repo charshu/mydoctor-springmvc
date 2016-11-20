@@ -7,11 +7,11 @@ public class Pharmacist extends User  {
 		super();
 	}
 	
-	public Pharmacist(String id,String username,String password, String type) {
+	public Pharmacist(int id,String username,String password, String type) {
 
-		super(id,username, password, type);
+		super(id,username, password,type);
 	}
-	public Pharmacist(String id,String username,String password,String name ,String surname,String type) {
+	public Pharmacist(int id,String username,String password,String name ,String surname,String type) {
 		
 		super(id,username, password, type);
 		this.name = name;

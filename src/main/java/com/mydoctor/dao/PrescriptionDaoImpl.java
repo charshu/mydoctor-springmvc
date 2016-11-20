@@ -28,24 +28,25 @@ public class PrescriptionDaoImpl {
 		//Find Prescription
 		return new Prescription();
 	}
-	public ArrayList<String> retriveDoctorPatientName(String prescrip_id) throws SQLException {
+	public ArrayList<Prescription> retriveDoctorPatientName() throws SQLException {
 		
-		String query = "SELECT diagnose.patient_id diagnose.doctor_id FROM create_prescription "
-				+ "INNER JOIN diagnose ON create_prescription.diagnose_id = diagnose.diagnose_id "
-				+ "INNER JOIN patient ON diagnose.patient_id = patient.user_id "
-				+ "INNER JOIN user ON user.user_id = diagnose.doctor_id "
-				+ "WHERE create_prescription = ?";
+		String query = "SELECT * FROM prescription "
+				+ "WHERE prescription.status = ? group by prescript_id";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, prescrip_id);
-		ResultSet rs = pstmt.executeQuery();
-		ArrayList<String> name = new ArrayList<String>();
+		pstmt.setString(1,"wait");
+		ResultSet rs = pstmt.executeQuery();	
+		ArrayList<Prescription> prescripList = new ArrayList<Prescription>();
+		while(rs.next()){
+			Prescription pres = new Prescription();
+			pres.setPrescriptionId(rs.getString("prescript_id"));
+			pres.setMedicineId(rs.getString("med_id"));
+			pres.setAmount(rs.getString("amount"));
+			pres.setInstruction(rs.getString("instruction"));
+			pres.setStatus(rs.getString("status"));
+			prescripList.add(pres);
+		}		
 		
-		
-		if(rs.next()){
-			String patId = rs.getString("patient_id");
-			String docId = rs.getString("doctor_id");
-		}
-		return name;
+		return prescripList;
 	}
 	
 //	public ArrayList<Prescription> retrieveAllPrescriptions(String patient_id) throws SQLException {
