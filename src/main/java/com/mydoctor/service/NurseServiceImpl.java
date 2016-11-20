@@ -36,7 +36,7 @@ public class NurseServiceImpl
 			//get patient id then insert to patient_info table
 			String hospitalNumber = generalInfo.getHospitalNumber();
 			double weight = generalInfo.getWeight();
-			double height = generalInfo.getHeight();
+			int height = generalInfo.getHeight();
 			int heart_rate = generalInfo.getHeart_rate();
 			int pressureH = generalInfo.getPressureH();
 			int pressureL = generalInfo.getPressureL();
@@ -55,6 +55,7 @@ public class NurseServiceImpl
 			}
 			
 			int record_id = nurseDaoImpl.insertInfo(hospitalNumber, weight,  height, heart_rate,pressureH, pressureL, congemital, med_allergy, symptom);
+			
 			if( record_id > 0)
 			{
 				nurseDaoImpl.addToCreatePatientInfo(patient_id, nurse_id, record_id);

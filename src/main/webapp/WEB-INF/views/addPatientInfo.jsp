@@ -23,13 +23,13 @@
 			<fieldset class="form-group row">
 				<form:label path="height"  class="col-sm-4 control-label" >Height</form:label>
 				<div class="col-sm-14">
-				<form:input path="height" type="double" required="required" placeholder=" please fill in m"/> m<br>
+				<form:input path="height" type="int" required="required" placeholder=" please fill in m"/> cm<br>
 				<form:errors path="height" cssClass="text-warning" />
 				</div>
 			</fieldset>
 			
 			<fieldset class="form-group row">
-				<form:label path="heart_rate" class="col-sm-4 control-label" >Weight</form:label>
+				<form:label path="heart_rate" class="col-sm-4 control-label" >Heart Rate</form:label>
 				<div class="col-sm-14">
 				<form:input path="heart_rate" type="int" required="required" placeholder=" please fill in mmHg"/> bpm<br>
 				<form:errors path="heart_rate" cssClass="text-warning" />

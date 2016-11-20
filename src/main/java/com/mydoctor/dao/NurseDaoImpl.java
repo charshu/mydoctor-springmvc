@@ -31,14 +31,14 @@ public class NurseDaoImpl {
 		return new Nurse();
 	}
 	
-	public int insertInfo(String hospitalNumber, double weight, double height, int heart_rate, int pressureH,
+	public int insertInfo(String hospitalNumber, double weight, int height, int heart_rate, int pressureH,
 			int pressureL, String congemital, String med_allergy, String symptom)throws SQLException{
 		String query = "INSERT INTO patient_info (record_id, hospitalNumber, weight, height, heart_rate, pressureH, pressureL, congemital, med_allergy, symptom)"
 				+ "VALUES ('0',?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 		pstmt.setString(1,hospitalNumber);
 		pstmt.setDouble(2,weight);
-		pstmt.setDouble(3,height);
+		pstmt.setInt(3,height);
 		pstmt.setInt(4,heart_rate);
 		pstmt.setInt(5,pressureH);
 		pstmt.setInt(6,pressureL);
@@ -70,6 +70,8 @@ public class NurseDaoImpl {
 		}
 		return -1;
 	}
+	
+	
 	
 	public int retrieveId(String username)throws SQLException {
 		String query = "Select user_id from user where username = ? ";

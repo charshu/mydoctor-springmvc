@@ -1,27 +1,40 @@
 package com.mydoctor.model;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+
 
 public class GeneralInfo {
 
-	// @Size(min = 1, message = "Enter Username.")
+    @Size(min=8, max=30, message = "Please Correct Hospital Number")
 	private String hospitalNumber;
+    @Min(1)
+    @Max(1000)
 	private double weight;
-	private double height;
+   
+
+    @Min(1)
+    @Max(1000)
+	private int height;
+    @Min(1)
+    @Max(400)
 	private int heart_rate;
-	
+    @Min(1)
+    @Max(400)
 	private int pressureH;
+    @Min(1)
+    @Max(400)
 	private int pressureL;
+    @Size(max=500, message = "Congemital is too long")
 	private String congemital;
+    @Size(max=500, message = "Medicine allergy is too long")
 	private String med_allergy;
+    @Size(max=500, message = "Symptom is too long")
 	private String symptom;
-	
-	//private final DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    
 	
 	public GeneralInfo(){
 		
@@ -43,11 +56,11 @@ public class GeneralInfo {
 		this.weight = weight;
 	}
 
-	public double getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
@@ -100,7 +113,7 @@ public class GeneralInfo {
 	}
 
 
-	public GeneralInfo(String hospitalNumber, double weight, double height, int heart_rate, int pressureH,
+	public GeneralInfo(String hospitalNumber, double weight, int height, int heart_rate, int pressureH,
 			int pressureL, String congemital, String med_allergy, String symptom) {
 		super();
 		this.hospitalNumber = hospitalNumber;
