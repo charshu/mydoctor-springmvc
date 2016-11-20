@@ -31,7 +31,7 @@ public class DoctorServiceImpl
 		}
 		public ArrayList<Schedule> retriveAllSchedules(String username)throws SQLException{
 			int doctor_id = retrieveId(username);
-			return doctorDaoImpl.retriveAllSchedules(doctor_id);
+			return doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
 		}
 		public int saveSchedule(String username,Schedule schedule)throws SQLException{
 			
