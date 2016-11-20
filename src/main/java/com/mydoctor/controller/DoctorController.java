@@ -56,6 +56,7 @@ public class DoctorController
 		{
 				System.out.println((String)model.get("username"));
 				model.addAttribute("schedules",doctorServiceImpl.retriveAllSchedules((String)model.get("username")));	
+				// schedules -> key , doctor -> object
 				return "schedules";
 		}
 		@RequestMapping(value="/add-schedule",method=RequestMethod.GET)
