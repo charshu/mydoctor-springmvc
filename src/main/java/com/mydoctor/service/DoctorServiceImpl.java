@@ -1,16 +1,22 @@
 package com.mydoctor.service;
 
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mydoctor.dao.DoctorDaoImpl;
 
 import com.mydoctor.model.Doctor;
+import com.mydoctor.model.GeneralInfo;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
+import com.mydoctor.model.ViewInfo;
 
 public class DoctorServiceImpl {
 
 	private DoctorDaoImpl doctorDaoImpl;
+	private static ArrayList<Doctor> doctors = new ArrayList<Doctor>();
 
 	public DoctorDaoImpl getDoctorDaoImpl() {
 		return doctorDaoImpl;
@@ -20,13 +26,26 @@ public class DoctorServiceImpl {
 		this.doctorDaoImpl = doctorDaoImpl;
 	}
 
+	public static ArrayList<Doctor> getDoctors() {
+		return doctors;
+	}
+	public static void setDoctors(ArrayList<Doctor> doctors) {
+		DoctorServiceImpl.doctors = doctors;
+	}
+
 	public Doctor retrieveDoctor(String username) throws SQLException {
-		return doctorDaoImpl.retrieveDoctor(username);
+		int doctor_id = retrieveId(username);
+		return doctorDaoImpl.retrieveDoctor(doctor_id);
+	}
+	public Doctor retrieveDoctor(int doctor_id) throws SQLException {
+		
+		return doctorDaoImpl.retrieveDoctor(doctor_id);
+	}
+	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
+		setDoctors(doctorDaoImpl.retrieveAllDoctors());
+		return doctors;
 	}
 	
-	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
-		return doctorDaoImpl.retrieveAllDoctors();
-	}
 	public int retrieveId(String username) throws SQLException {
 		return doctorDaoImpl.retrieveId(username);
 	}
@@ -62,7 +81,19 @@ public class DoctorServiceImpl {
 
 		return 0;
 	}
-
+	
+	public GeneralInfo findPatientGenInfo(String username,ViewInfo viewinfo) throws SQLException{
+		int record_id = doctorDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
+		System.out.println(record_id);
+		return doctorDaoImpl.retriveGenInfo(record_id);
+	}
+	
+	public Patient findPatientInfo(String username,ViewInfo viewinfo) throws SQLException{
+		int patient_id = doctorDaoImpl.retrievePatientId(viewinfo.getHospitalNumber());
+		System.out.println(patient_id);
+		return doctorDaoImpl.retriveInfo(patient_id);
+	}
+	
 	public int deleteSchedule(String username, int schedule_id) throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
 

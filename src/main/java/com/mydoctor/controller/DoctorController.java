@@ -3,6 +3,7 @@ package com.mydoctor.controller;
 
 
 import java.beans.PropertyEditorSupport;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.sql.SQLException;
@@ -28,8 +29,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 
+import com.mydoctor.model.GeneralInfo;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.Prescription;
 import com.mydoctor.model.Schedule;
+import com.mydoctor.model.ViewInfo;
 import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.PrescriptionServiceImpl;
 
@@ -41,7 +45,17 @@ public class DoctorController
 {
 		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
+		@Autowired
 		private PrescriptionServiceImpl prescriptionServiceImpl;
+
+		
+		@RequestMapping(value="/welcomeDoctor",method=RequestMethod.GET)
+		public String welcomeNurse(ModelMap model) throws SQLException 
+		{
+				
+				return "welcomeDoctor";
+		}
+		
 
 		@RequestMapping(value="/doctor-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
@@ -118,9 +132,31 @@ public class DoctorController
 		}
 		
 		
+		@RequestMapping(value="/view-info",method=RequestMethod.GET)
+		public String getPatient(ModelMap model) throws SQLException 
+		{
+			model.addAttribute("viewInfo",new ViewInfo());
+			return "viewPatientInfo_doctor";
+		}
 		
+		@RequestMapping(value="/view-info",method=RequestMethod.POST)
+		public String viewPatientInfo(ModelMap model,@Valid ViewInfo viewInfo, BindingResult result) throws SQLException 
+		{
+			System.out.println("[Request]" + viewInfo.toString());
+			if(result.hasErrors()){
+				return "viewPatientInfo_doctor";
+			}
+		    GeneralInfo generalInfo = doctorServiceImpl.findPatientGenInfo((String)model.get("username"),viewInfo);
+		    Patient patientInfo = doctorServiceImpl.findPatientInfo((String)model.get("username"),viewInfo);
+
+		   // System.out.println(generalInfo.getCongemital());
+		    model.addAttribute("generalInfo",generalInfo);
+		    model.addAttribute("patientInfo",patientInfo);
+
+			return "showPatientInfoAfterFind_doctor";	
+		}
 		
-		
+
 		@RequestMapping(value="/create_prescription",method=RequestMethod.GET)
 		public String showCreatePrescriptionPage(ModelMap model)
 		{
@@ -174,7 +210,5 @@ public class DoctorController
 				
 				return "prescription";
 		}
-		
-		
-		
+
 }

@@ -43,12 +43,21 @@ public class PatientController
 		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
 		
+		@RequestMapping(value="/welcomePatient",method=RequestMethod.GET)
+		public String welcomeNurse(ModelMap model) throws SQLException 
+		{
+				
+				return "welcomePatient";
+		}
+		
 		@RequestMapping(value="/patient-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
 		{
 				model.addAttribute("patient",patientServiceImpl.retrievePatient((String)model.get("username")));
 				return "patientProfile";
 		}
+		
+		
 		
 		@RequestMapping(value="/list-appointment",method=RequestMethod.GET)
 		public String showAppointmentList(ModelMap model) throws SQLException 
@@ -92,9 +101,9 @@ public class PatientController
 		@RequestMapping(value="/new-appointment",method=RequestMethod.GET)
 		public String addSchedule(@RequestParam("doctorId") String doctor_id,ModelMap model) throws SQLException 
 		{
-
-				Timestamp suggestDateTime = appointmentServiceImpl.findDoctorAvailableTime(Integer.parseInt(doctor_id));	
-				model.addAttribute("suggestDateTime", suggestDateTime);
+				model.addAttribute("suggestDateTimes", appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id)));
+				model.addAttribute("doctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
+				
 				return "confirmAppointment";
 				
 		}

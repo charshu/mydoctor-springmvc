@@ -2,6 +2,9 @@ package com.mydoctor.model;
 
 
 import javax.validation.constraints.Size;
+
+import java.sql.Date;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -9,7 +12,7 @@ import javax.validation.constraints.Min;
 
 public class GeneralInfo {
 
-    @Size(min=8, max=30, message = "Please Correct Hospital Number")
+    @Size(min=8, max=8, message = "Please Correct Hospital Number")
 	private String hospitalNumber;
     @Min(1)
     @Max(1000)
@@ -35,6 +38,7 @@ public class GeneralInfo {
     @Size(max=500, message = "Symptom is too long")
 	private String symptom;
     
+	private Date date;
 	
 	public GeneralInfo(){
 		
@@ -112,6 +116,13 @@ public class GeneralInfo {
 		this.symptom = symptom;
 	}
 
+	public Date getDate(){
+		return date;
+	}
+	
+	public void setDate(Date date){
+		this.date = date;
+	}
 
 	public GeneralInfo(String hospitalNumber, double weight, int height, int heart_rate, int pressureH,
 			int pressureL, String congemital, String med_allergy, String symptom) {
@@ -125,6 +136,22 @@ public class GeneralInfo {
 		this.congemital = congemital;
 		this.med_allergy = med_allergy;
 		this.symptom = symptom;
+		
+	}
+	
+	public GeneralInfo(String hospitalNumber, double weight, int height, int heart_rate, int pressureH,
+			int pressureL, String congemital, String med_allergy, String symptom, Date date) {
+		super();
+		this.hospitalNumber = hospitalNumber;
+		this.weight = weight;
+		this.height = height;
+		this.heart_rate = heart_rate;
+		this.pressureH = pressureH;
+		this.pressureL = pressureL;
+		this.congemital = congemital;
+		this.med_allergy = med_allergy;
+		this.symptom = symptom;
+		this.date =date;
 		
 	}
 

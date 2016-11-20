@@ -21,10 +21,8 @@ import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 
-
 public class AppointmentServiceImpl {
 
-	
 	private PatientDaoImpl patientDaoImpl;
 	private DoctorDaoImpl doctorDaoImpl;
 
@@ -36,7 +34,7 @@ public class AppointmentServiceImpl {
 	private static final int WALK_IN_LIMIT = 5;
 
 	static {
-			schedules.add(new Schedule(4,new Timestamp(new Date().getTime()),new Timestamp(new Date().getTime())));
+		schedules.add(new Schedule(4, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime())));
 	}
 
 	public DoctorDaoImpl getDoctorDaoImpl() {
@@ -46,6 +44,22 @@ public class AppointmentServiceImpl {
 	public void setDoctorDaoImpl(DoctorDaoImpl doctorDaoImpl) {
 		this.doctorDaoImpl = doctorDaoImpl;
 	}
+	
+	public static List<Schedule> getSchedules() {
+		return schedules;
+	}
+
+	public static void setSchedules(List<Schedule> schedules) {
+		AppointmentServiceImpl.schedules = schedules;
+	}
+
+	public static List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public static void setAppointments(List<Appointment> appointments) {
+		AppointmentServiceImpl.appointments = appointments;
+	}
 
 	public PatientDaoImpl getPatientDaoImpl() {
 		return patientDaoImpl;
@@ -54,26 +68,21 @@ public class AppointmentServiceImpl {
 	public void setPatientDaoImpl(PatientDaoImpl patientDaoImpl) {
 		this.patientDaoImpl = patientDaoImpl;
 	}
-	
 
 	public void loadAllSchedules() throws SQLException {
-		schedules = doctorDaoImpl.retriveAllSchedules();
-
+		setSchedules(doctorDaoImpl.retriveAllSchedules());
 	}
 
 	public void loadAllDoctorSchedules(int doctor_id) throws SQLException {
-
-		schedules = doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
-		
+		setSchedules(doctorDaoImpl.retriveAllDoctorSchedules(doctor_id));
 	}
 
 	public void loadAllDepartmentSchedules(String department) throws SQLException {
-		schedules = doctorDaoImpl.retriveAllDepartmentSchedules(department);
+		setSchedules(doctorDaoImpl.retriveAllDepartmentSchedules(department));
 	}
 
 	public void loadAllDoctorAppointment(int doctor_id) throws SQLException {
-		appointments = patientDaoImpl.retrieveAllDoctorAppointments(doctor_id);
-
+		setAppointments(patientDaoImpl.retrieveAllDoctorAppointments(doctor_id)); 
 	}
 
 	public ArrayList<Appointment> filterAppointment(DateTime startTime, DateTime endTime) {
@@ -88,51 +97,68 @@ public class AppointmentServiceImpl {
 		return appointmentsInSchedule;
 	}
 
-	public Timestamp findDoctorAvailableTime(int doctor_id) throws SQLException {
-		System.out.println("find doctor available time: " + doctor_id);
-		System.out.println("load all doctor schedules");
+	public ArrayList<Timestamp> findDoctorAllAvailableTime(int doctor_id) throws SQLException {
+		ArrayList<Timestamp> availableTimes = new ArrayList<Timestamp>();
 		loadAllDoctorSchedules(doctor_id);
-		System.out.println("schedules: " + schedules.toString());
-		System.out.println("load all doctor schedules success");
-		System.out.println("load all doctor appointment");
+		//System.out.println("schedules: " + schedules.toString());
 		loadAllDoctorAppointment(doctor_id);
-		System.out.println("appointments: " + appointments.toString());
-		System.out.println("load all doctor appointment success");
+		//System.out.println("appointments: " + appointments.toString());
 		DateTimeZone timeZone = DateTimeZone.forID("Asia/Bangkok");
 		DateTime now = DateTime.now(timeZone);
-		System.out.println("Now: "+now.toString());
+		//System.out.println("Now: " + now.toString());
 		DateTime minDateTime = now.plusDays(1).withTimeAtStartOfDay(); // tomorrow
-		DateTime maxDateTime = now.plusDays(7).withTimeAtStartOfDay(); // tomorrow +6
+		DateTime maxDateTime = now.plusDays(7).withTimeAtStartOfDay(); // tomorrow
+		int count = 0;		
+		DateTime startTime;
+		DateTime endTime;
+		DateTime startTimeSlot;
+		DateTime endTimeSlot;
+		DateTime appointmentTime;
+		
+		ArrayList<Appointment> appointmentsInSchedule;
 		for (Schedule schedule : schedules) {
-			System.out.println("consider schedule: "+schedule.toString());
-			DateTime startTime = new DateTime(schedule.getStart(), DateTimeZone.forID("Asia/Bangkok"));
-			DateTime endTime = new DateTime(schedule.getEnd(), DateTimeZone.forID("Asia/Bangkok"));
-			System.out.println("start time is : "+startTime);
-			System.out.println("end time is : "+endTime);
-			if (!startTime.isBefore(minDateTime) || !endTime.isAfter(maxDateTime))
+			//System.out.println("consider schedule: " + schedule.toString());
+			startTime = new DateTime(schedule.getStart(), DateTimeZone.forID("Asia/Bangkok"));
+			endTime = new DateTime(schedule.getEnd(), DateTimeZone.forID("Asia/Bangkok"));
+			//System.out.println("start time is : " + startTime);
+			//System.out.println("end time is : " + endTime);
+			if (!startTime.isBefore(endTime) || startTime.isBefore(minDateTime) || endTime.isAfter(maxDateTime))
 				continue; // skip if cannot make appointment in schedule
 
-			ArrayList<Appointment> appointmentsInSchedule = filterAppointment(startTime, endTime); // filter
+			//System.out.println("This schedule is in range");
+			appointmentsInSchedule = filterAppointment(startTime, endTime); // filter
+			if (appointmentsInSchedule.size() > 15)continue;
+			//System.out.println("filtered appointments : " + appointmentsInSchedule.toString());
+			
 			// init slot time
-			DateTime startTimeSlot = startTime;
-			DateTime endTimeSlot = startTime.plusMillis(7500 * 60); // +7.5mins
+			startTimeSlot = startTime;
+			endTimeSlot = startTime.plusMinutes(30); // +30mins
+
+			//System.out.println("checking available slot");
 			while (startTimeSlot.isBefore(endTime)) {
+				//System.out.println("start time slot = " + startTimeSlot);
+				//System.out.println("end time slot = " + endTimeSlot);
+				count = 0;
+				
 				for (Appointment appointment : appointmentsInSchedule) {
-					DateTime appointmentTime = new DateTime(appointment.getDate(), DateTimeZone.forID("Asia/Bangkok"));
-					if (appointmentTime.isAfter(startTimeSlot) && appointmentTime.isBefore(endTimeSlot)) {
-						continue;
-
-					} else {
-						// slot is available
-						return new Timestamp(startTimeSlot.toDate().getTime());
+					appointmentTime = new DateTime(appointment.getDate(), DateTimeZone.forID("Asia/Bangkok"));
+					if ( (appointmentTime.isAfter(startTimeSlot) ||appointmentTime.isEqual(startTimeSlot) )
+							&& appointmentTime.isBefore(endTimeSlot) ) {
+						count++;
 					}
+				//	System.out.println("count = " + count);
 				}
-				startTimeSlot.plusMillis(7500 * 60);//+ 7.5 minutes
-				endTimeSlot.plusMillis(7500 * 60);//+ 7.5 minutes
+				if (count < 4) {
+					//System.out.println("This slot is available !");
+					availableTimes.add(new Timestamp(startTimeSlot.toDate().getTime()));
+				}
+				count = 0;
+				startTimeSlot = startTimeSlot.plusMinutes(30); // +30mins
+				endTimeSlot = endTimeSlot.plusMinutes(30); // +30mins
 			}
-
 		}
-		return new Timestamp(1);
+		return availableTimes;
+		
 	}
 
 	public int cancelAppointment(String username, int appointment_id) throws SQLException {
