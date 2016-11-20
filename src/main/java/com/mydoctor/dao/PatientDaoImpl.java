@@ -99,4 +99,23 @@ public class PatientDaoImpl {
 		
 		
 	}
+	public ArrayList<Appointment> retrieveAllDoctorAppointments(int doctor_id)throws SQLException{
+		String query = "SELECT patient_id,doctor_id,appointment.app_id,appointment.date,appointment.symptom "
+				+ "FROM make_appointment INNER JOIN appointment "
+				+ "WHERE make_appointment.app_id = appointment.app_id and doctor_id = ? ORDER BY appointment.date DESC";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+		while(rs.next()){
+			Appointment appointment = new Appointment();
+			appointment.setId(rs.getInt("app_id"));
+			appointment.setDate(rs.getTimestamp("date"));
+			appointment.setSymptom(rs.getString("symptom"));
+			appointments.add(appointment);
+		}
+		return appointments;
+		
+		
+	}
 }

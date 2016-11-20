@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Schedule;
+import com.mydoctor.service.AppointmentServiceImpl;
+import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 
 
@@ -36,7 +38,9 @@ public class PatientController
 {
 		@Autowired
 		private PatientServiceImpl patientServiceImpl;
-
+		private AppointmentServiceImpl appointmentServiceImpl;
+		private DoctorServiceImpl doctorServiceImpl;
+		
 		@RequestMapping(value="/patient-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
 		{
@@ -55,7 +59,7 @@ public class PatientController
 		public String showAddAppointmentPage(ModelMap model) throws SQLException 
 		{
 				System.out.println((String)model.get("username"));
-				model.addAttribute("appointment",new Appointment());
+				model.addAttribute("doctors",doctorServiceImpl.retrieveAllDoctor());
 				return "addAppointment";
 		}
 		
@@ -91,7 +95,7 @@ public class PatientController
 					return "addAppointment";
 				}
 				
-				Timestamp suggestDateTime = patientServiceImpl.findNearestTime((String)model.get("username"), appointment);		
+				Timestamp suggestDateTime = appointmentServiceImpl.findDoctorAvailableTime(doctor_id);		
 				return "confirmAppointment";
 				
 		}

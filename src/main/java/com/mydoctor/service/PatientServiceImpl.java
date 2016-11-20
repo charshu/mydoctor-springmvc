@@ -34,10 +34,7 @@ public class PatientServiceImpl
 			return patientDaoImpl.retrieveAllAppointments(patient_id);
 			
 		}
-		public Timestamp findNearestTime(String username,Appointment appointment)throws SQLException{
-			
-			return 0;
-		}
+	
 		public int cancelAppointment(String username,int appointment_id)throws SQLException{
 			
 			

@@ -60,7 +60,7 @@ public class DoctorDaoImpl {
 
 		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
 				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
-				+ "WHERE doctor_schedule.doctor_id = ?";
+				+ "WHERE doctor_schedule.doctor_id = ? ORDER BY schedule.start_date ASC";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, doctor_id);
 		ResultSet rs = pstmt.executeQuery();
@@ -171,5 +171,6 @@ public class DoctorDaoImpl {
 			return updateCount;
 		return -1;
 	}
+	
 
 }
