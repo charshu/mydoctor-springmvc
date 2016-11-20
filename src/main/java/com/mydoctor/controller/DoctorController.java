@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 
@@ -105,6 +106,16 @@ public class DoctorController
 				return "addSchedule";
 				
 		}
+		@RequestMapping(value="/delete-schedule",method=RequestMethod.GET)
+		public String deleteSchedule(ModelMap model,@RequestParam String schedule_id) throws SQLException 
+		{
+				System.out.println("[Request Delete]" + schedule_id);
+	
+				doctorServiceImpl.deleteSchedule((String)model.get("username"), Integer.parseInt(schedule_id));	
+				return "redirect:/list-schedule";
+				
+		}
+		
 		
 		
 		
