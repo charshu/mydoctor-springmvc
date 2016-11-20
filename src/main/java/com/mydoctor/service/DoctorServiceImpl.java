@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import com.mydoctor.dao.DoctorDaoImpl;
 
 import com.mydoctor.model.Doctor;
+import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Schedule;
+import com.mydoctor.model.ViewInfo;
 
 
 public class DoctorServiceImpl
@@ -68,7 +70,11 @@ public class DoctorServiceImpl
 			return 1;
 		}
 	
-		
+		public GeneralInfo findPatientInfo(String username,ViewInfo viewinfo) throws SQLException{
+			int record_id = doctorDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
+			System.out.println(record_id);
+			return doctorDaoImpl.retriveInfo(record_id);
+		}
 		
 		
 		
