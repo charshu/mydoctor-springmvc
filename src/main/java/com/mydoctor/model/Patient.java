@@ -10,7 +10,7 @@ public class Patient extends User {
 		
 	}
 
-	public Patient(String id, String username, String password, String role) {
+	public Patient(int id, String username, String password, String role) {
 		super(id, username, password, role);
 		
 	}

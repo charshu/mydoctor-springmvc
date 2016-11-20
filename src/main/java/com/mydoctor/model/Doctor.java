@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Doctor extends User {
 	
+	
 	private String department;
 	private String name,surname;
 	private ArrayList<Schedule> schedules;
@@ -12,11 +13,11 @@ public class Doctor extends User {
 
 		super();
 	}
-	public Doctor(String id,String username,String password, String type) {
+	public Doctor(int id,String username,String password, String type) {
 
 		super(id,username, password, type);
 	}
-	public Doctor(String id,String username,String password, String type,String name ,String surname, String department) {
+	public Doctor(int id,String username,String password, String type,String name ,String surname, String department) {
 		
 		super(id,username, password, type);
 		this.department = department;

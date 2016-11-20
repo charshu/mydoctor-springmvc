@@ -24,8 +24,8 @@ public class DoctorServiceImpl {
 		return doctorDaoImpl.retrieveDoctor(username);
 	}
 	
-	public ArrayList<Doctor> retrieveAllDoctor() throws SQLException {
-		return doctorDaoImpl.retrieveAllDoctor();
+	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
+		return doctorDaoImpl.retrieveAllDoctors();
 	}
 	public int retrieveId(String username) throws SQLException {
 		return doctorDaoImpl.retrieveId(username);

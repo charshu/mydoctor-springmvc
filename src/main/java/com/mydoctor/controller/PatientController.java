@@ -59,7 +59,7 @@ public class PatientController
 		public String showAddAppointmentPage(ModelMap model) throws SQLException 
 		{
 				System.out.println((String)model.get("username"));
-				model.addAttribute("doctors",doctorServiceImpl.retrieveAllDoctor());
+				model.addAttribute("doctors",doctorServiceImpl.retrieveAllDoctors());
 				return "addAppointment";
 		}
 		
@@ -95,7 +95,7 @@ public class PatientController
 					return "addAppointment";
 				}
 				
-				Timestamp suggestDateTime = appointmentServiceImpl.findDoctorAvailableTime(doctor_id);		
+				Timestamp suggestDateTime = appointmentServiceImpl.findDoctorAvailableTime(Integer.parseInt(doctor_id));		
 				return "confirmAppointment";
 				
 		}

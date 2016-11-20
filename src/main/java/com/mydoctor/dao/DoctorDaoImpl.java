@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mydoctor.model.Doctor;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 import com.mysql.jdbc.Statement;
 
@@ -44,7 +45,22 @@ public class DoctorDaoImpl {
 	public Doctor retrieveDoctor(String username) throws SQLException {
 		return null;
 	}
-
+	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
+		String query = "Select * from doctor where 1 ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Doctor> doctors = new ArrayList<Doctor>();
+		if (rs.next()) {
+			Doctor doctor = new Doctor();
+			doctor.setId(rs.getInt("doctor_id"));
+			doctor.setName(rs.getString("name"));
+			doctor.setSurname(rs.getString("surname"));
+			doctors.add(doctor);
+			
+		}
+		return doctors;
+	}
 	public Schedule retriveSchedule(int schedule_id) throws SQLException {
 		String query = "Select * from schedule where schedule_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
