@@ -1,6 +1,7 @@
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation-doctor.jspf"%>
 
+<div class="container">
 <div class="container-fluid">
 
 	<h1>Prescription</h1>
@@ -16,7 +17,8 @@
 			<td>${doctorName}</td>
 		</tr>
 	</table>
-
+</div>
+<div class="container-fluid">
 	<h1>Medicine list</h1>
 	<table class="table">
 		<thead>
@@ -39,8 +41,16 @@
 	</table>
 
 </div>
-<a href="/add-medicine" class="btn btn-success">Add Medicine</a>
 
+<div class="row pad pull-right">
+  <div class="col-xs-3 ">
+    <a href="/add-medicine" class="btn btn-success pull-right">Add Medicine</a>
+  </div>
+  <div class="col-xs-3 ">
+    <button type="submit" class="btn btn-success ">Submit</button>
+  </div>
+</div>
 
+</div>
 
 <%@ include file="common/footer.jspf"%>
