@@ -25,7 +25,12 @@ public class DoctorServiceImpl
 		
 		public Doctor retrieveDoctor(String username) throws SQLException {
 			return doctorDaoImpl.retrieveDoctor(username);
-			}
+		}
+		
+		public String retrieveDoctorNameByID(int id) throws SQLException {
+			return doctorDaoImpl.retrieveDoctorNameByID(id);
+		}
+		
 		public int retrieveId(String username)throws SQLException{
 			return doctorDaoImpl.retrieveId(username);
 		}
@@ -33,6 +38,7 @@ public class DoctorServiceImpl
 			int doctor_id = retrieveId(username);
 			return doctorDaoImpl.retriveAllSchedules(doctor_id);
 		}
+		
 		public int saveSchedule(String username,Schedule schedule)throws SQLException{
 			
 			int schedule_id = doctorDaoImpl.insertSchedule(schedule);

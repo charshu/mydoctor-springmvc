@@ -68,6 +68,8 @@ public class DoctorDaoImpl {
 		}
 		return schedules;
 	}
+	
+	
 	public int retrieveId(String username)throws SQLException {
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -79,6 +81,20 @@ public class DoctorDaoImpl {
 		return -1;
 
 	}
+	
+	public String retrieveDoctorNameByID(int id)throws SQLException {
+		//////////pls check attribute of doctor name in database 
+		String query = "Select name from doctor where id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return rs.getString("name");
+		}
+		return "null";
+
+	}
+	
 	public int insertSchedule(Schedule schedule)throws SQLException{
 		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) "
 				+ "VALUES ('0', ?, ?);";
