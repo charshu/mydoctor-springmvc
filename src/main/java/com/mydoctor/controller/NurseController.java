@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.LoginBean;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.ViewInfo;
 import com.mydoctor.service.NurseServiceImpl;
 
@@ -37,7 +38,7 @@ public class NurseController
 		
 		
 		
-		@RequestMapping(value="/welocomeNurse",method=RequestMethod.GET)
+		@RequestMapping(value="/welcomeNurse",method=RequestMethod.GET)
 		public String welcomeNurse(ModelMap model) throws SQLException 
 		{
 				
@@ -75,7 +76,7 @@ public class NurseController
 		public String getPatient(ModelMap model) throws SQLException 
 		{
 			model.addAttribute("viewInfo",new ViewInfo());
-			return "viewPatientInfo";
+			return "viewPatientInfo_nurse";
 		}
 		
 		@RequestMapping(value="/view-info2",method=RequestMethod.POST)
@@ -83,12 +84,16 @@ public class NurseController
 		{
 			System.out.println("[Request]" + viewInfo.toString());
 			if(result.hasErrors()){
-				return "viewPatientInfo";
+				return "viewPatientInfo_nurse";
 			}
-		    GeneralInfo generalInfo = nurseServiceImpl.findPatientInfo((String)model.get("username"),viewInfo);
+		    GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfo((String)model.get("username"),viewInfo);
+		    Patient patientInfo = nurseServiceImpl.findPatientInfo((String)model.get("username"),viewInfo);
+
 		   // System.out.println(generalInfo.getCongemital());
 		    model.addAttribute("generalInfo",generalInfo);
-			return "showPatientInfoAfterFind";	
+		    model.addAttribute("patientInfo",patientInfo);
+
+			return "showPatientInfoAfterFind_nurse";	
 		}
 		
 		

@@ -7,6 +7,7 @@ import com.mydoctor.dao.DoctorDaoImpl;
 
 import com.mydoctor.model.Doctor;
 import com.mydoctor.model.GeneralInfo;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
 
@@ -70,12 +71,17 @@ public class DoctorServiceImpl
 			return 1;
 		}
 	
-		public GeneralInfo findPatientInfo(String username,ViewInfo viewinfo) throws SQLException{
+		public GeneralInfo findPatientGenInfo(String username,ViewInfo viewinfo) throws SQLException{
 			int record_id = doctorDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
 			System.out.println(record_id);
-			return doctorDaoImpl.retriveInfo(record_id);
+			return doctorDaoImpl.retriveGenInfo(record_id);
 		}
 		
+		public Patient findPatientInfo(String username,ViewInfo viewinfo) throws SQLException{
+			int patient_id = doctorDaoImpl.retrievePatientId(viewinfo.getHospitalNumber());
+			System.out.println(patient_id);
+			return doctorDaoImpl.retriveInfo(patient_id);
+		}
 		
 		
 	

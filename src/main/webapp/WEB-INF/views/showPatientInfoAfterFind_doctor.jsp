@@ -3,6 +3,43 @@
 
 
 <div class="container-fluid">
+
+<a href="/view-info" class="btn btn-success">Back to search</a>
+
+<h2>Patient Personal Information</h2>
+
+<table class="table table-condensed">
+<thead>
+		<tr>
+			<th>Hospital Number </th>
+			<th>Name </th>
+			<th>Surname</th>
+			<th>SSN</th>
+			<th>Gender</th>
+			<th>Birth Date</th>
+			<th>Address</th>
+			<th>Tel.</th>
+			<th>Email</th>
+			
+		</tr>
+	</thead>
+   <tr>
+       	<td>${patientInfo.hospitalNumber}</td>
+       	<td>${patientInfo.name}</td>
+       	<td>${patientInfo.surname}</td>
+       	<td>${patientInfo.ssn}</td>
+       	<td>${patientInfo.gender}</td>
+       	<td>${patientInfo.birthdate}</td>
+       	<td>${patientInfo.address}</td>
+       	<td>${patientInfo.tel}</td>
+       	<td>${patientInfo.email}</td>
+       	
+    </tr>
+
+</table>
+
+
+
   <h2>Patient General Information</h2>
 
 <table class="table table-condensed">
@@ -34,7 +71,7 @@
     </tr>
 
 </table>
-<a href="/view-info" class="btn btn-success">Back to search</a>
+
 </div>
 
 

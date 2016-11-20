@@ -7,6 +7,7 @@ import com.mydoctor.dao.NurseDaoImpl;
 import com.mydoctor.model.Doctor;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Nurse;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.ViewInfo;
 
 
@@ -68,13 +69,17 @@ public class NurseServiceImpl
 			
 		}
 		
-		public GeneralInfo findPatientInfo(String username,ViewInfo viewinfo) throws SQLException{
+		public GeneralInfo findPatientGenInfo(String username,ViewInfo viewinfo) throws SQLException{
 			int record_id = nurseDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
 			System.out.println(record_id);
-			return nurseDaoImpl.retriveInfo(record_id);
+			return nurseDaoImpl.retriveGenInfo(record_id);
 		}
 		
-		
+		public Patient findPatientInfo(String username,ViewInfo viewinfo) throws SQLException{
+			int patient_id = nurseDaoImpl.retrievePatientId(viewinfo.getHospitalNumber());
+			System.out.println(patient_id);
+			return nurseDaoImpl.retriveInfo(patient_id);
+		}
 		
 
 }

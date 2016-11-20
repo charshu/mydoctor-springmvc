@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Nurse;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 import com.mysql.jdbc.Statement;
 
@@ -95,7 +96,7 @@ public class NurseDaoImpl {
 
 	}
 
-	public GeneralInfo retriveInfo(int record_id) throws SQLException {
+	public GeneralInfo retriveGenInfo(int record_id) throws SQLException {
 
 		String query = "Select hospitalNumber, weight, height, heart_rate, pressureH, pressureL, congemital, med_allergy, symptom, date FROM patient_info where record_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -117,6 +118,25 @@ public class NurseDaoImpl {
 		return generalInfo;
 	}
 	
+	public Patient retriveInfo(int patient_id) throws SQLException {
+		String query = "Select hospitalNumber,ssn, name, surname, gender, birth_date, address, tel, email FROM patient where patient_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		ResultSet rs = pstmt.executeQuery();
+		Patient patientInfo = new Patient();
+		if(rs.next()) {
+			patientInfo.setHospitalNumber(rs.getString("hospitalNumber"));
+			patientInfo.setSsn(rs.getString("ssn"));
+			patientInfo.setName(rs.getString("name"));
+			patientInfo.setSurname(rs.getString("surname"));
+			patientInfo.setGender(rs.getString("gender"));
+			patientInfo.setBirthdate(rs.getString("birth_date"));
+			patientInfo.setAddress(rs.getString("address"));
+			patientInfo.setTel(rs.getString("tel"));
+			patientInfo.setEmail(rs.getString("email"));
+		}
+		return patientInfo;
+	}
 	
 	public int retrieveRecordId(String hospitalNumber)throws SQLException {
 		String query = "Select MAX(record_id) as record_id from patient_info where hospitalNumber = ?";
