@@ -2,6 +2,7 @@ package com.mydoctor.service;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.mydoctor.dao.PharmacistDaoImpl;
 import com.mydoctor.model.Pharmacist;
@@ -12,6 +13,7 @@ public class PharmacistServiceImpl
 {
 		
 		private PharmacistDaoImpl pharmacistDaoImpl;
+			
 
 		public PharmacistDaoImpl getPharmacistDaoImpl() {
 			return pharmacistDaoImpl;
@@ -25,9 +27,10 @@ public class PharmacistServiceImpl
 			return pharmacistDaoImpl.retrievePharmacist(username);
 		}
 		
-		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount,String status) {
+		public Prescription createPrescription(int prescriptionId,int medicineId,String medicine,String instruction, int amount,String status) {
 			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount,status);
 		}
+		
 		
 		
 		

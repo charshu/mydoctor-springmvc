@@ -1,14 +1,15 @@
 package com.mydoctor.model;
 
 public class Prescription  {
-	private String prescriptionId, medicineId, instruction, amount,status;
+	private String instruction, status;
+	private int prescriptionId, medicineId,amount;
 	private Medicine medicine;
 	
 	public Prescription() {
 		
 	}
 	
-	public Prescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount,String status) {
+	public Prescription(int prescriptionId,int medicineId,String medicine,String instruction, int amount,String status) {
 		this.prescriptionId = prescriptionId;
 		this.medicineId = medicineId;
 		this.instruction = instruction;
@@ -16,19 +17,19 @@ public class Prescription  {
 		this.status = status;
 	}
 
-	public String getPrescriptionId() {
+	public int getPrescriptionId() {
 		return prescriptionId;
 	}
 
-	public void setPrescriptionId(String prescriptionId) {
+	public void setPrescriptionId(int prescriptionId) {
 		this.prescriptionId = prescriptionId;
 	}
 
-	public String getMedicineId() {
+	public int getMedicineId() {
 		return medicineId;
 	}
 
-	public void setMedicineId(String medicineId) {
+	public void setMedicineId(int medicineId) {
 		this.medicineId = medicineId;
 	}
 
@@ -40,11 +41,11 @@ public class Prescription  {
 		this.instruction = instruction;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 	public String getStatus() {

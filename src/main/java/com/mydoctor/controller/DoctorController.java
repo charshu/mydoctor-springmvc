@@ -175,10 +175,10 @@ public class DoctorController
 					return "prescription";
 				}
 				// prescriptionId, medicineId, instruction, amount
-				String medicineId = prescription.getMedicineId();
+				int medicineId = prescription.getMedicineId();
 				//String medicine = prescription.
 				String instruction = prescription.getInstruction();
-				String amount = prescription.getAmount();
+				int amount = prescription.getAmount();
 //				boolean isValidUser = loginServiceImpl.isValidUser(username, password);
 //				if(isValidUser)
 //				{

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.Prescription;
 import com.mydoctor.service.PharmacistServiceImpl;
+import com.mydoctor.service.PrescriptionServiceImpl;
 
 
 
@@ -24,6 +25,8 @@ public class PharmacistController
 {
 		@Autowired
 		private PharmacistServiceImpl pharmacistServiceImpl;
+		@Autowired
+		private PrescriptionServiceImpl prescriptionServiceImpl;	
 
 		@RequestMapping(value="/pharmacist-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
@@ -40,12 +43,19 @@ public class PharmacistController
 		}
 		
 		@RequestMapping(value="/show-prescription",method=RequestMethod.GET)
-		public String showPrescription(ModelMap model)
+		public String showPrescription(ModelMap model) throws SQLException
 		{
-			Prescription pres = new Prescription();
-			model.addAttribute("Prescription", pres);
+			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
 			return "showPrescription";
 		}
+		
+		@RequestMapping(value="/show-prescription-detail",method=RequestMethod.GET)
+		public String showPrescriptionDetail(ModelMap model) throws SQLException
+		{
+			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
+			return "showPrescriptionDetail";
+		}
+		
 		
 		
 		
