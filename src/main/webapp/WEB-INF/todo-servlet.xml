@@ -78,7 +78,17 @@
 	autowire="byName">
 	<property name="prescriptionDaoImpl" ref="prescriptionDaoImpl"></property>
 	</bean>
+	
 	<bean name="prescriptionDaoImpl" class="com.mydoctor.dao.PrescriptionDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="MedicineServiceImpl" class="com.mydoctor.service.MedicineServiceImpl" autowire="byName">
+		<property name="MedicineDaoImpl" ref="MedicineDaoImpl"></property>
+	</bean>
+	
+	<bean name="MedicineDaoImpl" class="com.mydoctor.dao.MedicineDaoImpl"
 		autowire="byName">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>

@@ -29,6 +29,26 @@ public class MedicineDaoImpl {
 		return new Medicine();
 	}
 	
+	public ArrayList<Medicine> retrieveAllMedicineIDandName(int prescript_id)throws SQLException{
+		String query = "Select prescription.med_id , medicine.medicine , prescription.amount from prescription " 
+						+ "inner join medicine ON prescription.med_id = medicine.med_id "
+				
+						+ "where prescript_id = ?"	;
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, prescript_id);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Medicine> allmed = new ArrayList<Medicine>();
+		while(rs.next()){
+			Medicine med = new Medicine();
+			med.setMedicineId(rs.getInt("prescription.med_id"));
+			med.setMedicine(rs.getString("medicine.medicine"));
+			med.setAmount(rs.getInt("prescription.amount"));
+			allmed.add(med);
+		}
+		
+		return allmed;
+	}
+	
 	public String getMedicineName(String medicine_id) throws SQLException {
 		String query = "Select med_name from medicine where med_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);

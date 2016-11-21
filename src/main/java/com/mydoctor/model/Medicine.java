@@ -2,7 +2,7 @@ package com.mydoctor.model;
 
 public class Medicine  {
 	private String  medicine;
-	private int medicineId;
+	private int medicineId,amount;
 	public Medicine(){
 		
 	}
@@ -26,6 +26,12 @@ public class Medicine  {
 
 	public void setMedicine(String medicine) {
 		this.medicine = medicine;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public int getAmount() {
+		return amount;
 	}
 
 

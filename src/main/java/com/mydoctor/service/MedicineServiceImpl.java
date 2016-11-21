@@ -2,6 +2,7 @@ package com.mydoctor.service;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.mydoctor.dao.MedicineDaoImpl;
 import com.mydoctor.dao.PharmacistDaoImpl;
@@ -26,6 +27,10 @@ public class MedicineServiceImpl
 		
 		public Medicine retrieveMedicine(String medicine_id)throws SQLException{
 			return medicineDaoImpl.retrieveMedicine(medicine_id);
+		}
+		public ArrayList<Medicine> retrieveAllMedicine(int prescript_id)throws SQLException{
+			
+			return medicineDaoImpl.retrieveAllMedicineIDandName(prescript_id);
 		}
 		
 //		public String getMedicineName(String medicine_id)throws SQLException{

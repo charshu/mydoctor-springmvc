@@ -6,24 +6,21 @@
 	<table class="table table-reflow">
 	  <thead>
 	    <tr>
-	      <th>NO.</th>
 	      <th>Prescription ID</th>
-	   	  <th>Status</th>
+	      <th>amount</th>
 	    </tr>
 	  </thead>
 	  <tbody>
-		<c:set var="no"  value="0" scope="page"/>
-		<c:forEach items="${prescripts}"  var="prescript">
-		<c:set var="no"  value="${no + 1}" scope="page"/>
+		<c:forEach items="${medicines}"  var="medicine">
 		<tr>
-		   <td><c:out value="${no}"/></td>
-		   <td><c:out value="${prescript.prescriptionId}"/></td>
-		   <td><a href="/show-prescription-detail" class="btn btn-success"><c:out value="${prescript.status}"/></a></td>
-		 </tr>
-		</c:forEach>
+		   <td><c:out value="${medicine.medicine}"/></td>
+		    <td><c:out value="${medicine.amount}"/></td>
+		</tr>
+		</c:forEach>		
 
 	  </tbody>
 	</table>
+	<a href="/complete-prescription?prescript_id=${prescript_id}" class="btn btn-success">Complete</a>
 </div>
 </div>
 

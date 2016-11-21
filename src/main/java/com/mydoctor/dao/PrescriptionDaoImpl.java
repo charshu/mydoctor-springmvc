@@ -71,6 +71,17 @@ public class PrescriptionDaoImpl {
 		
 		return prescriptionhistory;
 	}
+	public void updateStatus(int prescript_id) throws SQLException{
+		
+		String query = "UPDATE prescription SET status = ?"
+				+" WHERE prescription.prescript_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1,"Complete");
+		pstmt.setInt(2,prescript_id);
+		pstmt.executeUpdate();
+		
+	}
+	
 //	public ArrayList<Prescription> retrieveAllPrescriptions(String patient_id) throws SQLException {
 //		String query = "Select prescription_id from patient,  where user_id = ? ";
 //		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
