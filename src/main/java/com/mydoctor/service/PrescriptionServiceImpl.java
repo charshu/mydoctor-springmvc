@@ -27,14 +27,21 @@ public class PrescriptionServiceImpl
 		
 		
 		public Prescription retrievePrescription(String username)throws SQLException{
+			
 			return prescriptionDaoImpl.retrievePrescription(username);
 		}
+
 		public ArrayList<Prescription> findPrescriptionHistory(String username,Prescription findprescriptionh)throws SQLException{
 			int userid = findprescriptionh.getUserid();
 			System.out.println(userid);
 			return prescriptionDaoImpl.retrievePrescriptionHistory(userid);
 		}
-		
+	
+		public ArrayList<Prescription> retrieveAllPrescription()throws SQLException{
+			return prescriptionDaoImpl.retriveAllwaitPrescription();
+			
+		}
+
 //		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {
 //			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount);
 //		}

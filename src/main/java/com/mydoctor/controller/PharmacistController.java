@@ -32,6 +32,7 @@ public class PharmacistController
 		@Autowired
 		private PrescriptionServiceImpl prescriptionServiceImpl;
 
+
 		@RequestMapping(value="/pharmacist-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
 		{
@@ -47,10 +48,9 @@ public class PharmacistController
 		}
 		
 		@RequestMapping(value="/show-prescription",method=RequestMethod.GET)
-		public String showPrescription(ModelMap model)
+		public String showPrescription(ModelMap model) throws SQLException
 		{
-			Prescription pres = new Prescription();
-			model.addAttribute("Prescription", pres);
+			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
 			return "showPrescription";
 		}
 		@RequestMapping(value="/findPrescriptionHistoryForm", method=RequestMethod.GET)
@@ -61,6 +61,7 @@ public class PharmacistController
 			return "findPrescriptionHistory";
 		}
 		
+
 		@RequestMapping(value="/findPrescriptionHistoryForm",method=RequestMethod.POST)
 		public String ShowPrescriptionHistoryForm(ModelMap model, @Valid Prescription findprescriptionh, BindingResult result) throws SQLException
 		{
@@ -72,8 +73,15 @@ public class PharmacistController
 			model.addAttribute("prescriptionHistorys", prescriptionHistorys);
 			return "viewPrescriptionHistory";
 		}
+
+		@RequestMapping(value="/show-prescription-detail",method=RequestMethod.GET)
+		public String showPrescriptionDetail(ModelMap model) throws SQLException
+		{
+			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
+			return "showPrescriptionDetail";
+		}
 		
-		
+	
 		
 		
 }

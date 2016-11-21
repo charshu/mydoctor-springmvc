@@ -1,8 +1,10 @@
 package com.mydoctor.model;
 
 public class Prescription  {
+
 	private String  instruction,status,medicinename;
 	private int userid,prescriptionId, medicineId,amount;
+
 	private Medicine medicine;
 	
 	public Prescription() {
