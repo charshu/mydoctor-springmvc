@@ -55,8 +55,8 @@ public class PrescriptionDaoImpl {
 		String query = "Select create_prescription.prescript_id, medicine , amount , instruction FROM create_prescription "
 						+	"INNER JOIN diagnose ON create_prescription.diagnose_id = diagnose.diagnose_id "
 						+	"INNER JOIN prescription ON create_prescription.prescript_id = prescription.prescript_id  "
-						+	"INNER JOIN medicine ON create_prescription.med_id = medicine.med_id  "
-						+	"WHERE patient_id = ?";
+						+	"INNER JOIN medicine ON prescription.med_id = medicine.med_id  "
+						+	"WHERE diagnose.patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, userid);
 		ResultSet rs = pstmt.executeQuery();
