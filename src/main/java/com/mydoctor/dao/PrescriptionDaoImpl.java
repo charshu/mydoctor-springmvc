@@ -32,7 +32,7 @@ public class PrescriptionDaoImpl {
 
 	public ArrayList<Prescription> retriveAllwaitPrescription() throws SQLException {
 		
-		String query = "SELECT prescript_id , status FROM prescription "
+		String query = "SELECT prescript_id , status  FROM prescription "
 				+ "WHERE prescription.status = ? group by prescript_id";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1,"wait");

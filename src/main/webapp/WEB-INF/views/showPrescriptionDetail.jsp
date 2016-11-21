@@ -8,13 +8,15 @@
 	    <tr>
 	      <th>Prescription ID</th>
 	      <th>amount</th>
+	      <th>Instruction</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 		<c:forEach items="${medicines}"  var="medicine">
 		<tr>
 		   <td><c:out value="${medicine.medicine}"/></td>
-		    <td><c:out value="${medicine.amount}"/></td>
+		   <td><c:out value="${medicine.amount}"/></td>
+		   <td><c:out value="${medicine.instruction}"/></td>
 		</tr>
 		</c:forEach>		
 

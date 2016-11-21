@@ -30,7 +30,7 @@ public class MedicineDaoImpl {
 	}
 	
 	public ArrayList<Medicine> retrieveAllMedicineIDandName(int prescript_id)throws SQLException{
-		String query = "Select prescription.med_id , medicine.medicine , prescription.amount from prescription " 
+		String query = "Select prescription.med_id , medicine.medicine , prescription.amount , prescription.instruction from prescription " 
 						+ "inner join medicine ON prescription.med_id = medicine.med_id "
 				
 						+ "where prescript_id = ?"	;
@@ -43,6 +43,7 @@ public class MedicineDaoImpl {
 			med.setMedicineId(rs.getInt("prescription.med_id"));
 			med.setMedicine(rs.getString("medicine.medicine"));
 			med.setAmount(rs.getInt("prescription.amount"));
+			med.setInstruction(rs.getString("prescription.instruction"));
 			allmed.add(med);
 		}
 		
