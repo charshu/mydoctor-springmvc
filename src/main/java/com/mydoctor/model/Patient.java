@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.Email;
 
 
 public class Patient extends User {
+	
+	
 	@Email(message = "Please correct Email")
     @Size(min=1,max=255, message = "Please correct Email")
 	private String email;
@@ -22,6 +24,12 @@ public class Patient extends User {
 
 	@Size(min=1,max=12, message = "Please correct Gender length")
 	private String gender;
+	
+	@Size(min=1,max=20, message = "Please correct Username length")
+	private String username1;
+	
+	@Size(min=1,max=30, message = "Please correct Password length")
+	private String password1;
 	
 	@Size(min=9, max=12, message = "Please correct Telephone Number")
 	private String tel;
@@ -46,6 +54,22 @@ public class Patient extends User {
 	public Patient(String ssn, String name, String surname, String gender, String email, String tel, String birthdate,
 			String address, String hospitalNumber) {
 		super();
+		this.ssn = ssn;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
+		this.email = email;
+		this.tel = tel;
+		this.birthdate = birthdate;
+		this.address = address;
+		this.hospitalNumber = hospitalNumber;
+	}
+	
+	public Patient(String username1, String password1,String ssn, String name, String surname, String gender, String email, String tel, String birthdate,
+			String address, String hospitalNumber) {
+		super();
+		this.username1 = username1;
+		this.password1 = password1;
 		this.ssn = ssn;
 		this.name = name;
 		this.surname = surname;
@@ -129,7 +153,21 @@ public class Patient extends User {
 		this.hospitalNumber = hospitalNumber;
 	}
 
-	
+	public String getUsername1() {
+		return username1;
+	}
 
+	public void setUsername1(String username1) {
+		this.username1 = username1;
+	}
+
+	public String getPassword1() {
+		return password1;
+	}
+
+	public void setPassword1(String password1) {
+		this.password1 = password1;
+	}
+	
 
 }

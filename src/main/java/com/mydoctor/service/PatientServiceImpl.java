@@ -65,5 +65,6 @@ public class PatientServiceImpl
 			
 			return patientDaoImpl.editPatientInfo(name, surname, gender, birthdate, address, tel,email, patient_id);
 	}
-
+		
+	
 }
