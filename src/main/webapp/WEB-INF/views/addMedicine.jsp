@@ -6,8 +6,14 @@
 <form:form id="addMedicineForm" method="post" action="add-medicine"
 			commandName="medicineBean" >
 			<fieldset class="form-group">
-				<form:label path="name">Medicine Name</form:label>
-				<form:select path="name" items="${medicineBean.name}" itemValue="id" itemLabel="companyName" />
+				<form:label path="id" class="control-label">Medicine ID</form:label>
+				<form:input path="id" type="text" class="form-control" />
+				<form:errors path="id" cssClass="text-warning" />
+			</fieldset>
+			
+			<fieldset class="form-group">
+				<form:label path="name" class="control-label">Medicine Name</form:label>
+				<form:input path="name" type="text" class="form-control" />
 				<form:errors path="name" cssClass="text-warning" />
 			</fieldset>
 			
