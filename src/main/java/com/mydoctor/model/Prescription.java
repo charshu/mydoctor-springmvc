@@ -1,8 +1,10 @@
 package com.mydoctor.model;
 
 public class Prescription  {
-	private String instruction, status;
-	private int prescriptionId, medicineId,amount;
+
+	private String  instruction,status,medicinename;
+	private int userid,prescriptionId, medicineId,amount;
+
 	private Medicine medicine;
 	
 	public Prescription() {
@@ -55,5 +57,21 @@ public class Prescription  {
 		this.status = status;
 	}
 
+	public int getUserid() {
+		return userid;
+	}
+
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+
+	public String getMedicinename() {
+		return medicinename;
+	}
+
+	public void setMedicinename(String medicinename) {
+		this.medicinename = medicinename;
+	}
+	
 
 }

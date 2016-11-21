@@ -1,22 +1,22 @@
 package com.mydoctor.model;
 
 public class Medicine  {
-	private String medicineId, medicine;
-	
+	private String  medicine;
+	private int medicineId;
 	public Medicine(){
 		
 	}
 	
-	public Medicine(String medicineId,String medicine) {
+	public Medicine(int medicineId,String medicine) {
 		this.medicineId = medicineId;
 		this.medicine = medicine;
 	}
 
-	public String getMedicineId() {
+	public int getMedicineId() {
 		return medicineId;
 	}
 
-	public void setMedicineId(String medicineId) {
+	public void setMedicineId(int medicineId) {
 		this.medicineId = medicineId;
 	}
 
