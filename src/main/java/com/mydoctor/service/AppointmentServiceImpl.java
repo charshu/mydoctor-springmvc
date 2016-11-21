@@ -3,22 +3,14 @@ package com.mydoctor.service;
 import java.util.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Interval;
-import org.springframework.stereotype.Service;
-
 import com.mydoctor.dao.DoctorDaoImpl;
 import com.mydoctor.dao.PatientDaoImpl;
 import com.mydoctor.model.Appointment;
-import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 
 public class AppointmentServiceImpl {
@@ -30,6 +22,7 @@ public class AppointmentServiceImpl {
 	// private static int doctor_id;
 	private static List<Schedule> schedules = new ArrayList<Schedule>();
 	private static List<Appointment> appointments = new ArrayList<Appointment>();
+	private static ArrayList<Timestamp> availableTimes = new ArrayList<Timestamp>();
 	private static final int APPOINTMENT_LIMIT = 15;
 	private static final int WALK_IN_LIMIT = 5;
 
@@ -75,6 +68,7 @@ public class AppointmentServiceImpl {
 
 	public void loadAllDoctorSchedules(int doctor_id) throws SQLException {
 		setSchedules(doctorDaoImpl.retriveAllDoctorSchedules(doctor_id));
+		//System.out.println("schedules: " + schedules.toString());
 	}
 
 	public void loadAllDepartmentSchedules(String department) throws SQLException {
@@ -83,6 +77,7 @@ public class AppointmentServiceImpl {
 
 	public void loadAllDoctorAppointment(int doctor_id) throws SQLException {
 		setAppointments(patientDaoImpl.retrieveAllDoctorAppointments(doctor_id)); 
+		//System.out.println("appointments: " + appointments.toString());
 	}
 
 	public ArrayList<Appointment> filterAppointment(DateTime startTime, DateTime endTime) {
@@ -96,13 +91,38 @@ public class AppointmentServiceImpl {
 		}
 		return appointmentsInSchedule;
 	}
+	
+	public void clearOldAvailableTimes(){
+		availableTimes.clear();
+	}
+	
+	public ArrayList<Timestamp> getAvailableTimes() {
+		return availableTimes;
+	}
+	public Timestamp getAvailableTime(int index) {
+		return availableTimes.get(index);
+	}
 
+	public static void setAvailableTimes(ArrayList<Timestamp> availableTimes) {
+		AppointmentServiceImpl.availableTimes = availableTimes;
+	}
+
+	public int saveAppointment(Appointment appointment)throws SQLException {
+		int appointment_id = patientDaoImpl.insertAppointment(appointment.getDate(), appointment.getSymptom());
+		if(appointment_id<0){
+			System.out.println("[ERROR] cannot insert appointment");
+			return -1;
+		}
+		return patientDaoImpl.insertCreateAppointment(appointment.getPatientId(),appointment.getDoctorId(),appointment_id);
+		
+		
+	}
+	
 	public ArrayList<Timestamp> findDoctorAllAvailableTime(int doctor_id) throws SQLException {
-		ArrayList<Timestamp> availableTimes = new ArrayList<Timestamp>();
+		clearOldAvailableTimes();
 		loadAllDoctorSchedules(doctor_id);
-		//System.out.println("schedules: " + schedules.toString());
 		loadAllDoctorAppointment(doctor_id);
-		//System.out.println("appointments: " + appointments.toString());
+		
 		DateTimeZone timeZone = DateTimeZone.forID("Asia/Bangkok");
 		DateTime now = DateTime.now(timeZone);
 		//System.out.println("Now: " + now.toString());
@@ -148,7 +168,7 @@ public class AppointmentServiceImpl {
 					}
 				//	System.out.println("count = " + count);
 				}
-				if (count < 4) {
+				if (count <= 4) {
 					//System.out.println("This slot is available !");
 					availableTimes.add(new Timestamp(startTimeSlot.toDate().getTime()));
 				}

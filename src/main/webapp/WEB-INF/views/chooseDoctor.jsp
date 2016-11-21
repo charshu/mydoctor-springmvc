@@ -16,7 +16,7 @@
        <td>${doctor.name}</td>
        <td>${doctor.surname}</td>
        <td>${doctor.department}</td>
-       <td><a href="/new-appointment?doctorId=${doctor.id}" class="btn btn-success">select</a></td>
+       <td><a href="/list-doctor-time?doctorId=${doctor.id}" class="btn btn-success">select</a></td>
     </tr>
 </c:forEach>
 

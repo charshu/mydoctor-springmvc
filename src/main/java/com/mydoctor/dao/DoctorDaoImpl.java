@@ -6,16 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
-import javax.validation.Valid;
-
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.mydoctor.model.Doctor;
-import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 import com.mysql.jdbc.Statement;
 

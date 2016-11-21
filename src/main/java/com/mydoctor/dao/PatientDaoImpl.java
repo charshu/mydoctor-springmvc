@@ -3,12 +3,14 @@ package com.mydoctor.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
+import com.mysql.jdbc.Statement;
 
 public class PatientDaoImpl {
 
@@ -31,8 +33,7 @@ public class PatientDaoImpl {
 		else
 			return -1;
 	}
-	public int retrievePatientId(String username) throws SQLException {
-		int user_id = retrieveUserId(username);
+	public int retrieveIdByUserId(int user_id) throws SQLException {
 		String query = "Select patient_id from patient where user_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, user_id);
@@ -117,5 +118,27 @@ public class PatientDaoImpl {
 		return appointments;
 		
 		
+	}
+	public int insertAppointment(Timestamp date,String symptom)throws SQLException{
+		String query = "INSERT INTO mydoctor.appointment (app_id, date, symptom) VALUES (NULL, ?, ?);";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		pstmt.setTimestamp(1, date);
+		pstmt.setString(2, symptom);
+		pstmt.executeUpdate();
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if (rs.next()) {
+			return rs.getInt(1);
+		}
+		return -1;
+	}
+	public int insertCreateAppointment(int patient_id,int doctor_id,int appointment_id)throws SQLException{
+		String query = "INSERT INTO mydoctor.make_appointment (patient_id, doctor_id, app_id) VALUES (?, ?, ?);";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		pstmt.setInt(2, doctor_id);
+		pstmt.setInt(3, appointment_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		return updateCount;
 	}
 }

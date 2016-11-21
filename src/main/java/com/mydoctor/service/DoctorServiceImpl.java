@@ -3,8 +3,6 @@ package com.mydoctor.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import com.mydoctor.dao.DoctorDaoImpl;
 
 import com.mydoctor.model.Doctor;
@@ -35,7 +33,6 @@ public class DoctorServiceImpl {
 		return doctorDaoImpl.retrieveDoctor(doctor_id);
 	}
 	public Doctor retrieveDoctor(int doctor_id) throws SQLException {
-		
 		return doctorDaoImpl.retrieveDoctor(doctor_id);
 	}
 	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {

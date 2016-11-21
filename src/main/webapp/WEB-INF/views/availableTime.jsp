@@ -15,10 +15,10 @@
   </thead>
   <tbody>
     <tr class="info">
-      <td>${doctor.name}</td>
-      <td>${doctor.surname}</td>
-      <td>${doctor.department}</td>
-      <td>${doctor.tel}</td>
+      <td>${chosenDoctor.name}</td>
+      <td>${chosenDoctor.surname}</td>
+      <td>${chosenDoctor.department}</td>
+      <td>${chosenDoctor.tel}</td>
     </tr>
   
   </tbody>
@@ -31,11 +31,11 @@
 		<th>Time</th>
 	</tr>
 </thead>
-<c:forEach items="${suggestDateTimes}" var="suggestDateTime">
+<c:forEach items="${suggestDateTimes}" var="suggestDateTime" varStatus="loop">
    <tr>
    <td><fmt:formatDate value="${suggestDateTime}" pattern="E dd/MM/yyyy HH:mm"/></td>
        
-       <td><a href="/add-appointment?doctorId=${doctor.id}" class="btn btn-success">select</a></td>
+       <td><a href="/confirm-time?index=${loop.index}" class="btn btn-success">select</a></td>
     </tr>
 </c:forEach>
 
