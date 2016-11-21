@@ -126,6 +126,7 @@ public class PatientDaoImpl {
 			appointment.setSymptom(rs.getString("symptom"));
 			appointments.add(appointment);
 		}
+
 		return appointments;
 
 	}
@@ -192,5 +193,23 @@ public class PatientDaoImpl {
 		if (updateCount > 0)
 			return updateCount;
 		return -1;
+		
+	}
+	
+	public int editPatientInfo(String name, String surname, String gender, String birth_date, String address, String tel, String email, int patient_id) throws SQLException {
+		String query = "Update patient Set name = ?, surname = ?, gender = ?, birth_date = ?, address = ?, tel = ?, email = ? Where patient_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, name);
+		pstmt.setString(2, surname);
+		pstmt.setString(3, gender);
+		pstmt.setString(4, birth_date);
+		pstmt.setString(5, address);
+		pstmt.setString(6, tel);
+		pstmt.setString(7, email);
+		pstmt.setInt(8, patient_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		return updateCount;
+
 	}
 }
