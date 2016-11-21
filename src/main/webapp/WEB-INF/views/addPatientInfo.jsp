@@ -3,6 +3,7 @@
 
 
 <div class="container">
+
 		<form:form id="add-info" method="post" action="add-info" commandName="generalInfo" class="form-horizontal">
 			<fieldset class="form-group row">
 				<form:label path="hospitalNumber" class="col-sm-4 control-label" >Patient Hospital Number </form:label>
@@ -76,7 +77,7 @@
 				</div>
 			</fieldset>
 			    <div class="col-sm-offset-5 col-sm-2 text-center">
-					<button type="submit" class="btn btn-success">Submit</button>
+					<button type="submit" class="btn btn-success" >Submit</button>		
 				</div>
 		</form:form>
 		

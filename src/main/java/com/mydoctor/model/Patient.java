@@ -1,9 +1,37 @@
 package com.mydoctor.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
+
 public class Patient extends User {
+	@Email(message = "Please correct Email")
+    @Size(min=1,max=255, message = "Please correct Email")
+	private String email;
+
+	@Size(max=13, min=7, message = "Please correct SSN")
+	private String ssn;
+
+	@Size(min=1,max=30, message = "Please correct Patient Name")
+	private String name;
+
+	@Size(min=1,max=30, message = "Please correct Patient Surname")
+	private String surname;
+
+	@Size(min=1,max=12, message = "Please correct Gender length")
+	private String gender;
 	
+	@Size(min=9, max=12, message = "Please correct Telephone Number")
+	private String tel;
 	
-	private String ssn,name,surname,gender,email,tel,birthdate,address,hospitalNumber;
+	private String birthdate;
+
+	@Size(min=1,max=255, message = "Please correct Address")
+	private String address;
+
+	private String hospitalNumber;
 
 	public Patient() {
 		super();

@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.Appointment;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
+import com.mydoctor.model.ViewInfo;
 import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
@@ -53,10 +55,33 @@ public class PatientController
 		@RequestMapping(value="/patient-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
 		{
-				model.addAttribute("patient",patientServiceImpl.retrievePatient((String)model.get("username")));
+			Patient patient = patientServiceImpl.retrievePatient((String)model.get("username"));
+				model.addAttribute("patient",patient);
+				model.addAttribute("new_patient",patient);
 				return "patientProfile";
 		}
 		
+		/*@RequestMapping(value="/edit-info",method=RequestMethod.GET)
+		public String editProfileInfo(ModelMap model) throws SQLException 
+		{
+				model.addAttribute("patient",patientServiceImpl.retrievePatient((String)model.get("username")));
+				model.addAttribute("new_patient",new Patient());
+				return "patientProfile";
+		}		*/
+		
+		@RequestMapping(value="/edit-info",method=RequestMethod.POST)
+		public String editProfile(ModelMap model,@Valid Patient new_patient, BindingResult result) throws SQLException 
+		{
+			System.out.println("[Request]" + new_patient.toString());
+			if(result.hasErrors()){
+				return "patientProfile";
+			}
+			int updateCount = patientServiceImpl.edit_info((String)model.get("username"),new_patient);
+		   if(updateCount > 0) {
+			   return "redirect:/patient-profile";
+		   }
+		   return "redirect:/patient-profile";
+			}
 		
 		
 		@RequestMapping(value="/list-appointment",method=RequestMethod.GET)
