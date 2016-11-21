@@ -1,9 +1,13 @@
 <%@ include file="common/header.jspf"%>
-<%@ include file="common/navigation-nurse.jspf"%>
+<%@ include file="common/navigation-staff.jspf"%>
 
 <div class="container-fluid">
-Welcome ${username}<br>
-HI NURSE
+ <h1> Welcome Staff : ${username} <i class="fa fa-medkit" aria-hidden="true"></i>
+ </h1>
+
 </div>
+
+
+
 
 <%@ include file="common/footer.jspf"%>

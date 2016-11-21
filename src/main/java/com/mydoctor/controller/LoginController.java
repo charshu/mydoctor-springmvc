@@ -17,24 +17,23 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.mydoctor.model.LoginBean;
 import com.mydoctor.service.LoginServiceImpl;
 
-
 @Controller
 @SessionAttributes("username")
-public class LoginController
-{
-	
-		
-		@Autowired
-		private LoginServiceImpl loginServiceImpl;
+public class LoginController {
 
-		@RequestMapping(value="/login", method=RequestMethod.GET)
-		public String showLoginPage(ModelMap model)
-		{
-			
-			LoginBean loginBean = new LoginBean();
-			model.addAttribute("loginBean", loginBean);
-			return "login";
-		}
+	@Autowired
+	private LoginServiceImpl loginServiceImpl;
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String showLoginPage(ModelMap model) {
+
+		LoginBean loginBean = new LoginBean();
+		model.addAttribute("loginBean", loginBean);
+		return "login";
+	}
+
+
+
 		
 		
 		@RequestMapping(value="/login",method=RequestMethod.POST)
@@ -62,24 +61,24 @@ public class LoginController
 						else if("nurse".equals(role)){
 							return "welcomeNurse";
 						}
-						
+						else if("staff".equals(role)){
+							return "welcomeStaff";
+						}
 				}
 				else
 				{
 						model.put("message", "Invalid credentials!!");
 						return "login";
 				}
-
-				
 				return "login";
 		}
-		
-		@RequestMapping(value="/logout",method=RequestMethod.GET)
-		public String logout(@ModelAttribute("username") String username,ModelMap model,SessionStatus status)
-		{	
-			System.out.println(username);
-			status.setComplete();
-			return "redirect:/login";
-		}
-		
+
+
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(ModelMap model, SessionStatus status) {
+		status.setComplete();
+		return "redirect:/login";
+	}
+
 }

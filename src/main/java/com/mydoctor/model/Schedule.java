@@ -1,31 +1,39 @@
 package com.mydoctor.model;
 
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import javax.validation.constraints.NotNull;
+
 public class Schedule {
 	
-	private String id;
+	private int id;
 	//Date stores in format milliseconds -> 1000022311231
-	private Timestamp start,end;
-	private final DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	@NotNull
+	//@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	private Timestamp start;
+	@NotNull
+	//@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	private Timestamp end;
+	private final DateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
 	
 	public Schedule(){
 	
 	}
 
-	public Schedule(String id, Timestamp start, Timestamp end) {
+	public Schedule(int id, Timestamp start, Timestamp end) {
 		super();
 		this.id = id;
 		this.start = start;
 		this.end = end;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public Timestamp getStart() {
@@ -43,9 +51,11 @@ public class Schedule {
 
 	@Override
 	public String toString() {
-		return "The schedule id : " + this.id + " Start time : " + df.format(start) + " End time : " + df.format(end);
+		return "ID: " + this.id + " ,Start: " + df.format(this.start) + " ,End: " + df.format(this.end) + "\n";
 	}
-	
+	public long duration(){
+		return this.end.getTime() - this.start.getTime();
+	}
 	public boolean isWithinRange(Date date){
 		return date.after(start) && date.before(end);
 	}

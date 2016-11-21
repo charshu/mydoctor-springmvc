@@ -16,9 +16,12 @@
        <td>${schedule.id}</td>
        <td>${schedule.printStart()}</td>
        <td>${schedule.printEnd()}</td>
+       <td><a href="/delete-schedule?schedule_id=${schedule.id}" class="btn btn-danger">Delete</a></td>
     </tr>
 </c:forEach>
+
 </table>
+<a href="/add-schedule" class="btn btn-success">Add</a>
 </div>
 
 

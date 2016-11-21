@@ -1,17 +1,17 @@
 package com.mydoctor.model;
 
-public class Nurse extends User  {
+public class Staff extends User  {
 	private String name,surname;
 	
-	public Nurse(){
+	public Staff(){
 		super();
 	}
 	
-	public Nurse(int id,String username,String password, String type) {
+	public Staff(int id,String username,String password, String type) {
 
 		super(id,username, password, type);
 	}
-	public Nurse(int id,String username,String password,String name ,String surname,String type) {
+	public Staff(int id,String username,String password,String name ,String surname,String type) {
 		
 		super(id,username, password, type);
 		this.name = name;
