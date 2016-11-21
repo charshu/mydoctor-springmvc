@@ -3,6 +3,7 @@
 
 <div class="container-fluid">
 
+<h2>Appointment Lists <i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
 <table class="table">
 <thead>
 		<tr>
