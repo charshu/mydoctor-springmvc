@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Pharmacist;
 import com.mydoctor.model.Prescription;
@@ -28,6 +29,7 @@ public class PrescriptionDaoImpl {
 		//Find Prescription
 		return new Prescription();
 	}
+	
 	public ArrayList<Prescription> retriveDoctorPatientName() throws SQLException {
 		
 		String query = "SELECT * FROM prescription "
@@ -38,9 +40,9 @@ public class PrescriptionDaoImpl {
 		ArrayList<Prescription> prescripList = new ArrayList<Prescription>();
 		while(rs.next()){
 			Prescription pres = new Prescription();
-			pres.setPrescriptionId(rs.getString("prescript_id"));
-			pres.setMedicineId(rs.getString("med_id"));
-			pres.setAmount(rs.getString("amount"));
+			pres.setPrescriptionId(rs.getInt("prescript_id"));
+			pres.setMedicineId(rs.getInt("med_id"));
+			pres.setAmount(rs.getInt("amount"));
 			pres.setInstruction(rs.getString("instruction"));
 			pres.setStatus(rs.getString("status"));
 			prescripList.add(pres);
@@ -48,7 +50,30 @@ public class PrescriptionDaoImpl {
 		
 		return prescripList;
 	}
-	
+	public ArrayList<Prescription> retrievePrescriptionHistory(int userid)throws SQLException{
+		//Find Prescription
+		String query = "Select create_prescription.prescript_id, medicine , amount , instruction FROM create_prescription "
+						+	"INNER JOIN diagnose ON create_prescription.diagnose_id = diagnose.diagnose_id "
+						+	"INNER JOIN prescription ON create_prescription.prescript_id = prescription.prescript_id  "
+						+	"INNER JOIN medicine ON create_prescription.med_id = medicine.med_id  "
+						+	"WHERE patient_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, userid);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Prescription> prescriptionhistory = new ArrayList<Prescription>();
+		while(rs.next()) {
+			Prescription prescriptionlist = new Prescription();
+			prescriptionlist.setUserid(userid);
+			prescriptionlist.setPrescriptionId(rs.getInt("prescript_id"));
+			prescriptionlist.setMedicinename(rs.getString("medicine"));
+			prescriptionlist.setAmount(rs.getInt("amount"));
+			prescriptionlist.setInstruction(rs.getString("instruction"));
+			System.out.println(5);
+			prescriptionhistory.add(prescriptionlist);
+		}
+		
+		return prescriptionhistory;
+	}
 //	public ArrayList<Prescription> retrieveAllPrescriptions(String patient_id) throws SQLException {
 //		String query = "Select prescription_id from patient,  where user_id = ? ";
 //		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
