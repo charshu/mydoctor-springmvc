@@ -63,8 +63,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(@ModelAttribute("username") String username, ModelMap model, SessionStatus status) {
-		System.out.println(username);
+	public String logout(ModelMap model, SessionStatus status) {
 		status.setComplete();
 		return "redirect:/login";
 	}
