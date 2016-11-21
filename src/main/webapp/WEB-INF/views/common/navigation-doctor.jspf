@@ -1,7 +1,7 @@
 <nav role="navigation" class="navbar navbar-default">
 
     <div class="">
-        <a href="/welcomeDoctor" class="navbar-brand">MyDoctor <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+        <a href="/welcomeDoctor" class="navbar-brand">MyHospital    <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
 
     <div class="navbar-collapse">
@@ -12,7 +12,7 @@
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/login">Logout</a></li>
         </ul>
     </div>
 

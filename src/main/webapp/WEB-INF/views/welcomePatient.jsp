@@ -2,8 +2,8 @@
 <%@ include file="common/navigation-patient.jspf"%>
 
 <div class="container-fluid">
-Welcome ${username}<br>
-Good
+ <h1> Welcome Patient : ${username} <i class="fa fa-wheelchair" aria-hidden="true"></i> </h1>
+ 
 </div>
 
 
