@@ -53,7 +53,7 @@ public class PatientServiceImpl
 		}
 		
 		public int edit_info(String username, Patient patient) throws SQLException {
-			int patient_id = patientDaoImpl.retrievePatientId(username);
+			int patient_id = patientDaoImpl.retrieveIdByUserId(patientDaoImpl.retrieveUserId(username));
 			System.out.println(patient_id);
 			String name = patient.getName();
 			String surname = patient.getSurname();
