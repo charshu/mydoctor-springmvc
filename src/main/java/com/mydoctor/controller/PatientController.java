@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,6 +65,7 @@ public class PatientController
 		@RequestMapping(value="/list-appointment",method=RequestMethod.GET)
 		public String showAppointmentList(ModelMap model) throws SQLException 
 		{
+				
 				System.out.println((String)model.get("username"));
 				model.addAttribute("appointments",patientServiceImpl.retrieveAllAppointments((String)model.get("username")));
 				return "patientAppointment";
@@ -84,9 +86,9 @@ public class PatientController
 				Appointment appointment =  new Appointment();
 				appointment.setDoctorId(Integer.parseInt(doctor_id));
 				appointment.setPatientId(patientServiceImpl.retrieveId((String)model.get("username")));
-				model.addAttribute("appointment", appointment);
+				model.put("appointment", appointment);
 				model.addAttribute("suggestDateTimes", appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id)));
-				model.addAttribute("chosenDoctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
+				model.put("chosenDoctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
 				
 				return "availableTime";
 				
@@ -104,28 +106,37 @@ public class PatientController
 				return "addAppointment";
 				
 		}
+		
 		@RequestMapping(value="/confirm-time",method=RequestMethod.POST)
-		public String saveAppointment(@ModelAttribute("appointment")Appointment appointment,
-				@ModelAttribute("suggestDateTimes")ArrayList<Timestamp> availableTimes,
-				@ModelAttribute("choosenDoctor")Doctor choosenDoctor,
-				ModelMap model,@Valid Appointment validAppointment) throws SQLException 
+		public String saveAppointment(
+				ModelMap model,@Valid Appointment validAppointment,BindingResult result) throws SQLException 
 		{
-			if(appointment == null){
-				return "redirect:/list-appointment";
-			}
-				appointmentServiceImpl.saveAppointment(validAppointment);
-				model.clear();
-				//request.removeAttribute("suggestDateTimes", WebRequest.SCOPE_SESSION);
-				return "redirect:/list-appointment";
+
+			appointmentServiceImpl.saveAppointment(validAppointment);
+			model.remove("suggestDateTimes");
+			model.remove("chosenDoctor");
+			model.remove("appointment");
+			return "redirect:/list-appointment";
 				
 		}
 		@RequestMapping(value="/cancel-appointment",method=RequestMethod.GET)
-		public String cancelAppointment(ModelMap model,@RequestParam String appointment_id) throws SQLException 
+		public String cancelAppointment(ModelMap model,@RequestParam("appointmentId") String appointment_id,
+				SessionStatus status) throws SQLException 
 		{
-			
-				System.out.println((String)model.get("username"));
-				patientServiceImpl.cancelAppointment((String)model.get("username"),Integer.parseInt(appointment_id));
-				return "redirect:/list-appointment";
+			 
+				System.out.println(appointment_id);
+				int updateCount = patientServiceImpl.cancelAppointment((String)model.get("username"),Integer.parseInt(appointment_id));
+				if(updateCount > 0){
+					model.remove("suggestDateTimes");
+					model.remove("chosenDoctor");
+					model.remove("appointment");
+					return "redirect:/list-appointment";
+				}
+				else{
+//					model.addAttribute("error", "Delete error please try again.");
+					return "redirect:/list-appointment";
+				}
+				
 		}
 		
 		

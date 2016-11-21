@@ -23,6 +23,7 @@ public class PatientDaoImpl {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
+
 	public int retrieveUserId(String username) throws SQLException {
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -33,6 +34,7 @@ public class PatientDaoImpl {
 		else
 			return -1;
 	}
+
 	public int retrieveIdByUserId(int user_id) throws SQLException {
 		String query = "Select patient_id from patient where user_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -43,6 +45,7 @@ public class PatientDaoImpl {
 		else
 			return -1;
 	}
+
 	public int getPatientPasswordLength(String username) throws SQLException {
 		String query = "Select password from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -75,32 +78,40 @@ public class PatientDaoImpl {
 		} else
 			return null;
 	}
-	
+
 	public ArrayList<Patient> retrieveAllPatients() throws SQLException {
-		
+
 		return null;
 	}
-	public ArrayList<Appointment> retrieveAllAppointments(int patient_id)throws SQLException{
-		String query = "SELECT patient_id,doctor_id,appointment.app_id,appointment.date,appointment.symptom "
-				+ "FROM make_appointment INNER JOIN appointment "
-				+ "WHERE make_appointment.app_id = appointment.app_id and patient_id = ?";
+
+	public ArrayList<Appointment> retrieveAllAppointments(int patient_id) throws SQLException {
+		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom "
+				+ "FROM make_appointment "
+				+ "INNER JOIN appointment "
+				+ "INNER JOIN doctor "
+				+ "INNER JOIN patient WHERE patient.patient_id=make_appointment.patient_id "
+				+ "and make_appointment.app_id = appointment.app_id "
+				+ "and doctor.doctor_id=make_appointment.doctor_id "
+				+ "and make_appointment.patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, patient_id);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-		while(rs.next()){
+		while (rs.next()) {
 			Appointment appointment = new Appointment();
 			appointment.setId(rs.getInt("app_id"));
+			appointment.setPatientName(rs.getString("patient_name"));
+			appointment.setDoctorName(rs.getString("doctor_name"));
 			appointment.setDate(rs.getTimestamp("date"));
 			appointment.setSymptom(rs.getString("symptom"));
 			appointments.add(appointment);
-			
+
 		}
 		return appointments;
-		
-		
+
 	}
-	public ArrayList<Appointment> retrieveAllDoctorAppointments(int doctor_id)throws SQLException{
+
+	public ArrayList<Appointment> retrieveAllDoctorAppointments(int doctor_id) throws SQLException {
 		String query = "SELECT patient_id,doctor_id,appointment.app_id,appointment.date,appointment.symptom "
 				+ "FROM make_appointment INNER JOIN appointment "
 				+ "WHERE make_appointment.app_id = appointment.app_id and doctor_id = ? ORDER BY appointment.date DESC";
@@ -108,7 +119,7 @@ public class PatientDaoImpl {
 		pstmt.setInt(1, doctor_id);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-		while(rs.next()){
+		while (rs.next()) {
 			Appointment appointment = new Appointment();
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setDate(rs.getTimestamp("date"));
@@ -116,10 +127,10 @@ public class PatientDaoImpl {
 			appointments.add(appointment);
 		}
 		return appointments;
-		
-		
+
 	}
-	public int insertAppointment(Timestamp date,String symptom)throws SQLException{
+
+	public int insertAppointment(Timestamp date, String symptom) throws SQLException {
 		String query = "INSERT INTO mydoctor.appointment (app_id, date, symptom) VALUES (NULL, ?, ?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		pstmt.setTimestamp(1, date);
@@ -131,7 +142,8 @@ public class PatientDaoImpl {
 		}
 		return -1;
 	}
-	public int insertCreateAppointment(int patient_id,int doctor_id,int appointment_id)throws SQLException{
+
+	public int insertCreateAppointment(int patient_id, int doctor_id, int appointment_id) throws SQLException {
 		String query = "INSERT INTO mydoctor.make_appointment (patient_id, doctor_id, app_id) VALUES (?, ?, ?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, patient_id);
@@ -140,5 +152,45 @@ public class PatientDaoImpl {
 		pstmt.executeUpdate();
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;
+	}
+
+	public boolean hasAppointmentId(int patient_id,int appointment_id) throws SQLException {
+		System.out.println("has -> patient : "+ patient_id+" appointment id : "+appointment_id);
+		String query = "SELECT * FROM make_appointment "
+				+ "WHERE make_appointment.patient_id = ? and make_appointment.app_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		pstmt.setInt(2, appointment_id);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) {
+			return true;
+		}
+		return false;
+
+	}
+	public int deleteMakeAppointment(int patient_id,int appointment_id) throws SQLException {
+		System.out.println("delete make_appointment -> patient : "+ patient_id+" appointment id : "+appointment_id);
+		String query = "DELETE FROM make_appointment "
+				+ "WHERE make_appointment.patient_id = ? and make_appointment.app_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		pstmt.setInt(2, appointment_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if (updateCount > 0)
+			return updateCount;
+		return -1;
+
+	}
+	public int deleteAppointment(int appointment_id)throws SQLException{
+		System.out.println("delete appointment -> appointment id : "+appointment_id);
+		String query = "DELETE FROM appointment WHERE appointment.app_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, appointment_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if (updateCount > 0)
+			return updateCount;
+		return -1;
 	}
 }

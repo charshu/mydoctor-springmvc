@@ -17,69 +17,56 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.mydoctor.model.LoginBean;
 import com.mydoctor.service.LoginServiceImpl;
 
-
 @Controller
 @SessionAttributes("username")
-public class LoginController
-{
-	
-		
-		@Autowired
-		private LoginServiceImpl loginServiceImpl;
+public class LoginController {
 
-		@RequestMapping(value="/login", method=RequestMethod.GET)
-		public String showLoginPage(ModelMap model)
-		{
-			
-			LoginBean loginBean = new LoginBean();
-			model.addAttribute("loginBean", loginBean);
+	@Autowired
+	private LoginServiceImpl loginServiceImpl;
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String showLoginPage(ModelMap model) {
+
+		LoginBean loginBean = new LoginBean();
+		model.addAttribute("loginBean", loginBean);
+		return "login";
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String executeLogin(ModelMap model, @Valid LoginBean loginBean, BindingResult result) throws SQLException {
+
+		if (result.hasErrors()) {
 			return "login";
 		}
-		
-		
-		@RequestMapping(value="/login",method=RequestMethod.POST)
-		public String executeLogin(ModelMap model, @Valid LoginBean loginBean, BindingResult result) throws SQLException
-		{
-				
-				if(result.hasErrors()){
-					return "login";
-				}
-				String username = loginBean.getUsername();
-				String password = loginBean.getPassword();
-				boolean isValidUser = loginServiceImpl.isValidUser(username, password);
-				if(isValidUser)
-				{
-					String role = loginServiceImpl.getUserRole(username);
-					model.put("username",username);
-					model.remove("loginBean");
-						if("patient".equals(role)){
-							
-							return "welcomePatient";
-						}
-						else if("doctor".equals(role)){
-							return "welcomeDoctor";
-						}
-						else if("nurse".equals(role)){
-							return "welcomeNurse";
-						}
-						
-				}
-				else
-				{
-						model.put("message", "Invalid credentials!!");
-						return "login";
-				}
+		String username = loginBean.getUsername();
+		String password = loginBean.getPassword();
+		boolean isValidUser = loginServiceImpl.isValidUser(username, password);
+		if (isValidUser) {
+			String role = loginServiceImpl.getUserRole(username);
+			model.put("username", username);
+			model.remove("loginBean");
+			if ("patient".equals(role)) {
 
-				
-				return "login";
+				return "welcomePatient";
+			} else if ("doctor".equals(role)) {
+				return "welcomeDoctor";
+			} else if ("nurse".equals(role)) {
+				return "welcomeNurse";
+			}
+
+		} else {
+			model.put("message", "Invalid credentials!!");
+			return "login";
 		}
-		
-		@RequestMapping(value="/logout",method=RequestMethod.GET)
-		public String logout(@ModelAttribute("username") String username,ModelMap model,SessionStatus status)
-		{	
-			System.out.println(username);
-			status.setComplete();
-			return "redirect:/login";
-		}
-		
+
+		return "login";
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(@ModelAttribute("username") String username, ModelMap model, SessionStatus status) {
+		System.out.println(username);
+		status.setComplete();
+		return "redirect:/login";
+	}
+
 }

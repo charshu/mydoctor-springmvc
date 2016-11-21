@@ -8,6 +8,7 @@
 		<tr>
 			<th>ID </th>
 			<th>Appointment Date </th>
+			<th>Doctor</th>
 			<th>Symptom</th>
 		</tr>
 	</thead>
@@ -15,8 +16,9 @@
    <tr>
        <td>${appointment.id}</td>
        <td>${appointment.printDate()}</td>
+       <td>${appointment.doctorName}</td>
        <td>${appointment.symptom}</td>
-       <td><a href="/cancel-appointment?appointment=${appointment.id}" class="btn btn-danger">Cancel</a></td>
+       <td><a href="/cancel-appointment?appointmentId=${appointment.id}" class="btn btn-danger">Cancel</a></td>
     </tr>
 </c:forEach>
 

@@ -4,11 +4,18 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Appointment {
 	private int id;
 	private Timestamp date;
+	
+	//@Size(min=1 , message="please fill symptom")
 	private  String symptom;
 	private int doctorId;
+	private String patientName;
+	private String doctorName;
 	private int patientId;
 	private final DateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
 	
@@ -19,6 +26,18 @@ public class Appointment {
 		this.id = id;
 	}
 	
+	public String getPatientName() {
+		return patientName;
+	}
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+	public String getDoctorName() {
+		return doctorName;
+	}
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
 	public int getDoctorId() {
 		return doctorId;
 	}
@@ -47,12 +66,16 @@ public class Appointment {
 		super();
 	}
 
-	public Appointment(int id, Timestamp date, String symptom, int doctorId, int patientId) {
+
+	public Appointment(int id, Timestamp date, String symptom, int doctorId, String patientName, String doctorName,
+			int patientId) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.symptom = symptom;
 		this.doctorId = doctorId;
+		this.patientName = patientName;
+		this.doctorName = doctorName;
 		this.patientId = patientId;
 	}
 	public String printDate(){

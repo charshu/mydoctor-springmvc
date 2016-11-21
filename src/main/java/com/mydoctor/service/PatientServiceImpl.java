@@ -41,8 +41,14 @@ public class PatientServiceImpl
 		}
 	
 		public int cancelAppointment(String username,int appointment_id)throws SQLException{
-			
-			
+			int user_id = patientDaoImpl.retrieveUserId(username);
+			int patient_id = patientDaoImpl.retrieveIdByUserId(user_id);
+			if(patientDaoImpl.hasAppointmentId(patient_id,appointment_id)){
+				patientDaoImpl.deleteMakeAppointment(patient_id,appointment_id);
+				patientDaoImpl.deleteAppointment(appointment_id);
+				return 1;
+			}
+			System.out.println("error");
 			return 0;
 		}
 		
