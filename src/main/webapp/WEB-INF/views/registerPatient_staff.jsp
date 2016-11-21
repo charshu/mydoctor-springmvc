@@ -3,12 +3,12 @@
 
 <div class="container-fluid">
 <div class="text-center">
-					<h2>Register Patient By Staff</h2>		
+					<h2>Register Patient By Staff</h2><br>	
 				</div>	
  <div class="col-sm-4 col-md-offset-4">
   			
 	<form:form id="register-patient" method="post" action="register-patient" commandName="patient" class="form-horizontal">
-		 
+		
 		   <fieldset class="form-group inline">
 		  <div class="input-group">
 		  <span class="input-group-addon" id="basic-addon1">SSN</span>
