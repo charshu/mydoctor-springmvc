@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Nurse;
+import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 import com.mysql.jdbc.Statement;
 
@@ -46,8 +47,6 @@ public class NurseDaoImpl {
 		pstmt.setString(8,med_allergy);
 		pstmt.setString(9,symptom);
 		pstmt.executeUpdate();
-		int updateCount = pstmt.getUpdateCount();
-		if(updateCount>0)return updateCount;
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if(rs.next()){
 			return rs.getInt(1);
@@ -97,4 +96,57 @@ public class NurseDaoImpl {
 
 	}
 
+	public GeneralInfo retriveGenInfo(int record_id) throws SQLException {
+
+		String query = "Select hospitalNumber, weight, height, heart_rate, pressureH, pressureL, congemital, med_allergy, symptom, date FROM patient_info where record_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, record_id);
+		ResultSet rs = pstmt.executeQuery();
+		GeneralInfo generalInfo = new GeneralInfo();
+		if(rs.next()) {
+			generalInfo.setHospitalNumber(rs.getString("hospitalNumber"));
+			generalInfo.setWeight(rs.getDouble("weight"));
+			generalInfo.setHeight(rs.getInt("height"));
+			generalInfo.setHeart_rate(rs.getInt("heart_rate"));
+			generalInfo.setPressureH(rs.getInt("pressureH"));
+			generalInfo.setPressureL(rs.getInt("pressureL"));
+			generalInfo.setCongemital(rs.getString("congemital"));
+			generalInfo.setMed_allergy(rs.getString("med_allergy"));
+			generalInfo.setSymptom(rs.getString("symptom"));
+			generalInfo.setDate(rs.getDate("date"));
+		}
+		return generalInfo;
+	}
+	
+	public Patient retriveInfo(int patient_id) throws SQLException {
+		String query = "Select hospitalNumber,ssn, name, surname, gender, birth_date, address, tel, email FROM patient where patient_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		ResultSet rs = pstmt.executeQuery();
+		Patient patientInfo = new Patient();
+		if(rs.next()) {
+			patientInfo.setHospitalNumber(rs.getString("hospitalNumber"));
+			patientInfo.setSsn(rs.getString("ssn"));
+			patientInfo.setName(rs.getString("name"));
+			patientInfo.setSurname(rs.getString("surname"));
+			patientInfo.setGender(rs.getString("gender"));
+			patientInfo.setBirthdate(rs.getString("birth_date"));
+			patientInfo.setAddress(rs.getString("address"));
+			patientInfo.setTel(rs.getString("tel"));
+			patientInfo.setEmail(rs.getString("email"));
+		}
+		return patientInfo;
+	}
+	
+	public int retrieveRecordId(String hospitalNumber)throws SQLException {
+		String query = "Select MAX(record_id) as record_id from patient_info where hospitalNumber = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, hospitalNumber);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return rs.getInt("record_id");
+		}
+		return -1;
+
+	}
 }

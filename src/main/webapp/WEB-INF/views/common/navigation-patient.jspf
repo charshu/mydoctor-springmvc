@@ -1,12 +1,12 @@
 <nav role="navigation" class="navbar navbar-default">
 
     <div class="">
-        <a href="http://www.google.com" class="navbar-brand">MyDoctor <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+        <a href="/welcomePatient" class="navbar-brand">MyDoctor <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
 
     <div class="navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="/login">Home</a></li>
+            <li><a href="/welcomePatient">Home</a></li>
             <li><a href="/patient-profile">Profile</a></li>
             <li><a href="/list-appointment">Appointment</a></li>
 

@@ -47,14 +47,20 @@ public class PatientController
 		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
 		
+		@RequestMapping(value="/welcomePatient",method=RequestMethod.GET)
+		public String welcomeNurse(ModelMap model) throws SQLException 
+		{
+				
+				return "welcomePatient";
+		}
+		
 		@RequestMapping(value="/patient-profile",method=RequestMethod.GET)
 		public String profile(ModelMap model) throws SQLException 
 		{
 				model.addAttribute("patient",patientServiceImpl.retrievePatient((String)model.get("username")));
 				return "patientProfile";
 		}
-		
-		//appointment 
+
 		@RequestMapping(value="/list-appointment",method=RequestMethod.GET)
 		public String showAppointmentList(ModelMap model) throws SQLException 
 		{
