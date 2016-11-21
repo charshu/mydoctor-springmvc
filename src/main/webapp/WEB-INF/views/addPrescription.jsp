@@ -46,8 +46,9 @@
   <div class="col-xs-3 ">
     <a href="/add-medicine" class="btn btn-success pull-right">Add Medicine</a>
   </div>
+  
   <div class="col-xs-3 ">
-    <button type="submit" class="btn btn-success ">Submit</button>
+    <a href="/save-prescription" type="submit" class="btn btn-success ">Submit</a>
   </div>
 </div>
 

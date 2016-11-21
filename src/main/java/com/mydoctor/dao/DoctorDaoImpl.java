@@ -82,11 +82,11 @@ public class DoctorDaoImpl {
 
 	}
 	
-	public String retrieveDoctorNameByID(int id)throws SQLException {
+	public String retrieveDoctorNameByID(int doctor_id)throws SQLException {
 		//////////pls check attribute of doctor name in database 
-		String query = "Select name from doctor where id = ? ";
+		String query = "Select name from doctor where doctor_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setInt(1, id);
+		pstmt.setInt(1, doctor_id);
 		ResultSet rs = pstmt.executeQuery();
 		if(rs.next()){
 			return rs.getString("name");

@@ -48,23 +48,35 @@ public class PrescriptionDaoImpl {
 		return null;
 	}
 	
-	public int insertPrescription()throws SQLException{
+	public int insertPrescription(int med_id, String amount, String instruction)throws SQLException{
 		String query = "INSERT INTO mydoctor.prescription (prescription_id, med_id, amount, instruction) "
-				+ "VALUES ('0', ?, ?);";
+				+ "VALUES ('0', ?, ?, ?);";
+		//System.out.println("pass0");
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+		pstmt.setInt(1, med_id);
+		pstmt.setString(2, amount);
+		pstmt.setString(3, instruction);
+		pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if(rs.next()){
+			//System.out.println("pass00");
 			return rs.getInt(1);
 		}
 		return -1;
 	}
 	
 	public int insertCreatePrescription(int doctor_id, int patient_id, int prescription_id)throws SQLException{
-		String query = "INSERT INTO mydoctor.createPrescription (doctor_id, patient_id, prescription_id)"
-				+ "VALUES ('0', ?, ?);";
+		String query = "INSERT INTO mydoctor.createprescription (doctor_id, patient_id, prescription_id)"
+				+ "VALUES (?, ?, ?);";
+		System.out.println("pass11");
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+		pstmt.setInt(1, doctor_id);
+		pstmt.setInt(2, patient_id);
+		pstmt.setInt(3, prescription_id);
+		pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if(rs.next()){
+			//System.out.println("pass12");
 			return rs.getInt(1);
 		}
 		return -1;
@@ -89,16 +101,16 @@ public class PrescriptionDaoImpl {
 //		return null;//schedules;
 //	}
 	
-	public int insertMedicine(MedicineBean medicineBean)throws SQLException{
-		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) "
-				+ "VALUES ('0', ?, ?);";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-		ResultSet rs = pstmt.getGeneratedKeys();
-		if(rs.next()){
-			return rs.getInt(1);
-		}
-		return -1;
-	}
+//	public int insertMedicine(MedicineBean medicineBean)throws SQLException{
+//		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) "
+//				+ "VALUES ('0', ?, ?);";
+//		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+//		ResultSet rs = pstmt.getGeneratedKeys();
+//		if(rs.next()){
+//			return rs.getInt(1);
+//		}
+//		return -1;
+//	}
 	
 	
 

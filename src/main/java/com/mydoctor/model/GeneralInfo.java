@@ -1,15 +1,11 @@
 package com.mydoctor.model;
 
 
-<<<<<<< HEAD
-=======
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 
-
->>>>>>> origin/nurse
 public class GeneralInfo {
 
     @Size(min=8, max=30, message = "Please Correct Hospital Number")

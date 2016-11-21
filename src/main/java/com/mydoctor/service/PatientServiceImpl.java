@@ -30,6 +30,10 @@ public class PatientServiceImpl
 			return patientDaoImpl.retrieveAllPatients();
 		}
 		
+		public String retrievePatientNameByID(int id) throws SQLException {
+			return patientDaoImpl.retrievePatientNameByID(id);
+		}
+		
 //		public ArrayList<Prescription> retrivePrescriptionHistory(String patient_id) throws SQLException {
 //			return patient;
 //		}

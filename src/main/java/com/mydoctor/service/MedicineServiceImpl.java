@@ -2,6 +2,7 @@ package com.mydoctor.service;
 
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.mydoctor.dao.MedicineDaoImpl;
 import com.mydoctor.model.MedicineBean;
@@ -25,9 +26,10 @@ public class MedicineServiceImpl
 			return medicineDaoImpl.retrieveMedicine(medicine_id);
 		}
 		
-//		public String getMedicineName(String medicine_id)throws SQLException{
-//			return medicineDaoImpl.
-//		}
+		public List<MedicineBean> retrieveAllMedicine()throws SQLException{
+			//return medicineDaoImpl.getAllMedicine();
+			return null;
+		}
 		
 		
 //		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {

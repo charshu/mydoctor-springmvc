@@ -3,6 +3,8 @@ package com.mydoctor.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import com.mydoctor.model.MedicineBean;
@@ -36,17 +38,22 @@ public class MedicineDaoImpl {
 			return null;
 	}
 	
-	public String getMedicineId(String medicine) throws SQLException {
-		String query = "Select med_id from medicine where med_name = ? ";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, medicine);
-		ResultSet resultSet = pstmt.executeQuery();
-		if (resultSet.next())
-			return resultSet.getString(1);
-		else
-			return null;
-
+	public List<MedicineBean> retrieveAllMedicine(){
+		List<MedicineBean> medicineBean = null;
+		return medicineBean;
 	}
+	
+//	public int getMedicineId(String medicine_name) throws SQLException {
+//		String query = "Select med_id from medicine where med_name = ? ";
+//		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+//		pstmt.setString(1, medicine_name);
+//		ResultSet resultSet = pstmt.executeQuery();
+//		if (resultSet.next())
+//			return resultSet.getInt(1);
+//		else
+//			return -1;
+//
+//	}
 	
 	
 //	public ArrayList<Prescription> retrieveAllPrescriptions(String patient_id) throws SQLException {

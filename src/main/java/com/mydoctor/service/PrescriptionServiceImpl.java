@@ -11,14 +11,13 @@ import com.mydoctor.dao.PrescriptionDaoImpl;
 import com.mydoctor.model.MedicineBean;
 import com.mydoctor.model.Schedule;
 
-@Service
+
 public class PrescriptionServiceImpl {
 
 	private PrescriptionDaoImpl prescriptionDaoImpl;
+	
 	private static List<MedicineBean> medicineBeans = new ArrayList<MedicineBean>();
 	
-	private DoctorServiceImpl doctorServiceImpl;
-	private PatientServiceImpl patientServiceImpl;
 
 	private static int patient_id, doctor_id;
 
@@ -59,6 +58,7 @@ public class PrescriptionServiceImpl {
 	public void addMedicineBean(int id, String name, String amount, String instruction) {
 		medicineBeans.add(new MedicineBean(id, name, amount, instruction));
 	}
+	
 
 	public void deleteMedicineBean(int id) {
 		Iterator<MedicineBean> iterator = medicineBeans.iterator();
@@ -70,19 +70,22 @@ public class PrescriptionServiceImpl {
 		}
 	}
 	
-	public int savePrescription()throws SQLException{
-		
-		int prescription_id = prescriptionDaoImpl.insertPrescription();
+	public int savePrescription(int doctor_id, int patient_id, int med_id, String amount, String instruction) throws SQLException{
+		System.out.println("pass1");
+		int prescription_id = prescriptionDaoImpl.insertPrescription(med_id, amount, instruction);
+		//System.out.println("pass1");
 		if(prescription_id == -1){
 			System.out.println("[ERROR] cannot retrieve schedule_id");
 			return 0;
 		}
 		//doctor_id = doctorServiceImpl.retrieveDoctorNameByID(id);
 		prescriptionDaoImpl.insertCreatePrescription(doctor_id, patient_id, prescription_id);
-		if(prescriptionDaoImpl.insertPrescription() > 0)return 1;
+		//System.out.println("pass2");
+		if(prescriptionDaoImpl.insertPrescription(med_id, amount, instruction) > 0)return 1;
 		
 		return 0;
 	}
+	
 	
 	
 
