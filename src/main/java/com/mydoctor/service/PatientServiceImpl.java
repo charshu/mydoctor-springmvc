@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mydoctor.dao.PatientDaoImpl;
-
+import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
 
 
@@ -22,12 +22,30 @@ public class PatientServiceImpl
 		}
 		
 		public Patient retrievePatient(String username) throws SQLException {
-				String patient_id = patientDaoImpl.retrievePatientId(username);
-				return patientDaoImpl.retrievePatient(patient_id);
+			int user_id = patientDaoImpl.retrieveUserId(username);
+			int patient_id = patientDaoImpl.retrieveIdByUserId(user_id);
+			return patientDaoImpl.retrievePatient(patient_id);
 		}
 		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
 			return patientDaoImpl.retrieveAllPatients();
 			}
+		public ArrayList<Appointment> retrieveAllAppointments(String username)throws SQLException{
+			int user_id = patientDaoImpl.retrieveUserId(username);
+			int patient_id = patientDaoImpl.retrieveIdByUserId(user_id);
+			return patientDaoImpl.retrieveAllAppointments(patient_id);
+			
+		}
+		public int retrieveId(String username)throws SQLException{
+			int user_id = patientDaoImpl.retrieveUserId(username);
+			return patientDaoImpl.retrieveIdByUserId(user_id);
+		}
+	
+		public int cancelAppointment(String username,int appointment_id)throws SQLException{
+			
+			
+			return 0;
+		}
+		
 		
 
 }

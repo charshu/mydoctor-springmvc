@@ -7,9 +7,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class Schedule {
 	
@@ -54,9 +51,11 @@ public class Schedule {
 
 	@Override
 	public String toString() {
-		return "The schedule id : " + this.id + " Start time : " + df.format(this.start) + " End time : " + df.format(this.end);
+		return "ID: " + this.id + " ,Start: " + df.format(this.start) + " ,End: " + df.format(this.end) + "\n";
 	}
-	
+	public long duration(){
+		return this.end.getTime() - this.start.getTime();
+	}
 	public boolean isWithinRange(Date date){
 		return date.after(start) && date.before(end);
 	}
