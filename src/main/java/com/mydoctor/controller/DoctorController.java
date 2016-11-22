@@ -135,8 +135,8 @@ public class DoctorController
 			if(result.hasErrors()){
 				return "viewPatientInfo_doctor";
 			}
-		    GeneralInfo generalInfo = doctorServiceImpl.findPatientGenInfo((String)model.get("username"),viewInfo);
-		    Patient patientInfo = doctorServiceImpl.findPatientInfo((String)model.get("username"),viewInfo);
+		    GeneralInfo generalInfo = doctorServiceImpl.findPatientGenInfo(viewInfo);
+		    Patient patientInfo = doctorServiceImpl.findPatientInfo(viewInfo);
 
 		   // System.out.println(generalInfo.getCongemital());
 		    model.addAttribute("generalInfo",generalInfo);

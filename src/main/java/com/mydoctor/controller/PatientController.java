@@ -65,7 +65,7 @@ public class PatientController
 		public String profile(ModelMap model) throws SQLException 
 		{
 			Patient patient = patientServiceImpl.retrievePatient((String)model.get("username"));
-				//model.addAttribute("patient",patient);
+				model.addAttribute("patient",patient); //for ssn,hospitalNumber
 				model.addAttribute("new_patient",patient);
 				return "patientProfile";
 		}
