@@ -2,7 +2,7 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 <div class="container-fluid">
-<table class="table table-reflow">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Your profile</th>

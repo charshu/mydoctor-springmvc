@@ -2,8 +2,8 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 <div class="container-fluid">
-
-<table class="table">
+<div class="container">
+<table class="table table-striped">
 <thead>
 		<tr>
 			<th>ID </th>
@@ -21,7 +21,8 @@
 </c:forEach>
 
 </table>
-<a href="/add-schedule" class="btn btn-success">Add</a>
+<a href="/add-schedule" class="btn btn-success btn-md navbar-right">Add</a>
+</div>
 </div>
 
 

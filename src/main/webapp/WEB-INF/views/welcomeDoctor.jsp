@@ -2,7 +2,7 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 <div class="container-fluid">
-Welcome ${username}<br>
+<h1 class="text-center">Welcome ${username}<br></h1>
 
 </div>
 

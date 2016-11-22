@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 <div class="container">
-	<table class="table table-reflow">
+	<table class="table table-striped">
 	  <thead>
 	    <tr>
 	      <th>NO.</th>

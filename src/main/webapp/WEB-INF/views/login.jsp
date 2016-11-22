@@ -1,6 +1,8 @@
 <%@ include file="common/header.jspf"%>
 
-	<div class="container">
+<div class="bgBlue">
+	<div class="container" >
+	<h4></h4>
 		<form:form id="loginForm" method="post" action="login" commandName="loginBean">
 			<fieldset class="form-group">
 			
@@ -17,5 +19,6 @@
 			 <button type="submit" class="btn btn-success">Submit</button>
 		</form:form>
 	</div>
-		
+</div>	
 <%@ include file="common/footer.jspf"%>
+
