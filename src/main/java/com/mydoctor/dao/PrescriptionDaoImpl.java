@@ -31,7 +31,7 @@ public class PrescriptionDaoImpl {
 	}
 
 	public ArrayList<Prescription> retriveAllwaitPrescription() throws SQLException {
-		
+
 		String query = "SELECT prescript_id , status  FROM prescription "
 				+ "WHERE prescription.status = ? group by prescript_id";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -41,6 +41,11 @@ public class PrescriptionDaoImpl {
 		while(rs.next()){
 			Prescription pres = new Prescription();
 			pres.setPrescriptionId(rs.getInt("prescript_id"));
+
+			pres.setMedicineId(rs.getInt("med_id"));
+			pres.setAmount(rs.getInt("amount"));
+			pres.setInstruction(rs.getString("instruction"));
+
 			pres.setStatus(rs.getString("status"));
 			prescripList.add(pres);
 		}		

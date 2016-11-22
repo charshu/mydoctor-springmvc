@@ -62,7 +62,7 @@ public class PharmacistController
 			model.addAttribute("prescript_id", prescript_id);
 			return "showPrescription";
 		}
-		
+	
 
 		@RequestMapping(value="/findPrescriptionHistoryForm",method=RequestMethod.POST)
 		public String ShowPrescriptionHistoryForm(ModelMap model, @Valid Prescription findprescriptionh, BindingResult result) throws SQLException
@@ -75,9 +75,6 @@ public class PharmacistController
 			model.addAttribute("prescriptionHistorys", prescriptionHistorys);
 			return "viewPrescriptionHistory";
 		}
-
-
-
 
 
 
@@ -107,13 +104,11 @@ public class PharmacistController
 		
 			
 		
-
-		
-
-		
-
-		
-		
-		
-		
+		@RequestMapping(value="/show-prescription-detail",method=RequestMethod.GET)
+		public String showPrescriptionDetail(ModelMap model) throws SQLException
+		{
+			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
+			return "showPrescriptionDetail";
+		}
 }
+
