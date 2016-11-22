@@ -80,13 +80,13 @@ public class DoctorServiceImpl {
 		return 0;
 	}
 	
-	public GeneralInfo findPatientGenInfo(String username,ViewInfo viewinfo) throws SQLException{
+	public GeneralInfo findPatientGenInfo(ViewInfo viewinfo) throws SQLException{
 		int record_id = doctorDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
 		System.out.println(record_id);
 		return doctorDaoImpl.retriveGenInfo(record_id);
 	}
 	
-	public Patient findPatientInfo(String username,ViewInfo viewinfo) throws SQLException{
+	public Patient findPatientInfo(ViewInfo viewinfo) throws SQLException{
 		int patient_id = doctorDaoImpl.retrievePatientId(viewinfo.getHospitalNumber());
 		System.out.println(patient_id);
 		return doctorDaoImpl.retriveInfo(patient_id);

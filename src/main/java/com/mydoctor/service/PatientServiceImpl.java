@@ -65,5 +65,20 @@ public class PatientServiceImpl
 			
 			return patientDaoImpl.editPatientInfo(name, surname, gender, birthdate, address, tel,email, patient_id);
 	}
+		
+		public int edit_info2(String hospitalNumber, Patient patient) throws SQLException {
+			int patient_id = patientDaoImpl.retrievePatientIdByHN(hospitalNumber);
+			System.out.println(patient_id);
+			String name = patient.getName();
+			String surname = patient.getSurname();
+			String gender = patient.getGender();
+			String birthdate = patient.getBirthdate();
+			String address = patient.getAddress();
+			String tel = patient.getTel();
+			String email = patient.getEmail();
+			
+			return patientDaoImpl.editPatientInfo(name, surname, gender, birthdate, address, tel,email, patient_id);
+	}
+
 
 }

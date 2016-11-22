@@ -1,15 +1,37 @@
 <%@ include file="common/header.jspf"%>
-<%@ include file="common/navigation-staff.jspf"%>
+<nav role="navigation" class="navbar navbar-default">
 
-<div class="container-fluid">
+    <div class="">
+        <a href="/login" class="navbar-brand">MyHospital    <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+    </div>
+   </nav>
+   
+  <div class="container-fluid">
 <div class="text-center">
-					<h2>Register Patient By Staff</h2><br>	
+					<h2>Patient Registration</h2><br>		
 				</div>	
  <div class="col-sm-4 col-md-offset-4">
   			
-	<form:form id="register-patient" method="post" action="register-patient" commandName="patient" class="form-horizontal">
-		
-		   <fieldset class="form-group inline">
+	<form:form id="register-patient-new" method="post" action="register-new" commandName="patient" class="form-horizontal"> 
+		  
+ 		<fieldset class="form-group inline">
+		  <div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">Username</span>
+			<form:input path="username1" type="text" class="form-control" placeholder="Set Username" aria-describedby="basic-addon1" required="required" /><br>
+			<form:errors path="username1" cssClass="text-warning" />
+		  </div>
+		  </fieldset>
+		  
+		  <fieldset class="form-group inline">
+		  <div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">Password</span>
+			<form:password path="password1"  class="form-control" placeholder="Set Password" aria-describedby="basic-addon1" /><br>
+			<form:errors path="password1" cssClass="text-warning" />
+		  </div>
+		  </fieldset>
+		  
+		  
+		 <fieldset class="form-group inline">
 		  <div class="input-group">
 		  <span class="input-group-addon" id="basic-addon1">SSN</span>
 			<form:input path="ssn" type="text" class="form-control" placeholder="SSN" aria-describedby="basic-addon1" /><br>
@@ -42,7 +64,7 @@
 		  </fieldset>
 		  
 		  	<fieldset class="form-group inline">
-				<form:label path="birthdate">Birth Date</form:label>
+				<form:label path="birthdate">Birthdate</form:label>
 				<div class="input-group date" id="datetimepicker1">
 					<form:input path="birthdate" type="text" class="form-control" />
 					<span class="input-group-addon"><span
@@ -98,3 +120,6 @@
 </body>
 </html>
 <%@ include file="common/footer.jspf"%>
+  
+  
+  <%@ include file="common/footer.jspf"%>

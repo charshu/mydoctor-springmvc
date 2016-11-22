@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.mydoctor.model.LoginBean;
+import com.mydoctor.model.Patient;
 import com.mydoctor.service.LoginServiceImpl;
 
 @Controller
@@ -81,4 +82,64 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String clickRegister(ModelMap model) {
+		return "chooseRegister";
+	}
+	
+	@RequestMapping(value = "/register-new", method = RequestMethod.GET)
+	public String showRegisterNew(ModelMap model) throws SQLException{
+		Patient patient = new Patient();
+		model.addAttribute("patient",patient);
+		return "registerNewPatient";
+	}
+	
+	@RequestMapping(value = "/register-new", method = RequestMethod.POST)
+	public String RegisterNew(ModelMap model, @Valid Patient patient, BindingResult result) throws SQLException {
+		System.out.println("[Request]" + patient.toString());
+		if(result.hasErrors()){
+			return "registerNewPatient";
+		}
+		
+		String hospitalNumber = loginServiceImpl.registerPatient(patient);
+		
+		System.out.println(hospitalNumber);
+		if(hospitalNumber != ""){
+			model.clear();
+			//model.addAttribute("patient",patient);
+			model.addAttribute("hospitalNumber", hospitalNumber);
+			return "showHospitalNumber_new";
+		} 
+		return "registerNewPatient";
+	}
+
+	@RequestMapping(value = "/register-old", method = RequestMethod.GET)
+	public String showRegisterOld(ModelMap model) throws SQLException{
+		Patient patient = new Patient();
+		model.addAttribute("patient",patient);
+		return "registerOldPatient";
+	}
+	
+	@RequestMapping(value = "/register-old", method = RequestMethod.POST)
+	public String RegisterOld(ModelMap model,@ModelAttribute("patient")Patient patient, BindingResult result) throws SQLException {
+		System.out.println("[Request]" + patient.toString());
+		if(result.hasErrors()){
+			return "registerOldPatient";
+		}
+		String hospitalNumber = patient.getHospitalNumber();
+		String ssn = patient.getSsn();
+		if(hospitalNumber != ""){
+			loginServiceImpl.createUserIdByHN(patient);
+			model.clear();
+			return "success";
+		}
+		else if(ssn != ""){
+			loginServiceImpl.createUserIdBySSN(patient);
+			model.clear();
+			return "success";
+		}
+		return "registerOldPatient";
+	}
+	
+	
 }
