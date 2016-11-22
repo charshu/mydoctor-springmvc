@@ -146,6 +146,10 @@ public class PatientController
 		{
 
 			appointmentServiceImpl.saveAppointment(validAppointment);
+			//send email
+			
+			
+			//
 			model.remove("suggestDateTimes");
 			model.remove("chosenDoctor");
 			model.remove("appointment");

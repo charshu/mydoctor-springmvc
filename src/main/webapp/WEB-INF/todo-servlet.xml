@@ -40,6 +40,7 @@
 		autowire="byName">
 		<property name="staffDaoImpl" ref="staffDaoImpl"></property>
 	</bean>
+
 		<bean id="AppointmentServiceImpl" class="com.mydoctor.service.AppointmentServiceImpl"
 		autowire="byName">
 		<property name="patientDaoImpl" ref="patientDaoImpl"></property>

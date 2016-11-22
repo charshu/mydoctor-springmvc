@@ -13,10 +13,17 @@ public class Appointment {
 	
 	//@Size(min=1 , message="please fill symptom")
 	private  String symptom;
-	private int doctorId;
-	private String patientName;
-	private String doctorName;
+	
 	private int patientId;
+	private String patientName;
+	private String patientSurname;
+	private String patientGender;
+	private String patientHospitalNumber;
+	
+	private int doctorId;
+	private String doctorName;
+	private String doctorSurname;
+	
 	private final DateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
 	
 	public int getId() {
@@ -26,6 +33,33 @@ public class Appointment {
 		this.id = id;
 	}
 	
+
+	public String getPatientGender() {
+		return patientGender;
+	}
+	public void setPatientGender(String patientGender) {
+		this.patientGender = patientGender;
+	}
+
+
+	public String getPatientHospitalNumber() {
+		return patientHospitalNumber;
+	}
+	public void setPatientHospitalNumber(String patientHospitalNumber) {
+		this.patientHospitalNumber = patientHospitalNumber;
+	}
+	public String getPatientSurname() {
+		return patientSurname;
+	}
+	public void setPatientSurname(String patientSurname) {
+		this.patientSurname = patientSurname;
+	}
+	public String getDoctorSurname() {
+		return doctorSurname;
+	}
+	public void setDoctorSurname(String doctorSurname) {
+		this.doctorSurname = doctorSurname;
+	}
 	public String getPatientName() {
 		return patientName;
 	}

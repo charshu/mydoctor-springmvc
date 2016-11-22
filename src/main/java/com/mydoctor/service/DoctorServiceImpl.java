@@ -4,7 +4,8 @@ package com.mydoctor.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import com.mydoctor.dao.DoctorDaoImpl;
-
+import com.mydoctor.model.Appointment;
+import com.mydoctor.model.DiagnosisBean;
 import com.mydoctor.model.Doctor;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
@@ -108,6 +109,21 @@ public class DoctorServiceImpl {
 		System.out.println(
 				"[SUCCESS] delete doctor_schedule " + "(doctor_id:" + doctor_id + ",schedule_id:" + schedule_id + ")");
 		return 1;
+	}
+
+	public ArrayList<Appointment> retrieveAllAppointmentInSchedule(String username)throws SQLException {
+		int doctor_id = doctorDaoImpl.retrieveId(username);
+		Schedule currentSchedule = doctorDaoImpl.retrieveCurrentSchedule(doctor_id);
+		
+		return doctorDaoImpl.retrieveAllAppointmentInSchedule(doctor_id,currentSchedule);
+	}
+
+	public int saveDiagnosis(DiagnosisBean diagnosisBean)throws SQLException  {
+		
+		int diagnosis_id = doctorDaoImpl.insertDiagnosis(diagnosisBean.getSymptom(),diagnosisBean.getDisease_id());
+		if(doctorDaoImpl.insertDiagnose(diagnosisBean.getDoctorId(),diagnosisBean.getPatientId(),diagnosis_id)>0)return 1;
+		return 0;
+		
 	}
 
 }

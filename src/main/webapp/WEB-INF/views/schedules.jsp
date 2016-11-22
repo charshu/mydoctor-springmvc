@@ -2,7 +2,7 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 <div class="container-fluid">
-
+<h2>Schedule</h2>
 <table class="table">
 <thead>
 		<tr>

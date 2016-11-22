@@ -20,16 +20,22 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.mydoctor.dao.DoctorDaoImpl;
+import com.mydoctor.model.Appointment;
+import com.mydoctor.model.DiagnosisBean;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
+import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
+import com.mydoctor.service.PatientServiceImpl;
 
 
 
@@ -39,6 +45,31 @@ public class DoctorController
 {
 		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
+		@Autowired
+		private AppointmentServiceImpl appointmentServiceImpl;
+		
+		@InitBinder
+		public void binder(WebDataBinder binder) {
+			binder.registerCustomEditor(Timestamp.class,
+		    new PropertyEditorSupport() {
+		        public void setAsText(String value) {
+		            try {
+		            	DateFormat df = new SimpleDateFormat("E dd-MM-YYYY HH:mm");
+		                Date parsedDate = df.parse(value);
+		                Calendar c = Calendar.getInstance(); 
+		                c.setTime(parsedDate); 
+		                c.add(Calendar.DATE, -7);
+		                c.add(Calendar.MONTH, -1);
+		                c.add(Calendar.YEAR, 1);
+		                parsedDate = c.getTime();
+		               System.out.println(df.format(parsedDate));
+		                setValue(new Timestamp(parsedDate.getTime()));
+		            } catch (ParseException e) {
+		                setValue(null);
+		            }
+		        }
+		    });
+		}
 		
 		@RequestMapping(value="/welcomeDoctor",method=RequestMethod.GET)
 		public String welcomeNurse(ModelMap model) throws SQLException 
@@ -70,28 +101,6 @@ public class DoctorController
 				return "addSchedule";
 		}
 		
-		@InitBinder
-		public void binder(WebDataBinder binder) {
-			binder.registerCustomEditor(Timestamp.class,
-		    new PropertyEditorSupport() {
-		        public void setAsText(String value) {
-		            try {
-		            	DateFormat df = new SimpleDateFormat("E dd-MM-YYYY HH:mm");
-		                Date parsedDate = df.parse(value);
-		                Calendar c = Calendar.getInstance(); 
-		                c.setTime(parsedDate); 
-		                c.add(Calendar.DATE, -7);
-		                c.add(Calendar.MONTH, -1);
-		                c.add(Calendar.YEAR, 1);
-		                parsedDate = c.getTime();
-		               System.out.println(df.format(parsedDate));
-		                setValue(new Timestamp(parsedDate.getTime()));
-		            } catch (ParseException e) {
-		                setValue(null);
-		            }
-		        }
-		    });
-		}
 		
 		@RequestMapping(value="/add-schedule",method=RequestMethod.POST)
 		public String addSchedule(ModelMap model,@Valid Schedule schedule, BindingResult result) throws SQLException 
@@ -138,12 +147,48 @@ public class DoctorController
 		    GeneralInfo generalInfo = doctorServiceImpl.findPatientGenInfo((String)model.get("username"),viewInfo);
 		    Patient patientInfo = doctorServiceImpl.findPatientInfo((String)model.get("username"),viewInfo);
 
-		   // System.out.println(generalInfo.getCongemital());
 		    model.addAttribute("generalInfo",generalInfo);
 		    model.addAttribute("patientInfo",patientInfo);
 
 			return "showPatientInfoAfterFind_doctor";	
 		}
+		
+		@RequestMapping(value="/patient-in-schedule",method=RequestMethod.GET)
+		public String showPatientInSlot(ModelMap model) throws SQLException 
+		{
+			model.addAttribute("appointments",doctorServiceImpl.retrieveAllAppointmentInSchedule((String)model.get("username")));
+			return "patientsInSchedule";
+		}
+
+		
+		@RequestMapping(value="/diagnose",method=RequestMethod.GET)
+		public String showDiagnosePage(@RequestParam("patientId")String patient_id
+				,@ModelAttribute("appointments")ArrayList<Appointment> appointments
+				,ModelMap model) throws SQLException 
+		{
+			DiagnosisBean diagnosis = new DiagnosisBean();
+			diagnosis.setPatientId(Integer.parseInt(patient_id));
+			diagnosis.setDoctorId(doctorServiceImpl.retrieveId((String)model.get("username")));
+			model.addAttribute("diagnosis",diagnosis);
+			return "addDiagnosis";
+		}
+		
+		@RequestMapping(value="/diagnose",method=RequestMethod.POST)
+		public String saveDiagnosis(ModelMap model,@ModelAttribute("diagnosis")DiagnosisBean diagnosisBean) throws SQLException 
+		{
+			if(diagnosisBean.getPatientId() == 0 || diagnosisBean.getDoctorId() == 0){
+				return "redirect:/patient-in-schedule";
+			}
+			if(doctorServiceImpl.saveDiagnosis(diagnosisBean) > 0){
+				return "redirect:/patient-in-schedule";
+			}
+			System.out.print("error");
+			return "redirect:/patient-in-schedule";
+			
+		}
+		
+		
+		
 		
 	
 }
