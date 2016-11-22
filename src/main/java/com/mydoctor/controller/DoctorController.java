@@ -156,7 +156,9 @@ public class DoctorController
 		@RequestMapping(value="/patient-in-schedule",method=RequestMethod.GET)
 		public String showPatientInSlot(ModelMap model) throws SQLException 
 		{
-			model.addAttribute("appointments",doctorServiceImpl.retrieveAllAppointmentInSchedule((String)model.get("username")));
+			ArrayList<Appointment> appointments = doctorServiceImpl.retrieveAllAppointmentInSchedule((String)model.get("username"));
+	
+			model.addAttribute("appointments",appointments);
 			return "patientsInSchedule";
 		}
 

@@ -114,7 +114,8 @@ public class DoctorServiceImpl {
 	public ArrayList<Appointment> retrieveAllAppointmentInSchedule(String username)throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
 		Schedule currentSchedule = doctorDaoImpl.retrieveCurrentSchedule(doctor_id);
-		
+		if(currentSchedule==null)return new ArrayList<Appointment>();
+		System.out.println("test: "+currentSchedule);
 		return doctorDaoImpl.retrieveAllAppointmentInSchedule(doctor_id,currentSchedule);
 	}
 
