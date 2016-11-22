@@ -32,8 +32,7 @@ public class MedicineDaoImpl {
 	public ArrayList<Medicine> retrieveAllMedicineIDandName(int prescript_id)throws SQLException{
 		String query = "Select prescription.med_id , medicine.medicine , prescription.amount , prescription.instruction from prescription " 
 						+ "inner join medicine ON prescription.med_id = medicine.med_id "
-				
-						+ "where prescript_id = ?"	;
+						+ "where prescription_id = ?"	;
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, prescript_id);
 		ResultSet rs = pstmt.executeQuery();
