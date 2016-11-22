@@ -10,6 +10,7 @@
             <li><a href="/doctor-profile">Profile</a></li>
             <li><a href="/list-schedule">Schedule</a></li>
             <li><a href="/patient-in-schedule">Diagnose</a></li>
+            <li><a href="/DoctorFindPrescriptionHistoryForm">PrescriptionHistory</a></li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right">

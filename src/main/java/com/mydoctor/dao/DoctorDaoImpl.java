@@ -53,6 +53,7 @@ public class DoctorDaoImpl {
 			doctor.setTel(rs.getString("tel"));
 		}
 		return doctor;
+
 	}
 	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
 		String query = "Select * from doctor ";
@@ -129,6 +130,7 @@ public class DoctorDaoImpl {
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 		while (rs.next()) {
+
 			Schedule schedule = new Schedule();
 			schedule.setId(rs.getInt("sch_id"));
 			schedule.setStart(rs.getTimestamp("start_date"));
@@ -137,6 +139,8 @@ public class DoctorDaoImpl {
 		}
 		return schedules;
 	}
+
+
 	public ArrayList<Schedule> retriveAllSchedules() throws SQLException {
 
 		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
@@ -155,6 +159,7 @@ public class DoctorDaoImpl {
 		}
 		return schedules;
 	}
+
 
 	public int retrieveId(String username) throws SQLException {
 		String query = "Select user_id from user where username = ? ";

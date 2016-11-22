@@ -32,9 +32,13 @@
 		autowire="byName">
 		<property name="patientDaoImpl" ref="patientDaoImpl"></property>
 	</bean>
-		<bean id="NurseServiceImpl" class="com.mydoctor.service.NurseServiceImpl"
-		autowire="byName">
-		<property name="nurseDaoImpl" ref="nurseDaoImpl"></property>
+	<bean id="NurseServiceImpl" class="com.mydoctor.service.NurseServiceImpl"
+	autowire="byName">
+	<property name="nurseDaoImpl" ref="nurseDaoImpl"></property>
+	</bean>
+	<bean id="PharmacistServiceImpl" class="com.mydoctor.service.PharmacistServiceImpl"
+	autowire="byName">
+	<property name="pharmacistDaoImpl" ref="pharmacistDaoImpl"></property>
 	</bean>
 	<bean id="StaffServiceImpl" class="com.mydoctor.service.StaffServiceImpl"
 		autowire="byName">
@@ -63,7 +67,13 @@
 		autowire="byName">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+
 	<bean name="staffDaoImpl" class="com.mydoctor.dao.StaffDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+<bean name="pharmacistDaoImpl" class="com.mydoctor.dao.PharmacistDaoImpl"
 		autowire="byName">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
@@ -76,7 +86,24 @@
 		<property name="password" value="admin" />
 	</bean>
 
-
+	<bean id="PrescriptionServiceImpl" class="com.mydoctor.service.PrescriptionServiceImpl"
+	autowire="byName">
+	<property name="prescriptionDaoImpl" ref="prescriptionDaoImpl"></property>
+	</bean>
+	
+	<bean name="prescriptionDaoImpl" class="com.mydoctor.dao.PrescriptionDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="MedicineServiceImpl" class="com.mydoctor.service.MedicineServiceImpl" autowire="byName">
+		<property name="MedicineDaoImpl" ref="MedicineDaoImpl"></property>
+	</bean>
+	
+	<bean name="MedicineDaoImpl" class="com.mydoctor.dao.MedicineDaoImpl"
+		autowire="byName">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 
 	<mvc:resources mapping="/webjars/**" location="/webjars/" />
 

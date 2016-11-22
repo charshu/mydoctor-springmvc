@@ -32,9 +32,6 @@ public class LoginController {
 		model.addAttribute("loginBean", loginBean);
 		return "login";
 	}
-
-
-
 		
 		
 		@RequestMapping(value="/login",method=RequestMethod.POST)
@@ -53,17 +50,24 @@ public class LoginController {
 					model.put("username",username);
 					model.remove("loginBean");
 						if("patient".equals(role)){
-							
 							return "welcomePatient";
 						}
 						else if("doctor".equals(role)){
 							return "welcomeDoctor";
 						}
+						else if("staff".equals(role)){
+							return "welcomeStaff";
+						}
 						else if("nurse".equals(role)){
 							return "welcomeNurse";
 						}
+
 						else if("staff".equals(role)){
 							return "welcomeStaff";
+						}
+						else if("pharmacist".equals(role)){
+							return "welcomePharmacist";
+
 						}
 				}
 				else
