@@ -1,5 +1,14 @@
 package com.mydoctor.controller;
 
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 import java.beans.PropertyEditorSupport;
@@ -39,6 +48,7 @@ import com.mydoctor.model.ViewInfo;
 
 import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
+import com.mydoctor.service.EmailServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 
 
@@ -53,6 +63,8 @@ public class PatientController
 		private AppointmentServiceImpl appointmentServiceImpl;
 		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
+		@Autowired
+		private EmailServiceImpl emailServiceImpl;
 		
 		@RequestMapping(value="/welcomePatient",method=RequestMethod.GET)
 		public String welcomeNurse(ModelMap model) throws SQLException 
@@ -146,6 +158,10 @@ public class PatientController
 		{
 
 			appointmentServiceImpl.saveAppointment(validAppointment);
+			
+			//email function
+			EmailServiceImpl.sendEmail();
+			//
 			model.remove("suggestDateTimes");
 			model.remove("chosenDoctor");
 			model.remove("appointment");

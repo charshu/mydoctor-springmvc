@@ -24,6 +24,9 @@
 	<bean id="LoginServiceImpl" class="com.mydoctor.service.LoginServiceImpl">
 		<property name="loginDaoImpl" ref="loginDaoImpl"></property>
 	</bean>
+	<bean id="EmailServiceImpl" class="com.mydoctor.service.LoginServiceImpl">
+		<property name="loginDaoImpl" ref="loginDaoImpl"></property>
+	</bean>
 	<bean id="DoctorServiceImpl" class="com.mydoctor.service.DoctorServiceImpl"
 		autowire="byName">
 		<property name="doctorDaoImpl" ref="doctorDaoImpl"></property>
