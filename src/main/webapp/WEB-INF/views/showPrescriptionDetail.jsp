@@ -22,7 +22,7 @@
 
 	  </tbody>
 	</table>
-	<a href="/complete-prescription?prescript_id=${prescript_id}" class="btn btn-success">Complete</a>
+	<a href="/complete-prescription?prescription_id=${prescription_id}" class="btn btn-success">Complete</a>
 </div>
 </div>
 

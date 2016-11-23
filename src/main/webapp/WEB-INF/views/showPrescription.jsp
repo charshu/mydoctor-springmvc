@@ -18,7 +18,7 @@
 		<tr>
 		   <td><c:out value="${no}"/></td>
 		   <td><c:out value="${prescript.prescriptionId}"/></td>
-		   <td><a href="/detail?prescript_id=${prescript.prescriptionId}" class="btn btn-danger"><c:out value="${prescript.status}"/></a></td>
+		   <td><a href="/detail?prescription_id=${prescript.prescriptionId}" class="btn btn-danger"><c:out value="${prescript.status}"/></a></td>
 		 </tr>
 		</c:forEach>
 

@@ -55,7 +55,7 @@ public class PrescriptionDaoImpl {
 //	}
 	
 	public int insertPrescription(int med_id, String amount, String instruction)throws SQLException{
-		String query = "INSERT INTO mydoctor.prescription (prescrip_id, med_id, amount, instruction) "
+		String query = "INSERT INTO mydoctor.prescription (prescription_id, med_id, amount, instruction) "
 				+ "VALUES ('0', ?, ?, ?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 		pstmt.setInt(1, med_id);
@@ -71,15 +71,15 @@ public class PrescriptionDaoImpl {
 
 	public ArrayList<Prescription> retriveAllwaitPrescription() throws SQLException {
 
-		String query = "SELECT prescrip_id , status  FROM prescription "
-				+ "WHERE prescription.status = ? group by prescrip_id";
+		String query = "SELECT *  FROM prescription "
+				+ "WHERE prescription.status = ? group by prescription_id";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1,"wait");
 		ResultSet rs = pstmt.executeQuery();	
 		ArrayList<Prescription> prescripList = new ArrayList<Prescription>();
 		while(rs.next()){
 			Prescription pres = new Prescription();
-			pres.setPrescriptionId(rs.getInt("prescrip_id"));
+			pres.setPrescriptionId(rs.getInt("prescription_id"));
 			pres.setMedicineId(rs.getInt("med_id"));
 			pres.setAmount(rs.getInt("amount"));
 			pres.setInstruction(rs.getString("instruction"));
@@ -91,11 +91,11 @@ public class PrescriptionDaoImpl {
 	}
 	public ArrayList<Prescription> retrievePrescriptionHistory(int userid)throws SQLException{
 		//Find Prescription
-		String query = "Select create_prescription.prescrip_id, medicine , amount , instruction FROM create_prescription "
-						+	"INNER JOIN diagnose ON create_prescription.diagnose_id = diagnose.diagnose_id "
-						+	"INNER JOIN prescription ON create_prescription.prescrip_id = prescription.prescrip_id  "
+
+		String query = "Select create_prescription.prescription_id, medicine , amount , instruction FROM create_prescription "
+						+	"INNER JOIN prescription ON create_prescription.prescription_id = prescription.prescription_id  "
 						+	"INNER JOIN medicine ON prescription.med_id = medicine.med_id  "
-						+	"WHERE diagnose.patient_id = ?";
+						+	"WHERE create_prescription.patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, userid);
 		ResultSet rs = pstmt.executeQuery();
@@ -103,7 +103,7 @@ public class PrescriptionDaoImpl {
 		while(rs.next()) {
 			Prescription prescriptionlist = new Prescription();
 			prescriptionlist.setUserid(userid);
-			prescriptionlist.setPrescriptionId(rs.getInt("prescrip_id"));
+			prescriptionlist.setPrescriptionId(rs.getInt("prescription_id"));
 			prescriptionlist.setMedicinename(rs.getString("medicine"));
 			prescriptionlist.setAmount(rs.getInt("amount"));
 			prescriptionlist.setInstruction(rs.getString("instruction"));
@@ -115,7 +115,7 @@ public class PrescriptionDaoImpl {
 	public void updateStatus(int prescription_id) throws SQLException{
 		
 		String query = "UPDATE prescription SET status = ?"
-				+" WHERE prescription.prescrip_id = ?";
+				+" WHERE prescription.prescription_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1,"Complete");
 		pstmt.setInt(2,prescription_id);
@@ -124,7 +124,7 @@ public class PrescriptionDaoImpl {
 	}
 	
 	public int insertCreatePrescription(int doctor_id, int patient_id, int prescription_id)throws SQLException{
-		String query = "INSERT INTO mydoctor.createprescription (doctor_id, patient_id, prescrip_id)"
+		String query = "INSERT INTO mydoctor.createprescription (doctor_id, patient_id, prescription_id)"
 				+ "VALUES (?, ?, ?);";
 	
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
