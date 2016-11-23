@@ -4,8 +4,11 @@ package com.mydoctor.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -58,19 +61,17 @@ public class PrescriptionController
 
 	    @RequestMapping(value = "/add-medicine", method = RequestMethod.GET)
 	    public String showAddMedicinePage(ModelMap model) throws SQLException {
-	    	ArrayList<MedicineBean> medicineBeanOption = medicineServiceImpl.retrieveAllMedicine();
 	    	
-//	    	ArrayList<String> medName = new ArrayList<String>();
-//	    	for(int i=0; i<medicineBean.size(); i++){
-//	    		medName.add(medicineBean.get(i).getName());
-//	    		System.out.println(medicineBean.get(i).getName());
-//	    		System.out.println(medName.get(i));
-//	    	}
+	    	
+	    	ArrayList<MedicineBean> medicineBean = medicineServiceImpl.retrieveAllMedicine();
 
-	    	MedicineBean medicineBean = new MedicineBean();
-	    	model.addAttribute("medicineBean", medicineBean);
-	        model.addAttribute("medicineBeanOption", medicineBeanOption);
-	        //model.addAttribute("medName", medName);
+			Map<Integer,String> medicineMap = new LinkedHashMap<Integer,String>();
+	    	for(int i=0; i<medicineBean.size(); i++){
+	    		medicineMap.put(medicineBean.get(i).getId(), medicineBean.get(i).getName());
+	    	}
+	        model.addAttribute("medicineMap", medicineMap);
+	        model.addAttribute("medicineBean", new MedicineBean());
+
 	        return "addMedicine";
 	    }
 
@@ -80,6 +81,7 @@ public class PrescriptionController
 	        if (result.hasErrors())
 	            return "addMedicine";
 
+	        prescriptionServiceImpl.setMedicineName(medicineBean, medicineServiceImpl);
 	        prescriptionServiceImpl.addMedicineBean(medicineBean);
 	        model.clear();// to prevent request parameter "name" to be passed
 	        return "redirect:/add-prescription";
@@ -113,7 +115,17 @@ public class PrescriptionController
 	    
 	    @RequestMapping(value = "/see-medicine-list", method = RequestMethod.GET)
 	    public String SeeMedicineList(ModelMap model) throws SQLException {
+	    	
+	    	ArrayList<MedicineBean> medicineBean = medicineServiceImpl.retrieveAllMedicine();
+	    	
+	    	Map referenceData = new HashMap();
 
+			Map<Integer,String> medicine = new LinkedHashMap<Integer,String>();
+	    	for(int i=0; i<medicineBean.size(); i++){
+	    		medicine.put(medicineBean.get(i).getId(), medicineBean.get(i).getName());
+	    	}
+			referenceData.put("medicineBean", medicine);
+	    	
 	        model.addAttribute("medicineBean", medicineServiceImpl.retrieveAllMedicine());
 	        
 	        return "seeMedicineList";

@@ -21,6 +21,7 @@ public class PrescriptionServiceImpl {
 
 	private PrescriptionDaoImpl prescriptionDaoImpl;
 	private MedicineDaoImpl medicineDaoImpl;
+	private MedicineServiceImpl medicineServiceImpl;
 	private static ArrayList<Prescription> prescriptionHistory = new ArrayList<Prescription>();
 	private static List<MedicineBean> medicineBeans = new ArrayList<MedicineBean>();
 
@@ -75,12 +76,6 @@ public class PrescriptionServiceImpl {
 		}
 	}
 
-
-//	public Prescription retrievePrescription(String username) throws SQLException {
-//
-//		return prescriptionDaoImpl.retrievePrescription(username);
-//	}
-
 	public ArrayList<Prescription> retrieveAllPrescription() throws SQLException {
 		return prescriptionDaoImpl.retriveAllwaitPrescription();
 
@@ -99,12 +94,6 @@ public class PrescriptionServiceImpl {
 
 	}
 
-	// public Prescription createPrescription(String prescriptionId,String
-	// medicineId,String medicine,String instruction, String amount) {
-	// return new Prescription(prescriptionId, medicineId, medicine,
-	// instruction, amount);
-	// }
-
 
 	public int savePrescription(int doctor_id, int patient_id, int med_id, String amount, String instruction) throws SQLException{
 		System.out.println("pass1");
@@ -120,6 +109,17 @@ public class PrescriptionServiceImpl {
 		if(prescriptionDaoImpl.insertPrescription(med_id, amount, instruction) > 0)return 1;
 		
 		return 0;
+	}
+	
+	public MedicineBean setMedicineName(MedicineBean medicineBean, MedicineServiceImpl medicineServiceImpl) throws SQLException{
+		ArrayList<MedicineBean> medicineBeanList = medicineServiceImpl.retrieveAllMedicine();
+
+		int id = medicineBean.getId();
+		
+		String medicineName = medicineBeanList.get(id-1).getName();
+		
+		medicineBean.setName(medicineName);
+		return medicineBean;
 	}
 
 }
