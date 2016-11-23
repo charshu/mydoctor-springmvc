@@ -106,12 +106,7 @@ public class PharmacistController
 		}
 
 		
-		@RequestMapping(value="/show-prescription-detail",method=RequestMethod.GET)
-		public String showPrescriptionDetail(ModelMap model) throws SQLException
-		{
-			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
-			return "showPrescriptionDetail";
-		}
+		
 
 }
 

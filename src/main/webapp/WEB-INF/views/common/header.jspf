@@ -6,6 +6,20 @@
 <title>MyHospital Application</title>
 <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
  <link href="webjars/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+<style>
+.background {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-image: url("images/bg.jpg");
+	background-size: cover;
+	top: 0;
+}
+</style>
+
 </head>
 
 <body>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
 import com.mydoctor.service.NurseServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
