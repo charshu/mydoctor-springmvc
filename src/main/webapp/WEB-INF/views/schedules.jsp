@@ -16,12 +16,12 @@
        <td>${schedule.id}</td>
        <td>${schedule.printStart()}</td>
        <td>${schedule.printEnd()}</td>
-       <td><a href="/delete-schedule?schedule_id=${schedule.id}" class="btn btn-danger">Delete</a></td>
+       <td><a href="/delete-schedule?schedule_id=${schedule.id}" class="btn btn-danger"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Delete</a></td>
     </tr>
 </c:forEach>
 
 </table>
-<a href="/add-schedule" class="btn btn-success">Add</a>
+<a href="/add-schedule" class="btn btn-success"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Add</a>
 </div>
 
 

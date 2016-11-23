@@ -72,7 +72,7 @@ public class DoctorDaoImpl {
 		//System.out.print(doctors.size());
 		return doctors;
 	}
-	public Schedule retriveSchedule(int schedule_id) throws SQLException {
+	public Schedule retrieveSchedule(int schedule_id) throws SQLException {
 		String query = "Select * from schedule where schedule_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, schedule_id);

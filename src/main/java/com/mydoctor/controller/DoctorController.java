@@ -38,7 +38,7 @@ import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
 import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
-
+import com.mydoctor.service.NurseServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 
 import com.mydoctor.service.PrescriptionServiceImpl;
@@ -51,9 +51,11 @@ public class DoctorController
 		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
 		@Autowired
-		private AppointmentServiceImpl appointmentServiceImpl;
+		private NurseServiceImpl nurseServiceImpl;
 		@Autowired
 		private PrescriptionServiceImpl prescriptionServiceImpl;
+		@Autowired
+		private PatientServiceImpl patientServiceImpl;
 
 
 		
@@ -135,8 +137,12 @@ public class DoctorController
 		public String deleteSchedule(ModelMap model,@RequestParam String schedule_id) throws SQLException 
 		{
 				System.out.println("[Request Delete]" + schedule_id);
-	
+				Schedule schedule = doctorServiceImpl.retrieveSchedule(Integer.parseInt(schedule_id));
+				patientServiceImpl.postponeAppointmentInSchedule(schedule);
 				doctorServiceImpl.deleteSchedule((String)model.get("username"), Integer.parseInt(schedule_id));	
+				//send email warn
+				
+				//
 				return "redirect:/list-schedule";
 				
 		}
@@ -186,7 +192,10 @@ public class DoctorController
 			DiagnosisBean diagnosis = new DiagnosisBean();
 			diagnosis.setPatientId(Integer.parseInt(patient_id));
 			diagnosis.setDoctorId(doctorServiceImpl.retrieveId((String)model.get("username")));
+			String patient_hospitalNumber = patientServiceImpl.retrieveHospitalNumberById(Integer.parseInt(patient_id));
+			GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfoByHospitalNumber(patient_hospitalNumber);
 			model.addAttribute("diagnosis",diagnosis);
+			model.addAttribute("generalInfo", generalInfo);
 			return "addDiagnosis";
 		}
 		

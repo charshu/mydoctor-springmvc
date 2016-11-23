@@ -56,7 +56,16 @@ public class PatientDaoImpl {
 		else
 			return -1;
 	}
-
+	public String retrieveHospitalNumberById(int patient_id)throws SQLException{
+		String query = "Select hospitalNumber from patient where patient_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		ResultSet resultSet = pstmt.executeQuery();
+		if (resultSet.next())
+			return resultSet.getString(1);
+		else
+			return null;
+	}
 	public int getPatientPasswordLength(String username) throws SQLException {
 		String query = "Select password from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -123,8 +132,9 @@ public class PatientDaoImpl {
 		pstmt.setInt(1, patient_id);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+		Appointment appointment = new Appointment();
 		while (rs.next()) {
-			Appointment appointment = new Appointment();
+			if(!"waiting".equals(rs.getString("status")))continue;
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setPatientName(rs.getString("patient_name"));
 			appointment.setDoctorName(rs.getString("doctor_name"));
@@ -221,7 +231,17 @@ public class PatientDaoImpl {
 		return -1;
 		
 	}
-	
+	public int setStatusAppointment(Timestamp start,Timestamp end,String status)throws SQLException{
+		String query = "Update appointment Set appointment.status = ? "
+				+ "Where appointment.date BETWEEN ? and ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, status);
+		pstmt.setString(2, "start");
+		pstmt.setString(3, "end");
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		return updateCount;
+	}
 	public int editPatientInfo(String name, String surname, String gender, String birth_date, String address, String tel, String email, int patient_id) throws SQLException {
 		String query = "Update patient Set name = ?, surname = ?, gender = ?, birth_date = ?, address = ?, tel = ?, email = ? Where patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);

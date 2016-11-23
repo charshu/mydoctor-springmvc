@@ -86,8 +86,9 @@ public class NurseController
 			if(result.hasErrors()){
 				return "viewPatientInfo_nurse";
 			}
-		    GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfo((String)model.get("username"),viewInfo);
-		    Patient patientInfo = nurseServiceImpl.findPatientInfo((String)model.get("username"),viewInfo);
+			
+		    GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfo(viewInfo);
+		    Patient patientInfo = nurseServiceImpl.findPatientInfo(viewInfo);
 
 		   // System.out.println(generalInfo.getCongemital());
 		    model.addAttribute("generalInfo",generalInfo);
