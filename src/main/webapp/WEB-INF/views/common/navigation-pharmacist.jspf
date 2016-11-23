@@ -4,7 +4,7 @@
         <a href="http://www.google.com" class="navbar-brand">MyDoctor</a>
     </div>
 
-    <div class="navbar-collapse">
+    <div class="navbar-collapse navbar-inverse">
         <ul class="nav navbar-nav">
             <li><a href="/login">Home</a></li>
             <li><a href="/patient-profile">Profile</a></li>
@@ -13,7 +13,7 @@
   
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/logout">Logout  <span class="glyphicon glyphicon-log-out"></a></li>
         </ul>
     </div>
 
