@@ -11,6 +11,7 @@
    	<th>Surname</th>
    	<th>Department</th>
    	<th>Tel</th>
+   
     </tr>
   </thead>
   <tbody>
@@ -29,6 +30,7 @@
 <thead>
 	<tr>
 		<th>Time</th>
+		<th></th>
 	</tr>
 </thead>
 <c:forEach items="${suggestDateTimes}" var="suggestDateTime" varStatus="loop">

@@ -58,6 +58,10 @@ public class DoctorServiceImpl {
 		int doctor_id = retrieveId(username);
 		return doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
 	}
+	public ArrayList<Schedule> retriveAllSchedulesStatus(String username,String status) throws SQLException {
+		int doctor_id = retrieveId(username);
+		return doctorDaoImpl.retriveAllSchedulesStatus(doctor_id,status);
+	}
 
 	public ArrayList<Schedule> retriveAllDepartmentSchedules(String department) throws SQLException {
 		return doctorDaoImpl.retriveAllDepartmentSchedules(department);
@@ -100,7 +104,9 @@ public class DoctorServiceImpl {
 		System.out.println(patient_id);
 		return doctorDaoImpl.retriveInfo(patient_id);
 	}
-	
+	public int setStatusSchedule(Schedule schedule,String status)throws SQLException{
+		return doctorDaoImpl.setStatusSchedule(schedule.getId(),status);
+	}
 	public int deleteSchedule(String username, int schedule_id) throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
 

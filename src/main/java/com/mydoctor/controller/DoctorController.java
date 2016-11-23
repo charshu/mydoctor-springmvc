@@ -69,7 +69,7 @@ public class DoctorController
 		                Date parsedDate = df.parse(value);
 		                Calendar c = Calendar.getInstance(); 
 		                c.setTime(parsedDate); 
-		                c.add(Calendar.DATE, -7);
+		               // c.add(Calendar.DATE, -7);
 		                c.add(Calendar.MONTH, -1);
 		                c.add(Calendar.YEAR, 1);
 		                parsedDate = c.getTime();
@@ -104,14 +104,17 @@ public class DoctorController
 		{
 				System.out.println((String)model.get("username"));
 				model.addAttribute("schedules",doctorServiceImpl.retriveAllSchedules((String)model.get("username")));	
+				ArrayList<Schedule> requestCancelSchedules = doctorServiceImpl.retriveAllSchedulesStatus((String)model.get("username"),"request cancel");
+				model.addAttribute("requestCancelSchedules", requestCancelSchedules);
 				// schedules -> key , doctor -> object
-				return "schedules";
+				return "showSchedules";
 		}
 		@RequestMapping(value="/add-schedule",method=RequestMethod.GET)
 		public String showAddSchedulePage(ModelMap model) throws SQLException 
 		{
 				System.out.println((String)model.get("username"));
 				model.addAttribute("schedule",new Schedule());
+				
 				return "addSchedule";
 		}
 		
@@ -133,16 +136,25 @@ public class DoctorController
 				return "addSchedule";
 				
 		}
-		@RequestMapping(value="/delete-schedule",method=RequestMethod.GET)
-		public String deleteSchedule(ModelMap model,@RequestParam String schedule_id) throws SQLException 
+		@RequestMapping(value="/cancel-schedule",method=RequestMethod.GET)
+		public String cancelSchedule(ModelMap model,@RequestParam String schedule_id) throws SQLException 
 		{
-				System.out.println("[Request Delete]" + schedule_id);
+				//System.out.println("[Request Delete]" + schedule_id);
 				Schedule schedule = doctorServiceImpl.retrieveSchedule(Integer.parseInt(schedule_id));
-				patientServiceImpl.postponeAppointmentInSchedule(schedule);
-				doctorServiceImpl.deleteSchedule((String)model.get("username"), Integer.parseInt(schedule_id));	
-				//send email warn
+				doctorServiceImpl.setStatusSchedule(schedule,"request cancel");
+				//patientServiceImpl.postponeAppointmentInSchedule(schedule);
+	
+				return "redirect:/list-schedule";
 				
-				//
+		}
+		@RequestMapping(value="/available-schedule",method=RequestMethod.GET)
+		public String availableSchedule(ModelMap model,@RequestParam String schedule_id) throws SQLException 
+		{
+				//System.out.println("[Request Delete]" + schedule_id);
+				Schedule schedule = doctorServiceImpl.retrieveSchedule(Integer.parseInt(schedule_id));
+				doctorServiceImpl.setStatusSchedule(schedule,"available");
+				//patientServiceImpl.postponeAppointmentInSchedule(schedule);
+	
 				return "redirect:/list-schedule";
 				
 		}

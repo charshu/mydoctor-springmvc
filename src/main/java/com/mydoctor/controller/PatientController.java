@@ -115,7 +115,7 @@ public class PatientController
 				model.addAttribute("suggestDateTimes", appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id)));
 				model.put("chosenDoctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
 				
-				return "availableTime";
+				return "showAvailableTime";
 				
 		}
 		@RequestMapping(value="/confirm-time",method=RequestMethod.GET)

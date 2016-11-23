@@ -120,7 +120,7 @@ public class PatientDaoImpl {
 	}
 
 	public ArrayList<Appointment> retrieveAllAppointments(int patient_id) throws SQLException {
-		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom "
+		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom,appointment.status "
 				+ "FROM make_appointment "
 				+ "INNER JOIN appointment "
 				+ "INNER JOIN doctor "
@@ -140,6 +140,7 @@ public class PatientDaoImpl {
 			appointment.setDoctorName(rs.getString("doctor_name"));
 			appointment.setDate(rs.getTimestamp("date"));
 			appointment.setSymptom(rs.getString("symptom"));
+			appointment.setStatus(rs.getString("status"));
 			appointments.add(appointment);
 
 		}
@@ -167,11 +168,12 @@ public class PatientDaoImpl {
 
 	}
 
-	public int insertAppointment(Timestamp date, String symptom) throws SQLException {
-		String query = "INSERT INTO mydoctor.appointment (app_id, date, symptom) VALUES (NULL, ?, ?);";
+	public int insertAppointment(Timestamp date, String symptom,String status) throws SQLException {
+		String query = "INSERT INTO mydoctor.appointment (app_id, date, symptom,status) VALUES (NULL, ?, ? ,?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		pstmt.setTimestamp(1, date);
 		pstmt.setString(2, symptom);
+		pstmt.setString(3, status);
 		pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if (rs.next()) {
