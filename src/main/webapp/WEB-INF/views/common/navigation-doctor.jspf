@@ -1,7 +1,7 @@
-<nav role="navigation" class="navbar navbar-inverse">
+<nav role="navigation" class="navbar navbar-default">
 
     <div class="">
-        <a href="/welcomeDoctor" class="navbar-brand">MyDoctor <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+        <a href="/welcomeDoctor" class="navbar-brand">MyHospital <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
 
     <div class="navbar-collapse">
@@ -9,10 +9,13 @@
             <li><a href="/welcomeDoctor">Home</a></li>
             <li><a href="/doctor-profile">Profile</a></li>
             <li><a href="/list-schedule">Schedule</a></li>
+            <li><a href="/patient-in-schedule">Diagnose</a></li>
             <li><a href="/DoctorFindPrescriptionHistoryForm">PrescriptionHistory</a></li>
+             <li><a href="/add-prescription">Add Prescription</a></li>
+
         </ul>
-        <ul class="nav navbar-nav navbar-right ">
-        <li><a href="/logout">Logout   <span class="glyphicon glyphicon-log-out">  </a></li>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/login">Logout</a></li>
         </ul>
     </div>
 

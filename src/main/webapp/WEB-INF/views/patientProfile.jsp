@@ -20,18 +20,52 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>${username}</td>
-      <td>${patient.name}</td>
-      <td>${patient.surname}</td>
-      <td>${patient.gender}</td>
-      <td>${patient.ssn}</td>
-      <td>${patient.birthdate}</td>
-      <td>${patient.address}</td>
-      <td>${patient.tel}</td>
-      <td>${patient.email}</td>
-      <td>${patient.hospitalNumber}</td>
-    </tr>
+     <tr>
+     <td>${username}</td>
+     <form:form id="edit-info" method="post" action="edit-info" commandName="new_patient" class="form-horizontal"> 
+    
+       	
+       <td><fieldset class="form-group">
+				<form:input path="name" type="text" class="form-control"  required="required" style="height:40px;"/><br>
+				<form:errors path="name" cssClass="text-warning" />
+		</fieldset></td>
+		
+		  <td><fieldset class="form-group">
+				<form:input path="surname" type="text" class="form-control" required="required" style="height:40px;"/><br>
+				<form:errors path="surname" cssClass="text-warning" />
+		</fieldset></td>
+		
+		  <td><fieldset class="form-group">
+				<form:input path="gender" type="text" class="form-control" required="required" style="height:40px;"/><br>
+				<form:errors path="gender" cssClass="text-warning" />
+		</fieldset></td>
+		
+		  <td>${patient.ssn}</td>
+		
+		  <td><fieldset class="form-group">
+				<form:input path="birthdate" type="text" class="form-control" required="required" style="height:40px;" /><br>
+				<form:errors path="birthdate" cssClass="text-warning" />
+		</fieldset></td>
+		
+		<td><fieldset class="form-group">
+				<form:textarea path="address" type="text" class="form-control" required="required" style="height:80px;"/><br>
+				<form:errors path="address" cssClass="text-warning" />
+		</fieldset></td>
+		
+		<td><fieldset class="form-group">
+				<form:input path="tel" type="text" class="form-control" required="required" style="height:40px;"/><br>
+				<form:errors path="tel" cssClass="text-warning" />
+		</fieldset></td>
+		
+		<td><fieldset class="form-group">
+				<form:textarea path="email" type="text" class="form-control" required="required" style="height:80px;" /><br>
+				<form:errors path="email" cssClass="text-warning" />
+		</fieldset></td>
+		<td>${patient.hospitalNumber}</td>
+		<button class="btn btn-success">Confirm Edit Profile</button>
+		</form:form>
+     </tr>
+  
   
   </tbody>
 </table>

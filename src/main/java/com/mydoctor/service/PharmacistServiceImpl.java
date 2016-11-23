@@ -9,6 +9,7 @@ import com.mydoctor.model.Pharmacist;
 import com.mydoctor.model.Prescription;
 
 
+
 public class PharmacistServiceImpl
 {
 		
@@ -27,13 +28,11 @@ public class PharmacistServiceImpl
 			return pharmacistDaoImpl.retrievePharmacist(username);
 		}
 		
+
 		public Prescription createPrescription(int prescriptionId,int medicineId,String medicine,String instruction, int amount,String status) {
 			return new Prescription(prescriptionId, medicineId, medicine, instruction, amount,status);
 		}
 		
-		
-		
-		
-		
+
 
 }

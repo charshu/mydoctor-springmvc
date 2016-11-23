@@ -3,13 +3,11 @@ package com.mydoctor.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.util.List;
 import com.mydoctor.dao.MedicineDaoImpl;
-import com.mydoctor.dao.PharmacistDaoImpl;
-import com.mydoctor.dao.PrescriptionDaoImpl;
 import com.mydoctor.model.Medicine;
-import com.mydoctor.model.Pharmacist;
-import com.mydoctor.model.Prescription;
+import com.mydoctor.model.MedicineBean;
+
 
 
 public class MedicineServiceImpl
@@ -25,17 +23,17 @@ public class MedicineServiceImpl
 			this.medicineDaoImpl = medicineDaoImpl;
 		}
 		
-		public Medicine retrieveMedicine(String medicine_id)throws SQLException{
+		public MedicineBean retrieveMedicine(String medicine_id)throws SQLException{
 			return medicineDaoImpl.retrieveMedicine(medicine_id);
 		}
-		public ArrayList<Medicine> retrieveAllMedicine(int prescript_id)throws SQLException{
-			
-			return medicineDaoImpl.retrieveAllMedicineIDandName(prescript_id);
+		public ArrayList<Medicine> retrieveAllMedicine(int prescription_id)throws SQLException{
+			return medicineDaoImpl.retrieveAllMedicineIDandName(prescription_id);
 		}
 		
-//		public String getMedicineName(String medicine_id)throws SQLException{
-//			return medicineDaoImpl.
-//		}
+		public List<MedicineBean> retrieveAllMedicine()throws SQLException{
+			//return medicineDaoImpl.getAllMedicine();
+			return null;
+		}
 		
 		
 //		public Prescription createPrescription(String prescriptionId,String medicineId,String medicine,String instruction, String amount) {

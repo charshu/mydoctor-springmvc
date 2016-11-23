@@ -2,26 +2,23 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 <div class="container-fluid">
-<table class="table table-striped">
+<h2>Profile</h2>
+<table class="table table-reflow">
   <thead>
     <tr>
-      <th>Your profile</th>
-      <th>username</th>
-   	<th>name</th>
-   	<th>surname</th>
-   	<th>department</th>
-   	<th>tel</th>
+   	<th>Name</th>
+   	<th>Surname</th>
+   	<th>Department</th>
+   	<th>Tel</th>
 
     </tr>
   </thead>
   <tbody>
     <tr>
-    	<th></th>
-      <td>${username}</td>
-      <td>${patient.name}</td>
-      <td>${patient.surname}</td>
-      <td>${patient.department}</td>
-      <td>${patient.tel}</td>
+      <td>${doctor.name}</td>
+      <td>${doctor.surname}</td>
+      <td>${doctor.department}</td>
+      <td>${doctor.tel}</td>
 
     </tr>
   

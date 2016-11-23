@@ -6,17 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
-import javax.validation.Valid;
 
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Doctor;
+
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
+
 import com.mydoctor.model.Schedule;
 import com.mysql.jdbc.Statement;
 
@@ -86,7 +82,7 @@ public class DoctorDaoImpl {
 		}
 		return null;
 	}
-
+	
 	public ArrayList<Schedule> retriveAllDoctorSchedules(int doctor_id) throws SQLException {
 		System.out.println("retrieve All Doctor Schedules");
 		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
@@ -105,6 +101,24 @@ public class DoctorDaoImpl {
 		}
 		
 		return schedules;
+	}
+	public Schedule retrieveCurrentSchedule(int doctor_id) throws SQLException {
+		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
+				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
+				+ "WHERE doctor_id = ? and CURRENT_TIMESTAMP BETWEEN schedule.start_date and schedule.end_date";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		ResultSet rs = pstmt.executeQuery();
+		Schedule schedule = new Schedule();
+		if (rs.next()) {
+			schedule.setId(rs.getInt("sch_id"));
+			schedule.setStart(rs.getTimestamp("start_date"));
+			schedule.setEnd(rs.getTimestamp("end_date"));
+			return schedule;
+			
+		}
+		return null;
+		
 	}
 	public ArrayList<Schedule> retriveAllDepartmentSchedules(String department) throws SQLException {
 
@@ -126,7 +140,6 @@ public class DoctorDaoImpl {
 		return schedules;
 	}
 
-
 	public ArrayList<Schedule> retriveAllSchedules() throws SQLException {
 
 		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
@@ -147,7 +160,9 @@ public class DoctorDaoImpl {
 	}
 
 
-	public int retrieveId(String username) throws SQLException {
+
+	public int retrieveId(String username)throws SQLException {
+
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, username);
@@ -159,9 +174,24 @@ public class DoctorDaoImpl {
 
 	}
 
-	public int insertSchedule(Schedule schedule) throws SQLException {
-		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) " + "VALUES ('0', ?, ?);";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	public String retrieveDoctorNameByID(int doctor_id)throws SQLException {
+		//////////pls check attribute of doctor name in database 
+		String query = "Select name from doctor where doctor_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return rs.getString("name");
+		}
+		return "null";
+
+	}
+	
+	public int insertSchedule(Schedule schedule)throws SQLException{
+		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) "
+				+ "VALUES ('0', ?, ?);";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+
 		pstmt.setTimestamp(1, schedule.getStart());
 		pstmt.setTimestamp(2, schedule.getEnd());
 		pstmt.executeUpdate();
@@ -273,6 +303,77 @@ public class DoctorDaoImpl {
 			return updateCount;
 		return -1;
 	}
+
+	public ArrayList<Appointment> retrieveAllAppointmentInSchedule(int doctor_id,Schedule currentSchedule)throws SQLException {
+		String query = "SELECT patient.patient_id,patient.name as patient_name,patient.surname as patient_surname,"
+				+ "patient.gender as patient_gender,patient.hospitalNumber as patient_hospitalNumber,"
+				+ "doctor.doctor_id,doctor.name as doctor_name ,doctor.surname as doctor_surname ,"
+				+ "appointment.app_id,appointment.date,appointment.symptom "
+				+ "FROM make_appointment "
+				+ "INNER JOIN appointment "
+				+ "INNER JOIN doctor "
+				+ "INNER JOIN patient "
+				+ "WHERE patient.patient_id=make_appointment.patient_id "
+				+ "and make_appointment.app_id = appointment.app_id "
+				+ "and doctor.doctor_id=make_appointment.doctor_id "
+				+ "and make_appointment.doctor_id = ? and appointment.date BETWEEN ? and ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		pstmt.setTimestamp(2, currentSchedule.getStart());
+		pstmt.setTimestamp(3, currentSchedule.getEnd());
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+		while (rs.next()) {
+			Appointment appointment = new Appointment();
+			appointment.setId(rs.getInt("app_id"));
+			appointment.setDate(rs.getTimestamp("date"));
+			appointment.setSymptom(rs.getString("symptom"));
+			
+			appointment.setPatientId(rs.getInt("patient_id"));
+			appointment.setPatientName(rs.getString("patient_name"));
+			appointment.setPatientSurname(rs.getString("patient_surname"));
+			appointment.setPatientGender(rs.getString("patient_gender"));
+			appointment.setPatientHospitalNumber(rs.getString("patient_hospitalNumber"));
+			
+			appointment.setDoctorId(rs.getInt("doctor_id"));
+			appointment.setDoctorName(rs.getString("doctor_name"));
+			appointment.setDoctorSurname(rs.getString("doctor_surname"));
+			appointments.add(appointment);
+
+		}
+		return appointments;
+
+	}
+
+	public int insertDiagnosis(String disease_id,String symptom)throws SQLException {
+		String query = "INSERT INTO mydoctor.diagnosis (disease_id, symptom) VALUES ( ?, ?)";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		pstmt.setString(1, disease_id);
+		pstmt.setString(2, symptom);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if (updateCount > 0)
+			return updateCount;
+		return -1;
+	}
+
+	public int insertDiagnose(int doctorId, int patientId,int diagnosis_id) throws SQLException {
+		
+		String query = "INSERT INTO mydoctor.diagnose (patient_id,doctor_id,diagnosis_id) VALUES ( ?, ?,?)";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patientId);
+		pstmt.setInt(2, doctorId);
+		pstmt.setInt(3, diagnosis_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if (updateCount > 0)
+			return updateCount;
+		return -1;
+	}
+	
+	
+
+	
 	
 
 }
