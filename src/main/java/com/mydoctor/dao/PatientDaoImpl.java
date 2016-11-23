@@ -34,6 +34,17 @@ public class PatientDaoImpl {
 		else
 			return -1;
 	}
+	
+	public int retrievePatientIdByHN(String hospitalNumber) throws SQLException {
+		String query = "Select patient_id from patient where hospitalNumber = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, hospitalNumber);
+		ResultSet resultSet = pstmt.executeQuery();
+		if (resultSet.next())
+			return resultSet.getInt("patient_id");
+		else
+			return -1;
+	}
 
 	public int retrieveIdByUserId(int user_id) throws SQLException {
 		String query = "Select patient_id from patient where user_id = ? ";
@@ -57,6 +68,8 @@ public class PatientDaoImpl {
 			return 0;
 
 	}
+	
+
 
 	public Patient retrievePatient(int patient_id) throws SQLException {
 		String query = "Select * from patient where patient_id = ? ";

@@ -65,19 +65,11 @@ public class PatientController
 		public String profile(ModelMap model) throws SQLException 
 		{
 			Patient patient = patientServiceImpl.retrievePatient((String)model.get("username"));
-				model.addAttribute("patient",patient);
+				model.addAttribute("patient",patient); //for ssn,hospitalNumber
 				model.addAttribute("new_patient",patient);
 				return "patientProfile";
 		}
 
-		
-		/*@RequestMapping(value="/edit-info",method=RequestMethod.GET)
-		public String editProfileInfo(ModelMap model) throws SQLException 
-		{
-				model.addAttribute("patient",patientServiceImpl.retrievePatient((String)model.get("username")));
-				model.addAttribute("new_patient",new Patient());
-				return "patientProfile";
-		}		*/
 		
 		@RequestMapping(value="/edit-info",method=RequestMethod.POST)
 		public String editProfile(ModelMap model,@Valid Patient new_patient, BindingResult result) throws SQLException 
@@ -146,6 +138,10 @@ public class PatientController
 		{
 
 			appointmentServiceImpl.saveAppointment(validAppointment);
+			//send email
+			
+			
+			//
 			model.remove("suggestDateTimes");
 			model.remove("chosenDoctor");
 			model.remove("appointment");
@@ -172,6 +168,6 @@ public class PatientController
 				
 		}
 		
-		
+	
 		
 }

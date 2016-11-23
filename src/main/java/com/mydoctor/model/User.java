@@ -1,8 +1,11 @@
 package com.mydoctor.model;
 
+import javax.validation.constraints.Size;
+
 public abstract class User {
 	
 	protected int id;
+	@Size(min=1,max=255, message = "Please correct username")
 	protected String username;
 	protected String password;
 	protected String role;

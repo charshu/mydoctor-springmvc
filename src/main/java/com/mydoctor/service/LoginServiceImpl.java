@@ -1,8 +1,10 @@
 package com.mydoctor.service;
 
 import java.sql.SQLException;
+import java.util.Random;
 
 import com.mydoctor.dao.LoginDaoImpl;
+import com.mydoctor.model.Patient;
 
 
 
@@ -15,6 +17,7 @@ public class LoginServiceImpl
 		public LoginDaoImpl getLoginDaoImpl() {
 			return loginDaoImpl;
 		}
+		
 		public void setLoginDaoImpl(LoginDaoImpl loginDaoImpl) {
 			this.loginDaoImpl = loginDaoImpl;
 		}
@@ -28,6 +31,44 @@ public class LoginServiceImpl
 			return loginDaoImpl.getUserRole(username);
 		}
 		
+		public String registerPatient(Patient patient)throws SQLException{
+			Random rnd = new Random();
+			int n = 10000000 + rnd.nextInt(90000000);
+			String username = patient.getUsername1();
+			System.out.println(username);
+			String password = patient.getPassword1();
+			String ssn = patient.getSsn();
+			String name = patient.getName();
+			String surname = patient.getSurname();
+			String gender = patient.getGender();
+			String birth_date = patient.getBirthdate();
+			String address = patient.getAddress();
+			System.out.println(address);
+			String tel = patient.getTel();
+			String email = patient.getEmail();
+			String hospitalNumber = Integer.toString(n);
+			int user_id = loginDaoImpl.registerUserId(username, password);
+			if(loginDaoImpl.registerPatient(ssn, name, surname, gender, birth_date, address, tel, email, hospitalNumber, user_id) > 0){
+				return hospitalNumber;
+			}
+			
+			return null;
+		}
 		
+		public int createUserIdByHN(Patient patient)throws SQLException{
+			String username = patient.getUsername1();
+			String password = patient.getPassword1();
+			String hospitalNumber = patient.getHospitalNumber();
+			int user_id = loginDaoImpl.registerUserId(username, password);
+			return loginDaoImpl.createUserIdByHN(user_id, hospitalNumber);
+		}
+
+		public int createUserIdBySSN(Patient patient)throws SQLException{
+			String username = patient.getUsername1();
+			String password = patient.getPassword1();
+			String ssn = patient.getSsn();
+			int user_id = loginDaoImpl.registerUserId(username, password);
+			return loginDaoImpl.createUserIdBySSN(user_id, ssn);
+		}
 
 }

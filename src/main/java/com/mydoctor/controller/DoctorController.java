@@ -18,19 +18,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+
+import com.mydoctor.dao.DoctorDaoImpl;
+import com.mydoctor.model.Appointment;
+import com.mydoctor.model.DiagnosisBean;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Prescription;
 import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
+import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
 
+import com.mydoctor.service.PatientServiceImpl;
+
+import com.mydoctor.service.PrescriptionServiceImpl;
 
 
 @Controller
@@ -39,36 +51,11 @@ public class DoctorController
 {
 		@Autowired
 		private DoctorServiceImpl doctorServiceImpl;
-		
-		@RequestMapping(value="/welcomeDoctor",method=RequestMethod.GET)
-		public String welcomeNurse(ModelMap model) throws SQLException 
-		{
-				
-				return "welcomeDoctor";
-		}
-		
-		@RequestMapping(value="/doctor-profile",method=RequestMethod.GET)
-		public String profile(ModelMap model) throws SQLException 
-		{
-				System.out.println((String)model.get("username"));
-				model.addAttribute("doctor",doctorServiceImpl.retrieveDoctor((String)model.get("username")));
-				return "doctorProfile";
-		}
-		@RequestMapping(value="/list-schedule",method=RequestMethod.GET)
-		public String showDoctorSchedule(ModelMap model) throws SQLException 
-		{
-				System.out.println((String)model.get("username"));
-				model.addAttribute("schedules",doctorServiceImpl.retriveAllSchedules((String)model.get("username")));
-				
-				return "schedules";
-		}
-		@RequestMapping(value="/add-schedule",method=RequestMethod.GET)
-		public String showAddSchedulePage(ModelMap model) throws SQLException 
-		{
-				System.out.println((String)model.get("username"));
-				model.addAttribute("schedule",new Schedule());
-				return "addSchedule";
-		}
+		@Autowired
+		private AppointmentServiceImpl appointmentServiceImpl;
+		@Autowired
+		private PrescriptionServiceImpl prescriptionServiceImpl;
+
 		
 		@InitBinder
 		public void binder(WebDataBinder binder) {
@@ -92,6 +79,40 @@ public class DoctorController
 		        }
 		    });
 		}
+
+		
+		@RequestMapping(value="/welcomeDoctor",method=RequestMethod.GET)
+		public String welcomeNurse(ModelMap model) throws SQLException 
+		{
+				
+				return "welcomeDoctor";
+		}
+		
+
+		@RequestMapping(value="/doctor-profile",method=RequestMethod.GET)
+		public String profile(ModelMap model) throws SQLException 
+		{
+				System.out.println((String)model.get("username"));
+				model.addAttribute("doctor",doctorServiceImpl.retrieveDoctor((String)model.get("username")));
+				return "doctorProfile";
+		}
+		
+		@RequestMapping(value="/list-schedule",method=RequestMethod.GET)
+		public String showDoctorSchedule(ModelMap model) throws SQLException 
+		{
+				System.out.println((String)model.get("username"));
+				model.addAttribute("schedules",doctorServiceImpl.retriveAllSchedules((String)model.get("username")));	
+				// schedules -> key , doctor -> object
+				return "schedules";
+		}
+		@RequestMapping(value="/add-schedule",method=RequestMethod.GET)
+		public String showAddSchedulePage(ModelMap model) throws SQLException 
+		{
+				System.out.println((String)model.get("username"));
+				model.addAttribute("schedule",new Schedule());
+				return "addSchedule";
+		}
+		
 		
 		@RequestMapping(value="/add-schedule",method=RequestMethod.POST)
 		public String addSchedule(ModelMap model,@Valid Schedule schedule, BindingResult result) throws SQLException 
@@ -135,15 +156,126 @@ public class DoctorController
 			if(result.hasErrors()){
 				return "viewPatientInfo_doctor";
 			}
-		    GeneralInfo generalInfo = doctorServiceImpl.findPatientGenInfo((String)model.get("username"),viewInfo);
-		    Patient patientInfo = doctorServiceImpl.findPatientInfo((String)model.get("username"),viewInfo);
+		    GeneralInfo generalInfo = doctorServiceImpl.findPatientGenInfo(viewInfo);
+		    Patient patientInfo = doctorServiceImpl.findPatientInfo(viewInfo);
 
-		   // System.out.println(generalInfo.getCongemital());
 		    model.addAttribute("generalInfo",generalInfo);
 		    model.addAttribute("patientInfo",patientInfo);
 
 			return "showPatientInfoAfterFind_doctor";	
 		}
 		
+
+		@RequestMapping(value="/patient-in-schedule",method=RequestMethod.GET)
+		public String showPatientInSlot(ModelMap model) throws SQLException 
+		{
+			ArrayList<Appointment> appointments = doctorServiceImpl.retrieveAllAppointmentInSchedule((String)model.get("username"));
 	
+			model.addAttribute("appointments",appointments);
+			return "patientsInSchedule";
+		}
+
+		
+		@RequestMapping(value="/diagnose",method=RequestMethod.GET)
+		public String showDiagnosePage(@RequestParam("patientId")String patient_id
+				,@ModelAttribute("appointments")ArrayList<Appointment> appointments
+				,ModelMap model) throws SQLException 
+		{
+			DiagnosisBean diagnosis = new DiagnosisBean();
+			diagnosis.setPatientId(Integer.parseInt(patient_id));
+			diagnosis.setDoctorId(doctorServiceImpl.retrieveId((String)model.get("username")));
+			model.addAttribute("diagnosis",diagnosis);
+			return "addDiagnosis";
+		}
+		
+		@RequestMapping(value="/diagnose",method=RequestMethod.POST)
+		public String saveDiagnosis(ModelMap model,@ModelAttribute("diagnosis")DiagnosisBean diagnosisBean) throws SQLException 
+		{
+			if(diagnosisBean.getPatientId() == 0 || diagnosisBean.getDoctorId() == 0){
+				return "redirect:/patient-in-schedule";
+			}
+			if(doctorServiceImpl.saveDiagnosis(diagnosisBean) > 0){
+				return "redirect:/patient-in-schedule";
+			}
+			System.out.print("error");
+			return "redirect:/patient-in-schedule";
+			
+		}
+		
+
+		@RequestMapping(value="/create_prescription",method=RequestMethod.GET)
+		public String showCreatePrescriptionPage(ModelMap model)
+		{
+			
+			Prescription prescription = new Prescription();
+			model.addAttribute("prescription", prescription);
+			return "createPrescription";
+		}
+		
+		
+		@RequestMapping(value="/create_prescription",method=RequestMethod.POST)
+		public String addPrescription(ModelMap model, @Valid Prescription prescription, BindingResult result) throws SQLException
+		{
+				
+				if(result.hasErrors()){
+					return "prescription";
+				}
+				// prescriptionId, medicineId, instruction, amount
+				int medicineId = prescription.getMedicineId();
+				//String medicine = prescription.
+				String instruction = prescription.getInstruction();
+				int amount = prescription.getAmount();
+//				boolean isValidUser = loginServiceImpl.isValidUser(username, password);
+//				if(isValidUser)
+//				{
+//					String role = loginServiceImpl.getUserRole(username);
+//					model.put("username",username);
+//					model.remove("loginBean");
+//						if("patient".equals(role)){
+//							return "welcomePatient";
+//						}
+//						else if("doctor".equals(role)){
+//							return "welcomeDoctor";
+//						}
+//						else if("staff".equals(role)){
+//							return "welcomeStaff";
+//						}
+//						else if("nurse".equals(role)){
+//							return "welcomeNurse";
+//						}
+//						else if("pharmacist".equals(role)){
+//							return "welcomePharmacist";
+//						}
+//				}
+//				else
+//				{
+//						model.put("message", "Invalid credentials!!");
+//						return "login";
+//				}
+
+				
+				return "prescription";
+		}
+		@RequestMapping(value="/DoctorFindPrescriptionHistoryForm", method=RequestMethod.GET)
+		public String doctorFindPrescriptionHistoryForm(ModelMap model)
+		{
+			Prescription findprescriptionh = new Prescription();
+			model.addAttribute("Prescription", findprescriptionh);
+			return "DoctorFindPrescriptionHistory";
+		}
+		
+
+		@RequestMapping(value="/DoctorFindPrescriptionHistoryForm",method=RequestMethod.POST)
+		public String doctorShowPrescriptionHistoryForm(ModelMap model, @Valid Prescription findprescriptionh, BindingResult result) throws SQLException
+		{
+			System.out.println("[Request]" + findprescriptionh.toString());
+			if(result.hasErrors()){
+				return "DoctorFindPrescriptionHistory";
+			}
+			ArrayList<Prescription> prescriptionHistorys = prescriptionServiceImpl.findPrescriptionHistory((String)model.get("username"),findprescriptionh);
+			model.addAttribute("prescriptionHistorys", prescriptionHistorys);
+			return "DoctorViewPrescriptionHistory";
+		}
+
+
 }
