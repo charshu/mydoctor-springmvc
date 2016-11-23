@@ -1,17 +1,20 @@
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation-doctor.jspf"%>
 
+
 <div class="container fluid">
    <h1>Add Medicine</h1>
-   <div class="container">
-		<form:form id="addMedicineForm" method="post" action="add-medicine"
+   			
+	<form:form id="addMedicineForm" method="post" action="add-medicine"
 			commandName="medicineBean" >
 			
-			<form:label path="amount" class="control-label">Medicine</form:label>
-			<form:select path="id">
-					  <form:options items="${medicineMap}" />
+			<fieldset class="form-group">
+			<form:label path="id" class="control-label">Medicine</form:label>
+			<form:select path="id" class="form-control" id="sel1">
+					  <form:options items="${medicineMap}"  id="sel1" />
 			</form:select>
-			</div>
+			</fieldset>
+			
 			
 			<fieldset class="form-group">
 				<form:label path="amount" class="control-label">Amount</form:label>
