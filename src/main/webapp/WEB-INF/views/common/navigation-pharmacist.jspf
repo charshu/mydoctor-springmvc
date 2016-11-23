@@ -6,10 +6,10 @@
 
     <div class="navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="/login">Home</a></li>
-            <li><a href="/patient-profile">Profile</a></li>
-             <li><a href="/show-prescription">Prescription </a></li>
-            <li><a href="/findPrescriptionHistoryForm">Prescription History</a></li>
+            <li><a href="/login"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li><a href="/patient-profile"> <i class="fa fa-user-circle" aria-hidden="true"></i> Profile</a></li>
+             <li><a href="/show-prescription"><i class="fa fa-file-text-o" aria-hidden="true"></i> Prescription </a></li>
+            <li><a href="/findPrescriptionHistoryForm"><i class="fa fa-file-text" aria-hidden="true"></i> Prescription History</a></li>
   
         </ul>
         <ul class="nav navbar-nav navbar-right">

@@ -3,7 +3,7 @@
 
 
 <div class="container fluid">
-   <h1>Add Medicine</h1>
+   <h1>  <i class="fa fa-medkit fa-2x" aria-hidden="true"></i> Add Medicine</h1>
    			
 	<form:form id="addMedicineForm" method="post" action="add-medicine"
 			commandName="medicineBean" >
@@ -37,7 +37,7 @@
 			</div>
 			
 		</form:form>
-	</div>
+	
 </div>
 
 <%@ include file="common/footer.jspf"%>

@@ -4,12 +4,12 @@
 <div class="container">
 <div class="container-fluid">
 
-	<h1>Prescription</h1>
+	<h1> <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i> Prescription</h1>
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Patient Name</th>
-				<th>Doctor Name</th>
+				<th> <i class="fa fa-male  fa-2x" aria-hidden="true"></i> Patient Name </th>
+				<th> <i class="fa fa-user-md fa-2x" aria-hidden="true"></i> Doctor Name </th>
 			</tr>
 		</thead>
 		<tr>
@@ -19,7 +19,7 @@
 	</table>
 </div>
 <div class="container-fluid">
-	<h1>Medicine list</h1>
+	<h1> <i class="fa fa-medkit fa-2x" aria-hidden="true"></i> Medicine list</h1>
 	<table class="table">
 		<thead>
 			<tr>

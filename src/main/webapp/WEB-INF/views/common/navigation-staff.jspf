@@ -6,9 +6,9 @@
 
     <div class="navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="/welcomeStaff">Home</a></li>
-            <li><a href="/view-info3">View/Edit Patient Information</a></li>
-            <li><a href="/register-patient">Register Patient</a></li>
+            <li><a href="/welcomeStaff"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li><a href="/view-info3"><i class="fa fa-info" aria-hidden="true"></i> View/Edit Patient Information</a></li>
+            <li><a href="/register-patient"><i class="fa fa-registered" aria-hidden="true"></i> Register Patient</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <li><a href="/login">Logout</a></li>
