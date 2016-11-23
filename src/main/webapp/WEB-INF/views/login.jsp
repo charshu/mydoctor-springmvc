@@ -33,8 +33,33 @@
 	background-image: url("images/logo.svg");
 	background-repeat: no-repeat;
 	background-position: center;
-	
-	
+
+}
+.bottom-text{
+	position: absolute;
+	bottom:0px;
+	padding-top:20px;
+	width:100%;
+	color:white;
+	text-align: center;
+	font-weight: bold;
+	height:50px;
+	vertical-align:middle;
+
+background: rgba(0,0,0,0);
+background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(20,20,20,0.6) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(100%, rgba(20,20,20,0.6)));
+background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(20,20,20,0.6) 100%);
+background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(20,20,20,0.6) 100%);
+background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(20,20,20,0.6) 100%);
+background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(20,20,20,0.6) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#141414', GradientType=0 );
+}
+body{
+margin:0px;
+overflow: hidden;
+
+
 }
 </style>
 </head>
@@ -95,6 +120,7 @@
 		</div>
 
 	</div>
+	<div class="bottom-text">Copyright © 2008 My Hospital All rights reserved. Power by SpringMVC 4.0</div>
 	<script>
 		function startTime() {
 			var today = new Date();
