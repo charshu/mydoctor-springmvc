@@ -40,7 +40,7 @@
 				<form:errors path="end" cssClass="text-warning" />
 			</fieldset>
 			<button type="submit" class="btn btn-success">Submit</button>
-
+			<div>${error}</div>
 		</form:form>
 	</div>
 
@@ -60,16 +60,14 @@
 			format : 'ddd DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
-			maxDate : moment().add(5, 'day'),
-			minDate : moment()
+			maxDate : moment().add(5, 'day')
 
 		});
 		$('#datetimepicker2').datetimepicker({
 			format : 'ddd DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
-			maxDate : moment().add(5, 'day'),
-			minDate : moment()
+			maxDate : moment().add(5, 'day')
 		});
 	</script>
 </body>

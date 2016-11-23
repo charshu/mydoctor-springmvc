@@ -127,7 +127,7 @@ public class DoctorController
 					model.clear();
 					return "redirect:/list-schedule";
 				} 
-				
+				model.addAttribute("error", "Fail to save a schedule, Please check overlapping time.");
 				return "addSchedule";
 				
 		}
@@ -170,8 +170,9 @@ public class DoctorController
 		@RequestMapping(value="/patient-in-schedule",method=RequestMethod.GET)
 		public String showPatientInSlot(ModelMap model) throws SQLException 
 		{
+			Schedule currentSchedule = doctorServiceImpl.retrieveCurrentSchedule((String)model.get("username"));
 			ArrayList<Appointment> appointments = doctorServiceImpl.retrieveAllAppointmentInSchedule((String)model.get("username"));
-	
+			model.addAttribute("currentSchedule",currentSchedule);
 			model.addAttribute("appointments",appointments);
 			return "patientsInSchedule";
 		}

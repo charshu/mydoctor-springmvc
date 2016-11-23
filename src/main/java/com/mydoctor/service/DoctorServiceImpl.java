@@ -117,13 +117,18 @@ public class DoctorServiceImpl {
 				"[SUCCESS] delete doctor_schedule " + "(doctor_id:" + doctor_id + ",schedule_id:" + schedule_id + ")");
 		return 1;
 	}
-
+	
+	public Schedule retrieveCurrentSchedule(String username)throws SQLException{
+		int doctor_id = doctorDaoImpl.retrieveId(username);
+		return doctorDaoImpl.retrieveCurrentSchedule(doctor_id);
+		 
+	}
 	public ArrayList<Appointment> retrieveAllAppointmentInSchedule(String username) throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
-		Schedule currentSchedule = doctorDaoImpl.retrieveCurrentSchedule(doctor_id);
+		Schedule currentSchedule = retrieveCurrentSchedule(username);
 		if (currentSchedule == null)
 			return new ArrayList<Appointment>();
-		System.out.println("test: " + currentSchedule);
+	
 		return doctorDaoImpl.retrieveAllAppointmentInSchedule(doctor_id, currentSchedule);
 	}
 

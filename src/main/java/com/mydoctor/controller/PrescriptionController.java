@@ -58,7 +58,7 @@ public class PrescriptionController
 
 	    @RequestMapping(value = "/add-medicine", method = RequestMethod.GET)
 	    public String showAddMedicinePage(ModelMap model) throws SQLException {
-	    	//ArrayList<MedicineBean> medicineBean = medicineServiceImpl.retrieveAllMedicine();
+	    	ArrayList<MedicineBean> medicineBeanOption = medicineServiceImpl.retrieveAllMedicine();
 	    	
 //	    	ArrayList<String> medName = new ArrayList<String>();
 //	    	for(int i=0; i<medicineBean.size(); i++){
@@ -68,7 +68,8 @@ public class PrescriptionController
 //	    	}
 
 	    	MedicineBean medicineBean = new MedicineBean();
-	        model.addAttribute("medicineBean", medicineBean);
+	    	model.addAttribute("medicineBean", medicineBean);
+	        model.addAttribute("medicineBeanOption", medicineBeanOption);
 	        //model.addAttribute("medName", medName);
 	        return "addMedicine";
 	    }
