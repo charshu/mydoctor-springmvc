@@ -3,8 +3,8 @@
 
 <div class="container fluid">
    <h1>Add Medicine</h1>
-<form:form id="addMedicineForm" method="post" action="add-medicine"
-			commandName="medicineBean" >
+	<form:form id="addMedicineForm" method="post" action="add-medicine" commandName="medicineBean" >
+			
 			<fieldset class="form-group">
 				<form:label path="id" class="control-label">Medicine ID</form:label>
 				<form:input path="id" type="text" class="form-control" />

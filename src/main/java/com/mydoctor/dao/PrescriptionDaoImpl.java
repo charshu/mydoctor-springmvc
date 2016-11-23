@@ -55,8 +55,8 @@ public class PrescriptionDaoImpl {
 //	}
 	
 	public int insertPrescription(int med_id, String amount, String instruction)throws SQLException{
-		String query = "INSERT INTO mydoctor.prescription (prescrip_id, med_id, amount, instruction) "
-				+ "VALUES ('0', ?, ?, ?);";
+		String query = "INSERT INTO mydoctor.prescription (prescrip_id, med_id, amount, instruction, status) "
+				+ "VALUES ('0', ?, ?, ?, 'wait');";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 		pstmt.setInt(1, med_id);
 		pstmt.setString(2, amount);
