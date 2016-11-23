@@ -22,12 +22,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 
 import com.mydoctor.dao.DoctorDaoImpl;
 import com.mydoctor.model.Appointment;
@@ -35,6 +33,7 @@ import com.mydoctor.model.DiagnosisBean;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Prescription;
+
 import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
 import com.mydoctor.service.AppointmentServiceImpl;
@@ -55,6 +54,7 @@ public class DoctorController
 		private AppointmentServiceImpl appointmentServiceImpl;
 		@Autowired
 		private PrescriptionServiceImpl prescriptionServiceImpl;
+
 
 		
 		@InitBinder
@@ -166,6 +166,7 @@ public class DoctorController
 		}
 		
 
+
 		@RequestMapping(value="/patient-in-schedule",method=RequestMethod.GET)
 		public String showPatientInSlot(ModelMap model) throws SQLException 
 		{
@@ -225,33 +226,6 @@ public class DoctorController
 				//String medicine = prescription.
 				String instruction = prescription.getInstruction();
 				int amount = prescription.getAmount();
-//				boolean isValidUser = loginServiceImpl.isValidUser(username, password);
-//				if(isValidUser)
-//				{
-//					String role = loginServiceImpl.getUserRole(username);
-//					model.put("username",username);
-//					model.remove("loginBean");
-//						if("patient".equals(role)){
-//							return "welcomePatient";
-//						}
-//						else if("doctor".equals(role)){
-//							return "welcomeDoctor";
-//						}
-//						else if("staff".equals(role)){
-//							return "welcomeStaff";
-//						}
-//						else if("nurse".equals(role)){
-//							return "welcomeNurse";
-//						}
-//						else if("pharmacist".equals(role)){
-//							return "welcomePharmacist";
-//						}
-//				}
-//				else
-//				{
-//						model.put("message", "Invalid credentials!!");
-//						return "login";
-//				}
 
 				
 				return "prescription";
@@ -263,7 +237,7 @@ public class DoctorController
 			model.addAttribute("Prescription", findprescriptionh);
 			return "DoctorFindPrescriptionHistory";
 		}
-		
+
 
 		@RequestMapping(value="/DoctorFindPrescriptionHistoryForm",method=RequestMethod.POST)
 		public String doctorShowPrescriptionHistoryForm(ModelMap model, @Valid Prescription findprescriptionh, BindingResult result) throws SQLException

@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 import com.mydoctor.dao.MedicineDaoImpl;
 import com.mydoctor.dao.PharmacistDaoImpl;
@@ -20,6 +22,7 @@ import com.mydoctor.model.LoginBean;
 import com.mydoctor.model.Prescription;
 import com.mydoctor.service.MedicineServiceImpl;
 import com.mydoctor.service.NurseServiceImpl;
+
 import com.mydoctor.service.PharmacistServiceImpl;
 import com.mydoctor.service.PrescriptionServiceImpl;
 
@@ -101,8 +104,7 @@ public class PharmacistController
 		{				
 				return "welcomePharmacist";
 		}
-		
-			
+
 		
 		@RequestMapping(value="/show-prescription-detail",method=RequestMethod.GET)
 		public String showPrescriptionDetail(ModelMap model) throws SQLException
@@ -110,5 +112,6 @@ public class PharmacistController
 			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
 			return "showPrescriptionDetail";
 		}
+
 }
 

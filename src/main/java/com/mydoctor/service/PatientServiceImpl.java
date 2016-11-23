@@ -52,6 +52,7 @@ public class PatientServiceImpl
 			return 0;
 		}
 		
+
 		public int edit_info(String username, Patient patient) throws SQLException {
 			int patient_id = patientDaoImpl.retrieveIdByUserId(patientDaoImpl.retrieveUserId(username));
 			System.out.println(patient_id);
@@ -65,7 +66,11 @@ public class PatientServiceImpl
 			
 			return patientDaoImpl.editPatientInfo(name, surname, gender, birthdate, address, tel,email, patient_id);
 	}
-		
+
+		public String retrievePatientNameByID(int id) throws SQLException {
+			return patientDaoImpl.retrievePatientNameByID(id);
+		}
+			
 		public int edit_info2(String hospitalNumber, Patient patient) throws SQLException {
 			int patient_id = patientDaoImpl.retrievePatientIdByHN(hospitalNumber);
 			System.out.println(patient_id);
