@@ -210,5 +210,25 @@ public class DoctorController
 				
 				return "prescription";
 		}
+		@RequestMapping(value="/DoctorFindPrescriptionHistoryForm", method=RequestMethod.GET)
+		public String doctorFindPrescriptionHistoryForm(ModelMap model)
+		{
+			Prescription findprescriptionh = new Prescription();
+			model.addAttribute("Prescription", findprescriptionh);
+			return "DoctorFindPrescriptionHistory";
+		}
+		
+
+		@RequestMapping(value="/DoctorFindPrescriptionHistoryForm",method=RequestMethod.POST)
+		public String doctorShowPrescriptionHistoryForm(ModelMap model, @Valid Prescription findprescriptionh, BindingResult result) throws SQLException
+		{
+			System.out.println("[Request]" + findprescriptionh.toString());
+			if(result.hasErrors()){
+				return "DoctorFindPrescriptionHistory";
+			}
+			ArrayList<Prescription> prescriptionHistorys = prescriptionServiceImpl.findPrescriptionHistory((String)model.get("username"),findprescriptionh);
+			model.addAttribute("prescriptionHistorys", prescriptionHistorys);
+			return "DoctorViewPrescriptionHistory";
+		}
 
 }

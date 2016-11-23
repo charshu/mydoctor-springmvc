@@ -9,6 +9,7 @@
             <li><a href="/welcomeDoctor">Home</a></li>
             <li><a href="/doctor-profile">Profile</a></li>
             <li><a href="/list-schedule">Schedule</a></li>
+            <li><a href="/DoctorFindPrescriptionHistoryForm">PrescriptionHistory</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
         <li><a href="/logout">Logout   <span class="glyphicon glyphicon-log-out">  </a></li>

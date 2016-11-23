@@ -34,13 +34,19 @@ public class PrescriptionDaoImpl {
 		
 		String query = "SELECT prescription_id , status  FROM prescription "
 				+ "WHERE prescription.status = ? group by prescription_id";
+
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1,"wait");
 		ResultSet rs = pstmt.executeQuery();	
 		ArrayList<Prescription> prescripList = new ArrayList<Prescription>();
 		while(rs.next()){
 			Prescription pres = new Prescription();
+
 			pres.setPrescriptionId(rs.getInt("prescription_id"));
+			pres.setMedicineId(rs.getInt("med_id"));
+			pres.setAmount(rs.getInt("amount"));
+			pres.setInstruction(rs.getString("instruction"));
+
 			pres.setStatus(rs.getString("status"));
 			prescripList.add(pres);
 		}		
