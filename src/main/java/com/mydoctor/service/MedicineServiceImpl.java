@@ -30,9 +30,10 @@ public class MedicineServiceImpl
 			return medicineDaoImpl.retrieveAllMedicineIDandName(prescription_id);
 		}
 		
-		public List<MedicineBean> retrieveAllMedicine()throws SQLException{
-			//return medicineDaoImpl.getAllMedicine();
-			return null;
+		public ArrayList<MedicineBean> retrieveAllMedicine()throws SQLException{
+			System.out.println("test4");
+			return medicineDaoImpl.retrieveAllMedicine();
+			//return null;
 		}
 		
 		
