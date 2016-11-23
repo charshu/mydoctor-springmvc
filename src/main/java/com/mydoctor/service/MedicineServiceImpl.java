@@ -26,8 +26,8 @@ public class MedicineServiceImpl
 		public MedicineBean retrieveMedicine(String medicine_id)throws SQLException{
 			return medicineDaoImpl.retrieveMedicine(medicine_id);
 		}
-		public ArrayList<Medicine> retrieveAllMedicine(int prescript_id)throws SQLException{
-			return medicineDaoImpl.retrieveAllMedicineIDandName(prescript_id);
+		public ArrayList<Medicine> retrieveAllMedicine(int prescription_id)throws SQLException{
+			return medicineDaoImpl.retrieveAllMedicineIDandName(prescription_id);
 		}
 		
 		public List<MedicineBean> retrieveAllMedicine()throws SQLException{

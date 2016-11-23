@@ -49,20 +49,20 @@ public class PharmacistController
 		}
 
 		@RequestMapping(value="/detail",method=RequestMethod.GET)
-		public String showPrescriptionDetail(ModelMap model ,@RequestParam int prescript_id ) throws SQLException
+		public String showPrescriptionDetail(ModelMap model ,@RequestParam int prescription_id ) throws SQLException
 		{	
 			
-			model.addAttribute("medicines", medicineServiceImpl.retrieveAllMedicine(prescript_id) );
-			model.addAttribute("prescript_id", prescript_id);
+			model.addAttribute("medicines", medicineServiceImpl.retrieveAllMedicine(prescription_id) );
+			model.addAttribute("prescription_id", prescription_id);
 			return "showPrescriptionDetail";
 		}
 
 		@RequestMapping(value="/complete-prescription",method=RequestMethod.GET)
-		public String changeStatusPrescription(ModelMap model, @RequestParam int prescript_id) throws SQLException
+		public String changeStatusPrescription(ModelMap model, @RequestParam int prescription_id) throws SQLException
 		{
-			prescriptionServiceImpl.changeStatusToCompete(prescript_id);
+			prescriptionServiceImpl.changeStatusToCompete(prescription_id);
 			model.addAttribute("prescripts", prescriptionServiceImpl.retrieveAllPrescription() );
-			model.addAttribute("prescript_id", prescript_id);
+			model.addAttribute("prescription_id", prescription_id);
 			return "showPrescription";
 		}
 	
