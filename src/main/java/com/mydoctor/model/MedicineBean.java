@@ -24,6 +24,7 @@ public class MedicineBean  {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -39,6 +40,9 @@ public class MedicineBean  {
 	public void setInstruction(String instruction) {
 		this.instruction = instruction;
 	}
+	
+	
+	
 	/**
 	 * @param id
 	 * @param name

@@ -30,8 +30,16 @@
 			</fieldset>
 			
 			
+			<div class="row pad pull-right">
+				  <div class="col-xs-3 ">
+				    <a href="/see-medicine-list" class="btn btn-success pull-right">See Medicine List</a>
+				  </div>
+				  
+				  <div class="col-xs-3 ">
+				    <button type="submit" class="btn btn-success">Submit</button>
+				  </div>
+			</div>
 			
-			<button type="submit" class="btn btn-success">Submit</button>
 
 		</form:form>
 </div>

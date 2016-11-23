@@ -3,6 +3,7 @@ package com.mydoctor.controller;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -26,7 +28,7 @@ import com.mydoctor.service.PrescriptionServiceImpl;
 
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes(value={"username","medName"})
 public class PrescriptionController
 {
 		@Autowired
@@ -42,8 +44,8 @@ public class PrescriptionController
 		
 		@RequestMapping(value = "/add-prescription", method = RequestMethod.GET)
 	    public String showPrescription(ModelMap model) throws SQLException {
-			PrescriptionServiceImpl.setDoctor_id(123);
-			PrescriptionServiceImpl.setPatient_id(456);
+			//PrescriptionServiceImpl.setDoctor_id(1);
+			//PrescriptionServiceImpl.setPatient_id(1);
 			int doctor_id = prescriptionServiceImpl.getDoctor_id();
 			int patient_id = prescriptionServiceImpl.getPatient_id();
 			String doctor_name = doctorServiceImpl.retrieveDoctorNameByID(doctor_id);
@@ -56,17 +58,28 @@ public class PrescriptionController
 
 	    @RequestMapping(value = "/add-medicine", method = RequestMethod.GET)
 	    public String showAddMedicinePage(ModelMap model) throws SQLException {
-	        model.addAttribute("medicineBean", medicineServiceImpl.retrieveAllMedicine());
+	    	//ArrayList<MedicineBean> medicineBean = medicineServiceImpl.retrieveAllMedicine();
+	    	
+//	    	ArrayList<String> medName = new ArrayList<String>();
+//	    	for(int i=0; i<medicineBean.size(); i++){
+//	    		medName.add(medicineBean.get(i).getName());
+//	    		System.out.println(medicineBean.get(i).getName());
+//	    		System.out.println(medName.get(i));
+//	    	}
+
+	    	MedicineBean medicineBean = new MedicineBean();
+	        model.addAttribute("medicineBean", medicineBean);
+	        //model.addAttribute("medName", medName);
 	        return "addMedicine";
 	    }
 
 	    @RequestMapping(value = "/add-medicine", method = RequestMethod.POST)
-	    public String addMedicine(ModelMap model, @Valid MedicineBean medicineBean, BindingResult result) {
+	    public String addMedicine(ModelMap model, @ModelAttribute("medicineBean")MedicineBean medicineBean, BindingResult result) throws SQLException {
 
 	        if (result.hasErrors())
 	            return "addMedicine";
 
-	        prescriptionServiceImpl.addMedicineBean(medicineBean.getId(), medicineBean.getName(), medicineBean.getAmount(), medicineBean.getInstruction());
+	        prescriptionServiceImpl.addMedicineBean(medicineBean);
 	        model.clear();// to prevent request parameter "name" to be passed
 	        return "redirect:/add-prescription";
 	    }
@@ -92,11 +105,17 @@ public class PrescriptionController
 				model.clear();
 				return "welcomeDoctor";
 			} 
-
 				//save method
-				return "welcomeDoctor";
-				
+				return "welcomeDoctor";	
 		}
-		
+	    
+	    
+	    @RequestMapping(value = "/see-medicine-list", method = RequestMethod.GET)
+	    public String SeeMedicineList(ModelMap model) throws SQLException {
+
+	        model.addAttribute("medicineBean", medicineServiceImpl.retrieveAllMedicine());
+	        
+	        return "seeMedicineList";
+	    }
 		
 }

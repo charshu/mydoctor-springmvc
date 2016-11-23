@@ -32,7 +32,6 @@ public class MedicineDaoImpl {
 	public ArrayList<Medicine> retrieveAllMedicineIDandName(int prescription_id)throws SQLException{
 		String query = "Select prescription.med_id , medicine.medicine , prescription.amount , prescription.instruction from prescription " 
 						+ "inner join medicine ON prescription.med_id = medicine.med_id "
-				
 						+ "where prescription_id = ?"	;
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, prescription_id);
@@ -50,10 +49,10 @@ public class MedicineDaoImpl {
 		return allmed;
 	}
 	
-	public String getMedicineName(String medicine_id) throws SQLException {
-		String query = "Select med_name from medicine where med_id = ? ";
+	public String getMedicineName(int medicine_id) throws SQLException {
+		String query = "Select medicine from medicine where med_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setString(1, medicine_id);
+		pstmt.setInt(1, medicine_id);
 		ResultSet resultSet = pstmt.executeQuery();
 		if (resultSet.next())
 			return resultSet.getString(1);
@@ -61,8 +60,22 @@ public class MedicineDaoImpl {
 			return null;
 	}
 	
-	public List<MedicineBean> retrieveAllMedicine(){
-		List<MedicineBean> medicineBean = null;
+	public ArrayList<MedicineBean> retrieveAllMedicine() throws SQLException{
+		String query = "Select med_id, medicine from medicine";
+		System.out.println("test1");
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+		System.out.println("test2");
+		ArrayList<MedicineBean> medicineBean = new ArrayList<MedicineBean>();
+		while(rs.next()){
+			MedicineBean med = new MedicineBean();
+			med.setId(rs.getInt("med_id"));
+			med.setName(rs.getString("medicine"));
+			med.setAmount("");
+			med.setInstruction("");
+			medicineBean.add(med);
+		}
+		System.out.println("test3");
 		return medicineBean;
 	}
 	

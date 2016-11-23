@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import org.springframework.stereotype.Service;
 
+import com.mydoctor.dao.MedicineDaoImpl;
 import com.mydoctor.dao.PrescriptionDaoImpl;
 
 import com.mydoctor.model.Doctor;
@@ -19,16 +20,17 @@ import com.mydoctor.model.Schedule;
 public class PrescriptionServiceImpl {
 
 	private PrescriptionDaoImpl prescriptionDaoImpl;
+	private MedicineDaoImpl medicineDaoImpl;
 	private static ArrayList<Prescription> prescriptionHistory = new ArrayList<Prescription>();
 	private static List<MedicineBean> medicineBeans = new ArrayList<MedicineBean>();
 
 	private static int patient_id, doctor_id;
 
-	// static {
-	// medicineBeans.add(new MedicineBean(1, "Paracetamon", "2", "dont use"));
-	// medicineBeans.add(new MedicineBean(2, "Paracetamon", "2", "dont use"));
-	// medicineBeans.add(new MedicineBean(3, "Paracetamon", "2", "dont use"));
-	// }
+//	 static {
+//	 medicineBeans.add(new MedicineBean(111, "Paracetamon", "2", "dont use"));
+//	 medicineBeans.add(new MedicineBean(222, "Paracetamon", "2", "dont use"));
+//	 medicineBeans.add(new MedicineBean(333, "Paracetamon", "2", "dont use"));
+//	 }
 
 	public static int getPatient_id() {
 		return patient_id;
@@ -58,8 +60,9 @@ public class PrescriptionServiceImpl {
 		return medicineBeans;
 	}
 
-	public void addMedicineBean(int id, String name, String amount, String instruction) {
-		medicineBeans.add(new MedicineBean(id, name, amount, instruction));
+	public void addMedicineBean(MedicineBean medicineBean) throws SQLException {
+		//medicineBean.setName(medicineDaoImpl.getMedicineName(medicineBean.getId()));
+		medicineBeans.add(new MedicineBean(medicineBean.getId(), medicineBean.getName(), medicineBean.getAmount(), medicineBean.getInstruction()));
 	}
 
 	public void deleteMedicineBean(int id) {
