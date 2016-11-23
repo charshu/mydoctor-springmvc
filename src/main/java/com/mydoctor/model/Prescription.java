@@ -18,6 +18,14 @@ public class Prescription  {
 		this.amount = amount;
 		this.status = status;
 	}
+	
+	public Medicine getMedicine() {
+		return medicine;
+	}
+
+	public void setMedicine(Medicine medicine) {
+		this.medicine = medicine;
+	}
 
 	public int getPrescriptionId() {
 		return prescriptionId;

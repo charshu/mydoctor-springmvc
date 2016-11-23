@@ -9,7 +9,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 
-
 public class GeneralInfo {
 
     @Size(min=8, max=8, message = "Please Correct Hospital Number")

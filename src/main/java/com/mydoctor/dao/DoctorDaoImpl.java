@@ -140,7 +140,6 @@ public class DoctorDaoImpl {
 		return schedules;
 	}
 
-
 	public ArrayList<Schedule> retriveAllSchedules() throws SQLException {
 
 		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
@@ -161,7 +160,9 @@ public class DoctorDaoImpl {
 	}
 
 
-	public int retrieveId(String username) throws SQLException {
+
+	public int retrieveId(String username)throws SQLException {
+
 		String query = "Select user_id from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, username);
@@ -173,9 +174,24 @@ public class DoctorDaoImpl {
 
 	}
 
-	public int insertSchedule(Schedule schedule) throws SQLException {
-		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) " + "VALUES ('0', ?, ?);";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	public String retrieveDoctorNameByID(int doctor_id)throws SQLException {
+		//////////pls check attribute of doctor name in database 
+		String query = "Select name from doctor where doctor_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return rs.getString("name");
+		}
+		return "null";
+
+	}
+	
+	public int insertSchedule(Schedule schedule)throws SQLException{
+		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) "
+				+ "VALUES ('0', ?, ?);";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+
 		pstmt.setTimestamp(1, schedule.getStart());
 		pstmt.setTimestamp(2, schedule.getEnd());
 		pstmt.executeUpdate();

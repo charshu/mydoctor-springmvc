@@ -96,6 +96,19 @@ public class PatientDaoImpl {
 
 		return null;
 	}
+	
+	public String retrievePatientNameByID(int patient_id)throws SQLException {
+		//////////pls check attribute of patient name in database 
+		String query = "Select name from patient where patient_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return rs.getString("name");
+		}
+		return "null";
+
+	}
 
 	public ArrayList<Appointment> retrieveAllAppointments(int patient_id) throws SQLException {
 		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom "

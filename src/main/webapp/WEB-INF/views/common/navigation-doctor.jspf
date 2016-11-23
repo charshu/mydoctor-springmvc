@@ -11,6 +11,7 @@
             <li><a href="/list-schedule">Schedule</a></li>
             <li><a href="/patient-in-schedule">Diagnose</a></li>
             <li><a href="/DoctorFindPrescriptionHistoryForm">PrescriptionHistory</a></li>
+             <li><a href="/add-prescription">Add Prescription</a></li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right">

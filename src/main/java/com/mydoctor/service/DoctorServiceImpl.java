@@ -1,6 +1,5 @@
 package com.mydoctor.service;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import com.mydoctor.dao.DoctorDaoImpl;
@@ -28,6 +27,7 @@ public class DoctorServiceImpl {
 	public static ArrayList<Doctor> getDoctors() {
 		return doctors;
 	}
+
 	public static void setDoctors(ArrayList<Doctor> doctors) {
 		DoctorServiceImpl.doctors = doctors;
 	}
@@ -36,14 +36,20 @@ public class DoctorServiceImpl {
 		int doctor_id = retrieveId(username);
 		return doctorDaoImpl.retrieveDoctor(doctor_id);
 	}
+
 	public Doctor retrieveDoctor(int doctor_id) throws SQLException {
 		return doctorDaoImpl.retrieveDoctor(doctor_id);
 	}
+
+	public String retrieveDoctorNameByID(int doctor_id) throws SQLException {
+		return doctorDaoImpl.retrieveDoctorNameByID(doctor_id);
+	}
+
 	public ArrayList<Doctor> retrieveAllDoctors() throws SQLException {
 		setDoctors(doctorDaoImpl.retrieveAllDoctors());
 		return doctors;
 	}
-	
+
 	public int retrieveId(String username) throws SQLException {
 		return doctorDaoImpl.retrieveId(username);
 	}
@@ -72,6 +78,7 @@ public class DoctorServiceImpl {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
 		if (doctor_id == -1) {
 			System.out.println("[ERROR] cannot retrieve doctor_id");
+
 			return 0;
 		}
 		if (doctorDaoImpl.insertDoctorSchedule(doctor_id, schedule_id) > 0)
@@ -79,19 +86,19 @@ public class DoctorServiceImpl {
 
 		return 0;
 	}
-	
-	public GeneralInfo findPatientGenInfo(ViewInfo viewinfo) throws SQLException{
+
+	public GeneralInfo findPatientGenInfo(ViewInfo viewinfo) throws SQLException {
 		int record_id = doctorDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
 		System.out.println(record_id);
 		return doctorDaoImpl.retriveGenInfo(record_id);
 	}
-	
-	public Patient findPatientInfo(ViewInfo viewinfo) throws SQLException{
+
+	public Patient findPatientInfo(ViewInfo viewinfo) throws SQLException {
 		int patient_id = doctorDaoImpl.retrievePatientId(viewinfo.getHospitalNumber());
 		System.out.println(patient_id);
 		return doctorDaoImpl.retriveInfo(patient_id);
 	}
-	
+
 	public int deleteSchedule(String username, int schedule_id) throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
 
@@ -111,20 +118,22 @@ public class DoctorServiceImpl {
 		return 1;
 	}
 
-	public ArrayList<Appointment> retrieveAllAppointmentInSchedule(String username)throws SQLException {
+	public ArrayList<Appointment> retrieveAllAppointmentInSchedule(String username) throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
 		Schedule currentSchedule = doctorDaoImpl.retrieveCurrentSchedule(doctor_id);
-		if(currentSchedule==null)return new ArrayList<Appointment>();
-		System.out.println("test: "+currentSchedule);
-		return doctorDaoImpl.retrieveAllAppointmentInSchedule(doctor_id,currentSchedule);
+		if (currentSchedule == null)
+			return new ArrayList<Appointment>();
+		System.out.println("test: " + currentSchedule);
+		return doctorDaoImpl.retrieveAllAppointmentInSchedule(doctor_id, currentSchedule);
 	}
 
-	public int saveDiagnosis(DiagnosisBean diagnosisBean)throws SQLException  {
-		
-		int diagnosis_id = doctorDaoImpl.insertDiagnosis(diagnosisBean.getSymptom(),diagnosisBean.getDisease_id());
-		if(doctorDaoImpl.insertDiagnose(diagnosisBean.getDoctorId(),diagnosisBean.getPatientId(),diagnosis_id)>0)return 1;
+	public int saveDiagnosis(DiagnosisBean diagnosisBean) throws SQLException {
+
+		int diagnosis_id = doctorDaoImpl.insertDiagnosis(diagnosisBean.getSymptom(), diagnosisBean.getDisease_id());
+		if (doctorDaoImpl.insertDiagnose(diagnosisBean.getDoctorId(), diagnosisBean.getPatientId(), diagnosis_id) > 0)
+			return 1;
 		return 0;
-		
+
 	}
 
 }
