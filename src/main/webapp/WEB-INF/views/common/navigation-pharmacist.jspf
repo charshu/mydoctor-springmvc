@@ -7,7 +7,7 @@
     <div class="navbar-collapse navbar-inverse">
         <ul class="nav navbar-nav">
             <li><a href="/login">Home</a></li>
-            <li><a href="/patient-profile">Profile</a></li>
+            <li><a href="/pharmacist-profile">Profile</a></li>
              <li><a href="/show-prescription">Prescription </a></li>
             <li><a href="/findPrescriptionHistoryForm">Prescription History</a></li>
   
