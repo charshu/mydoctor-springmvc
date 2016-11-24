@@ -189,8 +189,10 @@ public class DoctorController
 		public String showPatientInSlot(ModelMap model) throws SQLException 
 		{
 			Schedule currentSchedule = doctorServiceImpl.retrieveCurrentSchedule((String)model.get("username"));
-			ArrayList<Appointment> appointments = doctorServiceImpl.retrieveAllAppointmentInSchedule((String)model.get("username"));
+		
 			model.addAttribute("currentSchedule",currentSchedule);
+			ArrayList<Appointment> appointments = doctorServiceImpl.retrieveAllAppointmentInSchedule((String)model.get("username"));
+			
 			model.addAttribute("appointments",appointments);
 			return "patientsInSchedule";
 		}

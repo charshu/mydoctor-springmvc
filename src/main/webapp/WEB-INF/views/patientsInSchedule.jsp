@@ -11,7 +11,7 @@
 			<th>Schedule ID </th>
 			<th>Start</th>
 			<th>End</th>
-			<th></th>
+			
 		</tr>
 	</thead>
 
@@ -19,7 +19,7 @@
        <td>${currentSchedule.id}</td>
        <td>${currentSchedule.printStart()}</td>
        <td>${currentSchedule.printEnd()}</td>
- <td><a href="/delete-schedule?schedule_id=${currentSchedule.id}" class="btn btn-danger">Delete</a></td>
+
     </tr>
 
 
