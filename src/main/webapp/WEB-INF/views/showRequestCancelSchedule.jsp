@@ -17,7 +17,7 @@
        <td>${requestCancelSchedule.id}</td>
        <td>${requestCancelSchedule.printStart()}</td>
        <td>${requestCancelSchedule.printEnd()}</td>
-      <td><a href="/available-schedule?schedule_id=${requestCancelSchedule.id}" class="btn btn-warning"> Stop pending</a></td>
+      <td><a href="/available-schedule?schedule_id=${requestCancelSchedule.id}" class="btn btn-warning"> Approve</a></td>
  
     </tr>
 </c:forEach>
