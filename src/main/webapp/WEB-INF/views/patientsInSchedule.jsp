@@ -3,14 +3,40 @@
 
 <div class="container-fluid">
 
-<h2>Patients in schedule<i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
+
+<h2>Current schedule <i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
+<table class="table">
+<thead>
+		<tr>
+			<th>Schedule ID </th>
+			<th>Start</th>
+			<th>End</th>
+			<th></th>
+		</tr>
+	</thead>
+
+   <tr class="success">
+       <td>${currentSchedule.id}</td>
+       <td>${currentSchedule.printStart()}</td>
+       <td>${currentSchedule.printEnd()}</td>
+ <td><a href="/delete-schedule?schedule_id=${currentSchedule.id}" class="btn btn-danger">Delete</a></td>
+    </tr>
+
+
+</table>
+
+<h2>Patients in schedule <i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
 <table class="table">
 <thead>
 		<tr>
 			<th>Appointment ID </th>
 			<th>Appointment date </th>
-			<th>Patient ID</th>
+			<th>Patient Name</th>
+			<th>Patient Surname</th>
+			<th>Patient Gender</th>
+			<th>Hospital Number</th>
 			<th>Symptom</th>
+			<th></th>
 		</tr>
 	</thead>
 <c:forEach items="${appointments}" var="appointment">

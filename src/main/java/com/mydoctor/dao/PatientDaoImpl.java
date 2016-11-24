@@ -56,7 +56,16 @@ public class PatientDaoImpl {
 		else
 			return -1;
 	}
-
+	public String retrieveHospitalNumberById(int patient_id)throws SQLException{
+		String query = "Select hospitalNumber from patient where patient_id = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, patient_id);
+		ResultSet resultSet = pstmt.executeQuery();
+		if (resultSet.next())
+			return resultSet.getString(1);
+		else
+			return null;
+	}
 	public int getPatientPasswordLength(String username) throws SQLException {
 		String query = "Select password from user where username = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -111,7 +120,7 @@ public class PatientDaoImpl {
 	}
 
 	public ArrayList<Appointment> retrieveAllAppointments(int patient_id) throws SQLException {
-		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom "
+		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom,appointment.status "
 				+ "FROM make_appointment "
 				+ "INNER JOIN appointment "
 				+ "INNER JOIN doctor "
@@ -123,13 +132,15 @@ public class PatientDaoImpl {
 		pstmt.setInt(1, patient_id);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+		Appointment appointment = new Appointment();
 		while (rs.next()) {
-			Appointment appointment = new Appointment();
+			if(!"waiting".equals(rs.getString("status")))continue;
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setPatientName(rs.getString("patient_name"));
 			appointment.setDoctorName(rs.getString("doctor_name"));
 			appointment.setDate(rs.getTimestamp("date"));
 			appointment.setSymptom(rs.getString("symptom"));
+			appointment.setStatus(rs.getString("status"));
 			appointments.add(appointment);
 
 		}
@@ -157,11 +168,12 @@ public class PatientDaoImpl {
 
 	}
 
-	public int insertAppointment(Timestamp date, String symptom) throws SQLException {
-		String query = "INSERT INTO mydoctor.appointment (app_id, date, symptom) VALUES (NULL, ?, ?);";
+	public int insertAppointment(Timestamp date, String symptom,String status) throws SQLException {
+		String query = "INSERT INTO mydoctor.appointment (app_id, date, symptom,status) VALUES (NULL, ?, ? ,?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		pstmt.setTimestamp(1, date);
 		pstmt.setString(2, symptom);
+		pstmt.setString(3, status);
 		pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if (rs.next()) {
@@ -221,7 +233,17 @@ public class PatientDaoImpl {
 		return -1;
 		
 	}
-	
+	public int setStatusAppointment(Timestamp start,Timestamp end,String status)throws SQLException{
+		String query = "Update appointment Set appointment.status = ? "
+				+ "Where appointment.date BETWEEN ? and ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, status);
+		pstmt.setString(2, "start");
+		pstmt.setString(3, "end");
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		return updateCount;
+	}
 	public int editPatientInfo(String name, String surname, String gender, String birth_date, String address, String tel, String email, int patient_id) throws SQLException {
 		String query = "Update patient Set name = ?, surname = ?, gender = ?, birth_date = ?, address = ?, tel = ?, email = ? Where patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);

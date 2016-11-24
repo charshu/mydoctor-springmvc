@@ -3,6 +3,7 @@ package com.mydoctor.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
@@ -72,8 +73,8 @@ public class DoctorDaoImpl {
 		//System.out.print(doctors.size());
 		return doctors;
 	}
-	public Schedule retriveSchedule(int schedule_id) throws SQLException {
-		String query = "Select * from schedule where schedule_id = ? ";
+	public Schedule retrieveSchedule(int schedule_id) throws SQLException {
+		String query = "Select * from schedule where sch_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, schedule_id);
 		ResultSet rs = pstmt.executeQuery();
@@ -82,10 +83,19 @@ public class DoctorDaoImpl {
 		}
 		return null;
 	}
-	
+	public int setStatusSchedule(int schedule_id,String status)throws SQLException{
+		String query = "Update schedule Set schedule.status = ? "
+				+ "Where sch_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, status);
+		pstmt.setInt(2, schedule_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		return updateCount;
+	}
 	public ArrayList<Schedule> retriveAllDoctorSchedules(int doctor_id) throws SQLException {
 		System.out.println("retrieve All Doctor Schedules");
-		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
+		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date,schedule.status FROM doctor_schedule "
 				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
 				+ "WHERE doctor_schedule.doctor_id = ? ORDER BY schedule.start_date ASC";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -93,6 +103,7 @@ public class DoctorDaoImpl {
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 		while (rs.next()) {
+			if(!"available".equals(rs.getString("status")))continue;
 			Schedule schedule = new Schedule();
 			schedule.setId(rs.getInt("sch_id"));
 			schedule.setStart(rs.getTimestamp("start_date"));
@@ -158,6 +169,45 @@ public class DoctorDaoImpl {
 		}
 		return schedules;
 	}
+	public ArrayList<Schedule> retriveAllSchedulesStatus(int doctor_id,String status) throws SQLException {
+
+		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
+				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
+				+ "WHERE doctor_schedule.doctor_id = ? and schedule.status = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		pstmt.setString(2, status);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+		
+		while (rs.next()) {
+			Schedule schedule = new Schedule();
+			schedule.setId(rs.getInt("sch_id"));
+			schedule.setStart(rs.getTimestamp("start_date"));
+			schedule.setEnd(rs.getTimestamp("end_date"));
+			schedules.add(schedule);
+		}
+		return schedules;
+	}
+	public ArrayList<Schedule> retriveAllSchedulesStatus(String status) throws SQLException {
+
+		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
+				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
+				+ "WHERE schedule.status = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, status);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+		
+		while (rs.next()) {
+			Schedule schedule = new Schedule();
+			schedule.setId(rs.getInt("sch_id"));
+			schedule.setStart(rs.getTimestamp("start_date"));
+			schedule.setEnd(rs.getTimestamp("end_date"));
+			schedules.add(schedule);
+		}
+		return schedules;
+	}
 
 
 
@@ -188,12 +238,13 @@ public class DoctorDaoImpl {
 	}
 	
 	public int insertSchedule(Schedule schedule)throws SQLException{
-		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date) "
-				+ "VALUES ('0', ?, ?);";
+		String query = "INSERT INTO mydoctor.schedule (sch_id, start_date, end_date,status) "
+				+ "VALUES ('0', ?, ?, ?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 
 		pstmt.setTimestamp(1, schedule.getStart());
 		pstmt.setTimestamp(2, schedule.getEnd());
+		pstmt.setString(3, "available");
 		pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if (rs.next()) {

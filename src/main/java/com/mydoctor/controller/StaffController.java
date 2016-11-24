@@ -1,6 +1,7 @@
 package com.mydoctor.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.validation.Valid;
 
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
+import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.NurseServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 import com.mydoctor.service.StaffServiceImpl;
@@ -30,6 +33,8 @@ public class StaffController
 	private StaffServiceImpl staffServiceImpl;
 	@Autowired
 	private PatientServiceImpl patientServiceImpl;
+	@Autowired
+	private DoctorServiceImpl doctorServiceImpl;
 		
 	@RequestMapping(value="/welcomeStaff",method=RequestMethod.GET)
 	public String profile(ModelMap model) throws SQLException 
@@ -108,4 +113,15 @@ public class StaffController
 	   }
 	   return "showPatientInfoAfterFind_staff";
 		}
+	
+	@RequestMapping(value="/approve-schedule",method=RequestMethod.GET)
+	public String showRequestCancelSchedule(ModelMap model) throws SQLException 
+	{
+		
+		ArrayList<Schedule> requestCancelSchedules = doctorServiceImpl.retriveAllSchedulesStatus("request cancel");
+		model.addAttribute("requestCancelSchedules", requestCancelSchedules);
+		return "showRequestCancelSchedule";
+	}
+	
+	
 }

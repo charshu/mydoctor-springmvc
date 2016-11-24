@@ -58,11 +58,22 @@ public class DoctorServiceImpl {
 		int doctor_id = retrieveId(username);
 		return doctorDaoImpl.retriveAllDoctorSchedules(doctor_id);
 	}
+	public ArrayList<Schedule> retriveAllSchedulesStatus(String username,String status) throws SQLException {
+		int doctor_id = retrieveId(username);
+		return doctorDaoImpl.retriveAllSchedulesStatus(doctor_id,status);
+	}
+	public ArrayList<Schedule> retriveAllSchedulesStatus(String status) throws SQLException {
+		
+		return doctorDaoImpl.retriveAllSchedulesStatus(status);
+	}
+	
 
 	public ArrayList<Schedule> retriveAllDepartmentSchedules(String department) throws SQLException {
 		return doctorDaoImpl.retriveAllDepartmentSchedules(department);
 	}
-
+	public Schedule retrieveSchedule(int schedule_id)throws SQLException {
+		return doctorDaoImpl.retrieveSchedule(schedule_id);
+	}
 	public ArrayList<Schedule> retriveAllSchedules() throws SQLException {
 
 		return doctorDaoImpl.retriveAllSchedules();
@@ -98,7 +109,9 @@ public class DoctorServiceImpl {
 		System.out.println(patient_id);
 		return doctorDaoImpl.retriveInfo(patient_id);
 	}
-
+	public int setStatusSchedule(Schedule schedule,String status)throws SQLException{
+		return doctorDaoImpl.setStatusSchedule(schedule.getId(),status);
+	}
 	public int deleteSchedule(String username, int schedule_id) throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
 
@@ -117,13 +130,18 @@ public class DoctorServiceImpl {
 				"[SUCCESS] delete doctor_schedule " + "(doctor_id:" + doctor_id + ",schedule_id:" + schedule_id + ")");
 		return 1;
 	}
-
+	
+	public Schedule retrieveCurrentSchedule(String username)throws SQLException{
+		int doctor_id = doctorDaoImpl.retrieveId(username);
+		return doctorDaoImpl.retrieveCurrentSchedule(doctor_id);
+		 
+	}
 	public ArrayList<Appointment> retrieveAllAppointmentInSchedule(String username) throws SQLException {
 		int doctor_id = doctorDaoImpl.retrieveId(username);
-		Schedule currentSchedule = doctorDaoImpl.retrieveCurrentSchedule(doctor_id);
+		Schedule currentSchedule = retrieveCurrentSchedule(username);
 		if (currentSchedule == null)
 			return new ArrayList<Appointment>();
-		System.out.println("test: " + currentSchedule);
+	
 		return doctorDaoImpl.retrieveAllAppointmentInSchedule(doctor_id, currentSchedule);
 	}
 

@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 
-<h2>Appointment Lists <i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
+<h2>Appointment Lists <a href="/choose-doctor" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> New appointment</a></h2>
 <table class="table">
 <thead>
 		<tr>
@@ -11,6 +11,8 @@
 			<th>Appointment Date </th>
 			<th>Doctor</th>
 			<th>Symptom</th>
+			<th>Status</th>
+			<th></th>
 		</tr>
 	</thead>
 <c:forEach items="${appointments}" var="appointment">
@@ -19,12 +21,13 @@
        <td>${appointment.printDate()}</td>
        <td>${appointment.doctorName}</td>
        <td>${appointment.symptom}</td>
+       <td>${appointment.status}</td>
        <td><a href="/cancel-appointment?appointmentId=${appointment.id}" class="btn btn-danger">Cancel</a></td>
     </tr>
 </c:forEach>
 
 </table>
-<a href="/choose-doctor" class="btn btn-success">New appointment</a>
+
 </div>
 
 

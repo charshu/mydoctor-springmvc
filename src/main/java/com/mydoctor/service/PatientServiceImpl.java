@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.mydoctor.dao.PatientDaoImpl;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Schedule;
 
 
 public class PatientServiceImpl
@@ -39,7 +40,9 @@ public class PatientServiceImpl
 			int user_id = patientDaoImpl.retrieveUserId(username);
 			return patientDaoImpl.retrieveIdByUserId(user_id);
 		}
-	
+		public String retrieveHospitalNumberById(int patient_id)throws SQLException{
+			return patientDaoImpl.retrieveHospitalNumberById(patient_id);
+		}
 		public int cancelAppointment(String username,int appointment_id)throws SQLException{
 			int user_id = patientDaoImpl.retrieveUserId(username);
 			int patient_id = patientDaoImpl.retrieveIdByUserId(user_id);
@@ -51,6 +54,10 @@ public class PatientServiceImpl
 			System.out.println("error");
 			return 0;
 		}
+		public int postponeAppointmentInSchedule(Schedule schedule)throws SQLException{
+			return patientDaoImpl.setStatusAppointment(schedule.getStart(),schedule.getEnd(),"postpone");
+		}
+		
 		
 
 		public int edit_info(String username, Patient patient) throws SQLException {

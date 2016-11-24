@@ -19,7 +19,7 @@ public class Appointment {
 	private String patientSurname;
 	private String patientGender;
 	private String patientHospitalNumber;
-	
+	private String status;
 	private int doctorId;
 	private String doctorName;
 	private String doctorSurname;
@@ -34,6 +34,12 @@ public class Appointment {
 	}
 	
 
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getPatientGender() {
 		return patientGender;
 	}
