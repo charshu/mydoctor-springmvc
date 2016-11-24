@@ -14,9 +14,11 @@
 
 <body>
 	<%@ include file="common/navigation-doctor.jspf"%>
-
-
 	<div class="container">
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-6">
+	
 		<h2>Add new schedule</h2>
 		<form:form id="scheduleForm" method="post" action="add-schedule"
 			commandName="schedule" >
@@ -43,8 +45,9 @@
 			<div>${error}</div>
 		</form:form>
 	</div>
-
-
+</div>
+<div class="col-md-3"></div>
+</div>
 
 	
 

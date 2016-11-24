@@ -1,13 +1,41 @@
 <%@ include file="common/header.jspf"%>
+<div class="background2">
 <%@ include file="common/navigation-doctor.jspf"%>
 
-<div class="container-fluid">
-<h1> Welcome Doctor: ${username} <i class="fa fa-user-md" aria-hidden="true"></i> </h1>
-
+	<div class="container-fluid">
+	<h2>&nbsp;&nbsp;Welcome to MyDoctor: ${username}</h2>
+	<div class="container">
+		<div class="row well">
+			<div class="col-md-1"></div>
+			<div class="col-md-6">
+				<p></p>
+				<p></p>
+				<p  class="headFontThai">&nbsp;&nbsp;&nbsp;&nbsp;คำแนะนำการใช้เว็บไซต์</p>
+				<h1></h1>
+				<div class ="fontThai">
+				<p>1. Profile :</p>
+				<p>สำหรับการตรวจสอบประวัติส่วนตัว</p>
+				<p></p>
+				<p>2. Schedule :</p>
+				<p>สำหรับตรวจสอบเวลาออกตรวจผู้ป่วย</p>
+				<p></p>
+				<p>3. Diagnose :</p>
+				<p>สำหรับการบันทึกอาการผู้ป่วย</p>
+				<p></p>
+				<p>4. Prescription History :</p>
+				<p>สำหรับตรวจสอบการประวัติการยาของผู้ป่วย</p>
+				<p>5. Add Prescription :</p>
+				<p>สำหรับบันทึกใบสั่งยาและตรวจสอบการจ่ายยา</p>
+				</div>
+			</div>
+			<div class="col-md-5"></div>
+		</div>
+		
+	</div>	
 
 </div>
 
 
 
-
+</div>
 <%@ include file="common/footer.jspf"%>

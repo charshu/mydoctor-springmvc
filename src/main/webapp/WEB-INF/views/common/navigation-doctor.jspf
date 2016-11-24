@@ -1,22 +1,28 @@
-<nav role="navigation" class="navbar navbar-default">
-
+<nav role="navigation" class="navbar navbar-inverse">
+<div class="container-fluid">
+	
     <div class="">
-        <a href="/welcomeDoctor" class="navbar-brand">MyHospital <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+        <a href="/welcomeDoctor" class="navbar-brand ">MyHospital <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
 
     <div class="navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="/welcomeDoctor"> <i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-            <li><a href="/doctor-profile"> <i class="fa fa-user-circle" aria-hidden="true"></i>  Profile</a></li>
-            <li><a href="/list-schedule"><i class="fa fa-calendar" aria-hidden="true"></i>  Schedule</a></li>
-            <li><a href="/patient-in-schedule"><i class="fa fa-stethoscope" aria-hidden="true"></i>  Diagnose</a></li>
-            <li><a href="/DoctorFindPrescriptionHistoryForm"><i class="fa fa-file-text" aria-hidden="true"></i>  PrescriptionHistory</a></li>
-             <li><a href="/add-prescription"><i class="fa fa-file-text-o" aria-hidden="true"></i>  Add Prescription</a></li>
+
+            <li class ="active"><a href="/welcomeDoctor">Home <i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/doctor-profile">Profile  <i class="fa fa-user fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/list-schedule">Schedule <i class="fa fa-clock-o fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/patient-in-schedule">Diagnose  <i class="fa fa-heartbeat fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/DoctorFindPrescriptionHistoryForm">PrescriptionHistory  <i class="fa fa-history fa-lg" aria-hidden="true"></i></a></li>
+             <li><a href="/add-prescription">Add Prescription  <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+             </a></li>
+
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="/login">Logout</a></li>
+        <li><a href="/login">Logout  <span class="glyphicon glyphicon-log-out"></span></a></li>
         </ul>
     </div>
-
+    
+    
+</div>
 </nav>

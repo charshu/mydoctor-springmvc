@@ -2,28 +2,34 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 <div class="container-fluid">
-<h2>Profile</h2>
-<table class="table table-reflow">
-  <thead>
-    <tr>
-   	<th>Name</th>
-   	<th>Surname</th>
-   	<th>Department</th>
-   	<th>Tel</th>
 
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>${doctor.name}</td>
-      <td>${doctor.surname}</td>
-      <td>${doctor.department}</td>
-      <td>${doctor.tel}</td>
+<div class = "well" style=" background:#008181" >
+ 		<div style="font-weight:bold"><h2>Profile</h2></div>
+</div>
 
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+	<table class="table ">
+	  
+	<tr>
+      <th>Name</th><td>${doctor.name}</td>
     </tr>
-  
-  </tbody>
-</table>
+    <tr>
+      <th>Surname</th><td>${doctor.surname}</td>
+    </tr>
+    <tr>
+      <th>Department</th><td>${doctor.department}</td>
+    </tr>
+    <tr>
+      <th>Tel</th><td>${doctor.tel}</td>
+    </tr>
+	  
+	</table>
+	</div>
+	<div class="col-md-3"></div>
+	</div>
+
 </div>
 
 <%@ include file="common/footer.jspf"%>

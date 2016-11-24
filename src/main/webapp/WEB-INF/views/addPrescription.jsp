@@ -6,7 +6,7 @@
 
 	<h1> <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i> Prescription</h1>
 	<table class="table">
-		<thead>
+		<thead  style="background:#008181 !important">
 			<tr>
 				<th> <i class="fa fa-male  fa-2x" aria-hidden="true"></i> Patient Name </th>
 				<th> <i class="fa fa-user-md fa-2x" aria-hidden="true"></i> Doctor Name </th>
@@ -21,7 +21,7 @@
 <div class="container-fluid">
 	<h1> <i class="fa fa-medkit fa-2x" aria-hidden="true"></i> Medicine list</h1>
 	<table class="table">
-		<thead>
+		<thead  style="background:#008181!important">
 			<tr>
 				<th>Medicine ID</th>
 				<th>Medicine Name</th>
