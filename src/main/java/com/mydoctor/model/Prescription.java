@@ -2,7 +2,7 @@ package com.mydoctor.model;
 
 public class Prescription  {
 
-	private String  instruction,status,medicinename;
+	private String  instruction,status,medicinename,patientName,patientSurname;
 	private int userid,prescriptionId, medicineId,amount;
 	private String hospitalNumber;
 
@@ -18,6 +18,7 @@ public class Prescription  {
 		this.instruction = instruction;
 		this.amount = amount;
 		this.status = status;
+		
 	}
 	
 	public String getHospitalNumber() {
@@ -89,6 +90,16 @@ public class Prescription  {
 	public void setMedicinename(String medicinename) {
 		this.medicinename = medicinename;
 	}
-	
-
+	public String getPatientName() {
+		return patientName;
+	}
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+	public String getPatientSurname() {
+		return patientSurname;
+	}
+	public void setPatientSurname(String patientSurname) {
+		this.patientSurname = patientSurname;
+	}
 }

@@ -7,7 +7,7 @@
 	  <thead style="background:#F75D59">
 	    <tr>
 	      <th>Medicines List</th>
-	      <th>amount</th>
+	      <th>Dose</th>
 	      <th>Instruction</th>
 	    </tr>
 	  </thead>

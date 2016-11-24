@@ -10,7 +10,7 @@
 			<th>PrescriptionID </th>
 			<th>Instruction</th>
 			<th>Medicine</th>
-			<th>Quantity</th>
+			<th>Dose</th>
 		</tr>
 	</thead>
 <c:forEach items="${prescriptionHistorys}" var="prescriptionHistory">

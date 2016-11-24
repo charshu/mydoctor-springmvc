@@ -71,19 +71,23 @@ public class PrescriptionDaoImpl {
 
 	public ArrayList<Prescription> retriveAllwaitPrescription() throws SQLException {
 
-		String query = "SELECT *  FROM prescription "
-				+ "WHERE prescription.status = ? group by prescription_id";
+		String query = "SELECT *  FROM prescription "				
+				+ "INNER JOIN create_prescription ON create_prescription.prescription_id = prescription.prescription_id "
+				+ "INNER JOIN patient ON create_prescription.patient_id = patient.patient_id "
+				+ "WHERE prescription.status = ? group by prescription.prescription_id";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1,"wait");
 		ResultSet rs = pstmt.executeQuery();	
 		ArrayList<Prescription> prescripList = new ArrayList<Prescription>();
 		while(rs.next()){
 			Prescription pres = new Prescription();
-			pres.setPrescriptionId(rs.getInt("prescription_id"));
-			pres.setMedicineId(rs.getInt("med_id"));
-			pres.setAmount(rs.getInt("amount"));
-			pres.setInstruction(rs.getString("instruction"));
-			pres.setStatus(rs.getString("status"));
+			pres.setPrescriptionId(rs.getInt("prescription.prescription_id"));
+			pres.setMedicineId(rs.getInt("prescription.med_id"));
+			pres.setAmount(rs.getInt("prescription.amount"));
+			pres.setInstruction(rs.getString("prescription.instruction"));
+			pres.setStatus(rs.getString("prescription.status"));
+			pres.setPatientName(rs.getString("patient.name"));
+			pres.setPatientSurname(rs.getString("patient.surname"));
 			prescripList.add(pres);
 		}		
 		

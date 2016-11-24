@@ -10,7 +10,7 @@
 		  <thead style="background:#FBB917 !important">
 		    <tr style="color:white">
 		      <th>NO.</th>
-		      <th>Prescription ID</th>
+		      <th>Patient Name</th>
 		   	  <th>Status</th>
 		    </tr>
 		  </thead>
@@ -20,7 +20,7 @@
 			<c:set var="no"  value="${no + 1}" scope="page"/>
 			<tr>
 			   <td><c:out value="${no}"/></td>
-			   <td><c:out value="${prescript.prescriptionId}"/></td>
+			   <td><c:out value="${prescript.patientName}"/> <c:out value="${prescript.patientSurname}"/></td>
 			   <td><a href="/detail?prescription_id=${prescript.prescriptionId}" class="btn btn-danger"><c:out value="Waiting"/></a></td>
 			 </tr>
 			</c:forEach>

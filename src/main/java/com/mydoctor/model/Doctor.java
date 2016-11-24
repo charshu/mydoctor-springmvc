@@ -2,6 +2,7 @@ package com.mydoctor.model;
 
 import java.util.ArrayList;
 
+
 public class Doctor extends User {
 	
 	
