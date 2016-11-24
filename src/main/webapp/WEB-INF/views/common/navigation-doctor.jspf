@@ -13,7 +13,7 @@
             <li><a href="/list-schedule">Schedule <i class="fa fa-clock-o fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/patient-in-schedule">Diagnose  <i class="fa fa-heartbeat fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/DoctorFindPrescriptionHistoryForm">PrescriptionHistory  <i class="fa fa-history fa-lg" aria-hidden="true"></i></a></li>
-             <li><a href="/add-prescription">Add Prescription  <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+<!--              <li><a href="/add-prescription">Add Prescription  <i class="fa fa-plus fa-lg" aria-hidden="true"></i> -->
              </a></li>
 
 

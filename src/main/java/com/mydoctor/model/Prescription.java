@@ -4,6 +4,7 @@ public class Prescription  {
 
 	private String  instruction,status,medicinename;
 	private int userid,prescriptionId, medicineId,amount;
+	private String hospitalNumber;
 
 	private Medicine medicine;
 	
@@ -19,6 +20,14 @@ public class Prescription  {
 		this.status = status;
 	}
 	
+	public String getHospitalNumber() {
+		return hospitalNumber;
+	}
+
+	public void setHospitalNumber(String hospitalNumber) {
+		this.hospitalNumber = hospitalNumber;
+	}
+
 	public Medicine getMedicine() {
 		return medicine;
 	}

@@ -6,7 +6,7 @@
 <table class="table">
 <thead>
 		<tr>
-			<th>ID </th>
+			<th>Hospital Number</th>
 			<th>PrescriptionID </th>
 			<th>Instruction</th>
 			<th>Medicine</th>
@@ -15,7 +15,7 @@
 	</thead>
 <c:forEach items="${prescriptionHistorys}" var="prescriptionHistory">
    <tr>
-       <td>${prescriptionHistory.userid}</td>
+       <td>${prescriptionHistory.hospitalNumber}</td>
        <td>${prescriptionHistory.prescriptionId}</td>
        <td>${prescriptionHistory.instruction}</td>
        <td>${prescriptionHistory.medicinename}</td>

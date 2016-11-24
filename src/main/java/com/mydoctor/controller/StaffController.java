@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.Appointment;
@@ -121,6 +122,15 @@ public class StaffController
 		ArrayList<Schedule> requestCancelSchedules = doctorServiceImpl.retriveAllSchedulesStatus("request cancel");
 		model.addAttribute("requestCancelSchedules", requestCancelSchedules);
 		return "showRequestCancelSchedule";
+	}
+	
+	@RequestMapping(value="/approve-cancel-schedule",method=RequestMethod.GET)
+	public String cancelSchedule(@RequestParam("scheduleId")String schedule_id,ModelMap model) throws SQLException 
+	{
+		Schedule schedule = doctorServiceImpl.retrieveSchedule(Integer.parseInt(schedule_id));
+		doctorServiceImpl.setStatusSchedule(schedule, "cancel");
+		patientServiceImpl.postponeAppointmentInSchedule(schedule);
+		return "redirect:/approve-schedule";
 	}
 	
 	

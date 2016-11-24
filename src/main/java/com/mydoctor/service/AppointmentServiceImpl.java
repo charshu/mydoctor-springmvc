@@ -84,7 +84,8 @@ public class AppointmentServiceImpl {
 		ArrayList<Appointment> appointmentsInSchedule = new ArrayList<Appointment>();
 		for (Appointment appointment : appointments) {
 			DateTime appointmentTime = new DateTime(appointment.getDate(), DateTimeZone.forID("Asia/Bangkok"));
-			if (appointmentTime.isAfter(startTime) && appointmentTime.isBefore(endTime)) {
+			System.out.println("filter time : "+appointmentTime);
+			if (appointmentTime.isAfter(startTime) || appointmentTime.isEqual(startTime) && appointmentTime.isBefore(endTime)) {
 				appointmentsInSchedule.add(appointment);
 
 			}
@@ -122,10 +123,10 @@ public class AppointmentServiceImpl {
 		clearOldAvailableTimes();
 		loadAllDoctorSchedules(doctor_id);
 		loadAllDoctorAppointment(doctor_id);
-		
+		System.out.println("All appointment: " + appointments);
 		DateTimeZone timeZone = DateTimeZone.forID("Asia/Bangkok");
 		DateTime now = DateTime.now(timeZone);
-		//System.out.println("Now: " + now.toString());
+		System.out.println("Now: " + now.toString());
 		DateTime minDateTime = now.plusDays(1).withTimeAtStartOfDay(); // tomorrow
 		DateTime maxDateTime = now.plusDays(7).withTimeAtStartOfDay(); // tomorrow
 		int count = 0;		
@@ -137,27 +138,27 @@ public class AppointmentServiceImpl {
 		
 		ArrayList<Appointment> appointmentsInSchedule;
 		for (Schedule schedule : schedules) {
-			//System.out.println("consider schedule: " + schedule.toString());
+			System.out.println("consider schedule: " + schedule.toString());
 			startTime = new DateTime(schedule.getStart(), DateTimeZone.forID("Asia/Bangkok"));
 			endTime = new DateTime(schedule.getEnd(), DateTimeZone.forID("Asia/Bangkok"));
-			//System.out.println("start time is : " + startTime);
-			//System.out.println("end time is : " + endTime);
+			System.out.println("start time is : " + startTime);
+			System.out.println("end time is : " + endTime);
 			if (!startTime.isBefore(endTime) || startTime.isBefore(minDateTime) || endTime.isAfter(maxDateTime))
 				continue; // skip if cannot make appointment in schedule
 
-			//System.out.println("This schedule is in range");
+			System.out.println("This schedule is in range");
 			appointmentsInSchedule = filterAppointment(startTime, endTime); // filter
 			if (appointmentsInSchedule.size() > 15)continue;
-			//System.out.println("filtered appointments : " + appointmentsInSchedule.toString());
+			System.out.println("filtered appointments : " + appointmentsInSchedule.toString());
 			
 			// init slot time
 			startTimeSlot = startTime;
 			endTimeSlot = startTime.plusMinutes(30); // +30mins
 
-			//System.out.println("checking available slot");
+			System.out.println("checking available slot");
 			while (startTimeSlot.isBefore(endTime)) {
-				//System.out.println("start time slot = " + startTimeSlot);
-				//System.out.println("end time slot = " + endTimeSlot);
+				System.out.println("start time slot = " + startTimeSlot);
+				System.out.println("end time slot = " + endTimeSlot);
 				count = 0;
 				
 				for (Appointment appointment : appointmentsInSchedule) {
@@ -166,10 +167,10 @@ public class AppointmentServiceImpl {
 							&& appointmentTime.isBefore(endTimeSlot) ) {
 						count++;
 					}
-				//	System.out.println("count = " + count);
+					System.out.println("count = " + count);
 				}
 				if (count <= 4) {
-					//System.out.println("This slot is available !");
+					System.out.println("This slot is available !");
 					availableTimes.add(new Timestamp(startTimeSlot.toDate().getTime()));
 				}
 				count = 0;

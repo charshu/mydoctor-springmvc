@@ -2,7 +2,7 @@
 <%@ include file="common/navigation-patient.jspf"%>
 
 <div class="container-fluid">
-<div class="well" style="background:#E56717 !important">
+<div class="well" >
 	<h2>Your profile</h2>
 </div>
 <div class = "container">
@@ -72,7 +72,11 @@
 	<tr>
 		<th>HospitalNumber</th><td>${patient.hospitalNumber}</td>
 	</tr>
-		<button class="btn btn-success">Confirm Edit Profile</button>
+	<tr>
+	<th></th>
+	<td><button class="btn btn-success">Confirm Edit Profile</button></td>
+	</tr>
+		
 		</form:form>
 </table>		
 </div>       

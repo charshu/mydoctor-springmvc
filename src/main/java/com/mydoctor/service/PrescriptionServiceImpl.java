@@ -81,11 +81,11 @@ public class PrescriptionServiceImpl {
 
 	}
 
-	public ArrayList<Prescription> findPrescriptionHistory(String username, Prescription findprescriptionh)
+	public ArrayList<Prescription> findPrescriptionHistory(Prescription findprescriptionh)
 			throws SQLException {
-		int userid = findprescriptionh.getUserid();
-		System.out.println(userid);
-		return prescriptionDaoImpl.retrievePrescriptionHistory(userid);
+		String hospitalNumber = findprescriptionh.getHospitalNumber();
+		System.out.println(hospitalNumber);
+		return prescriptionDaoImpl.retrievePrescriptionHistory(hospitalNumber);
 	}
 
 	public void changeStatusToCompete(int prescript_id) throws SQLException {

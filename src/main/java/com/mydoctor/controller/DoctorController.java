@@ -45,7 +45,7 @@ import com.mydoctor.service.PrescriptionServiceImpl;
 
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes(value={"username","diagnosis"})
 public class DoctorController
 {
 		@Autowired
@@ -69,7 +69,7 @@ public class DoctorController
 		                Date parsedDate = df.parse(value);
 		                Calendar c = Calendar.getInstance(); 
 		                c.setTime(parsedDate); 
-		               // c.add(Calendar.DATE, -7);
+		              //  c.add(Calendar.DATE, -7);
 		                c.add(Calendar.MONTH, -1);
 		                c.add(Calendar.YEAR, 1);
 		                parsedDate = c.getTime();
@@ -217,10 +217,12 @@ public class DoctorController
 		public String saveDiagnosis(ModelMap model,@ModelAttribute("diagnosis")DiagnosisBean diagnosisBean) throws SQLException 
 		{
 			if(diagnosisBean.getPatientId() == 0 || diagnosisBean.getDoctorId() == 0){
+				System.out.println("back");
 				return "redirect:/patient-in-schedule";
 			}
 			if(doctorServiceImpl.saveDiagnosis(diagnosisBean) > 0){
-				return "redirect:/patient-in-schedule";
+				System.out.print("go add prescription");
+				return "redirect:/add-prescription";
 			}
 			System.out.print("error");
 			return "redirect:/patient-in-schedule";
@@ -270,7 +272,7 @@ public class DoctorController
 			if(result.hasErrors()){
 				return "DoctorFindPrescriptionHistory";
 			}
-			ArrayList<Prescription> prescriptionHistorys = prescriptionServiceImpl.findPrescriptionHistory((String)model.get("username"),findprescriptionh);
+			ArrayList<Prescription> prescriptionHistorys = prescriptionServiceImpl.findPrescriptionHistory(findprescriptionh);
 			model.addAttribute("prescriptionHistorys", prescriptionHistorys);
 			return "DoctorViewPrescriptionHistory";
 		}

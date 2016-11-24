@@ -132,9 +132,10 @@ public class PatientDaoImpl {
 		pstmt.setInt(1, patient_id);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-		Appointment appointment = new Appointment();
+		
 		while (rs.next()) {
-			if(!"waiting".equals(rs.getString("status")))continue;
+			Appointment appointment = new Appointment();
+			
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setPatientName(rs.getString("patient_name"));
 			appointment.setDoctorName(rs.getString("doctor_name"));
@@ -149,7 +150,7 @@ public class PatientDaoImpl {
 	}
 
 	public ArrayList<Appointment> retrieveAllDoctorAppointments(int doctor_id) throws SQLException {
-		String query = "SELECT patient_id,doctor_id,appointment.app_id,appointment.date,appointment.symptom "
+		String query = "SELECT patient_id,doctor_id,appointment.app_id,appointment.date,appointment.symptom,appointment.status "
 				+ "FROM make_appointment INNER JOIN appointment "
 				+ "WHERE make_appointment.app_id = appointment.app_id and doctor_id = ? ORDER BY appointment.date DESC";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -157,10 +158,13 @@ public class PatientDaoImpl {
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 		while (rs.next()) {
+			
 			Appointment appointment = new Appointment();
+			if(!"waiting".equals(rs.getString("status")))continue;
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setDate(rs.getTimestamp("date"));
 			appointment.setSymptom(rs.getString("symptom"));
+			appointment.setStatus(rs.getString("status"));
 			appointments.add(appointment);
 		}
 
@@ -238,8 +242,8 @@ public class PatientDaoImpl {
 				+ "Where appointment.date BETWEEN ? and ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, status);
-		pstmt.setString(2, "start");
-		pstmt.setString(3, "end");
+		pstmt.setTimestamp(2, start);
+		pstmt.setTimestamp(3, end);
 		pstmt.executeUpdate();
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;

@@ -11,7 +11,7 @@
 			<div class="col-md-6">
 				<p></p>
 				<p></p>
-				<p  class="headFontThai">&nbsp;&nbsp;&nbsp;&nbsp;คำแนะนำการใช้เว็บไซต์</p>
+				<p  class="headFontThai">คำแนะนำการใช้เว็บไซต์</p>
 				<h1></h1>
 				<div class ="fontThai">
 				<p>1. View Patient All Information :</p>

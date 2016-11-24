@@ -370,6 +370,7 @@ public class DoctorDaoImpl {
 				+ "and make_appointment.doctor_id = ? and appointment.date BETWEEN ? and ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, doctor_id);
+		System.out.println("start: "+currentSchedule.getStart());
 		pstmt.setTimestamp(2, currentSchedule.getStart());
 		pstmt.setTimestamp(3, currentSchedule.getEnd());
 		ResultSet rs = pstmt.executeQuery();
@@ -409,8 +410,8 @@ public class DoctorDaoImpl {
 	}
 
 	public int insertDiagnose(int doctorId, int patientId,int diagnosis_id) throws SQLException {
-		
-		String query = "INSERT INTO mydoctor.diagnose (patient_id,doctor_id,diagnosis_id) VALUES ( ?, ?,?)";
+		System.out.println("doctor_id:"+doctorId+"patient_id:"+patientId+"diagnosis_id:"+diagnosis_id);
+		String query = "INSERT INTO mydoctor.diagnose (patient_id, doctor_id, diagnosis_id) VALUES (?, ?, ?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, patientId);
 		pstmt.setInt(2, doctorId);

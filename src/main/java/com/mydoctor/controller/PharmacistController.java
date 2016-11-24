@@ -74,7 +74,7 @@ public class PharmacistController
 			if(result.hasErrors()){
 				return "findPrescriptionHistory";
 			}
-			ArrayList<Prescription> prescriptionHistorys = prescriptionServiceImpl.findPrescriptionHistory((String)model.get("username"),findprescriptionh);
+			ArrayList<Prescription> prescriptionHistorys = prescriptionServiceImpl.findPrescriptionHistory(findprescriptionh);
 			model.addAttribute("prescriptionHistorys", prescriptionHistorys);
 			return "viewPrescriptionHistory";
 		}

@@ -12,14 +12,14 @@
 			<div class="col-md-6">
 				<p></p>
 				<p></p>
-				<p  class="headFontThai">&nbsp;&nbsp;&nbsp;&nbsp;คำแนะนำการใช้เว็บไซต์</p>
+				<p  class="headFontThai">คำแนะนำการใช้เว็บไซต์</p>
 				<h1></h1>
 				<div class ="fontThai">
 				<p>1. Profile :</p>
 				<p>สำหรับการตรวจสอบประวัติส่วนตัว</p>
 				<p></p>
 				<p>2. Appointment :</p>
-				<p>สำหรับการนัดหมายแพทย์</p>
+				<p>สำหรับการนัดหมายแพทย์</p>
 		
 				</div>
 			</div>

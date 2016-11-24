@@ -89,20 +89,21 @@ public class PrescriptionDaoImpl {
 		
 		return prescripList;
 	}
-	public ArrayList<Prescription> retrievePrescriptionHistory(int userid)throws SQLException{
+	public ArrayList<Prescription> retrievePrescriptionHistory(String hospitalNumber)throws SQLException{
 		//Find Prescription
 
-		String query = "Select create_prescription.prescription_id, medicine , amount , instruction FROM create_prescription "
+		String query = "Select create_prescription.prescription_id, medicine , amount , instruction,patient.hospitalNumber FROM create_prescription "
 						+	"INNER JOIN prescription ON create_prescription.prescription_id = prescription.prescription_id  "
 						+	"INNER JOIN medicine ON prescription.med_id = medicine.med_id  "
-						+	"WHERE create_prescription.patient_id = ?";
+						+	"INNER JOIN patient ON create_prescription.patient_id = patient.patient_id  "
+						+	"WHERE patient.hospitalNumber = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
-		pstmt.setInt(1, userid);
+		pstmt.setString(1, hospitalNumber);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Prescription> prescriptionhistory = new ArrayList<Prescription>();
 		while(rs.next()) {
 			Prescription prescriptionlist = new Prescription();
-			prescriptionlist.setUserid(userid);
+			prescriptionlist.setHospitalNumber(rs.getString("hospitalNumber"));
 			prescriptionlist.setPrescriptionId(rs.getInt("prescription_id"));
 			prescriptionlist.setMedicinename(rs.getString("medicine"));
 			prescriptionlist.setAmount(rs.getInt("amount"));
@@ -124,7 +125,7 @@ public class PrescriptionDaoImpl {
 	}
 	
 	public int insertCreatePrescription(int doctor_id, int patient_id, int prescription_id)throws SQLException{
-		String query = "INSERT INTO mydoctor.createprescription (doctor_id, patient_id, prescription_id)"
+		String query = "INSERT INTO mydoctor.create_prescription (doctor_id, patient_id, prescription_id)"
 				+ "VALUES (?, ?, ?);";
 	
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);

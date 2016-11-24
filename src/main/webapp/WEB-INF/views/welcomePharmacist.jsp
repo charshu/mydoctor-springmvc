@@ -12,17 +12,17 @@
 		<div class="col-md-6">
 			<p></p>
 			<p></p>
-			<p  class="headFontThai">&nbsp;&nbsp;&nbsp;&nbsp;คำแนะนำการใช้เว็บไซต์</p>
+			<p  class="headFontThai"></p>
 			<h1></h1>
 			<div class ="fontThai">
 			<p>1. Profile :</p>
-			<p>สำหรับการตรวจสอบประวัติส่วนตัว</p>
+			<p>สำหรับดูข้อมูลส่วนตัว</p>
 			<p></p>
 			<p>2. Prescription :</p>
-			<p>สำหรับเรียกดูใบสั่งยาจากแพทย์</p>
+			<p>สำหรับดูใบสั่งยา</p>
 			<p></p>
 			<p>3. Prescription History :</p>
-			<p>สำหรับการเรียกดูประวัติการจ่ายยา</p>
+			<p>สำหรับดูประวัติการจ่ายยา</p>
 			</div>
 		</div>
 		<div class="col-md-5"></div>

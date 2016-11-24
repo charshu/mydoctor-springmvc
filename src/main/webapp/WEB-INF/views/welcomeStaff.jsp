@@ -12,14 +12,14 @@
 			<div class="col-md-6">
 				<p></p>
 				<p></p>
-				<p  class="headFontThai">&nbsp;&nbsp;&nbsp;&nbsp;คำแนะนำการใช้เว็บไซต์</p>
+				<p  class="headFontThai"></p>
 				<h1></h1>
 				<div class ="fontThai">
 				<p>1. View/Edit Patient Information :</p>
-				<p>สำหรับการตรวจสอบและแก้ไขประวัติส่วนตัว</p>
+				<p>สำหรับการดูและแก้ไขข้อมูลส่วนตัว</p>
 				<p></p>
 				<p>2. Register Patient :</p>
-				<p>สำหรับการลงทะเบียนผู้ป่วย</p>
+				<p>สำหรับลงทะเบียนให้ผู้ป่วย</p>
 		
 			</div>
 		</div>

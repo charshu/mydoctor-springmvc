@@ -147,7 +147,7 @@ public class DoctorServiceImpl {
 
 	public int saveDiagnosis(DiagnosisBean diagnosisBean) throws SQLException {
 
-		int diagnosis_id = doctorDaoImpl.insertDiagnosis(diagnosisBean.getSymptom(), diagnosisBean.getDisease_id());
+		int diagnosis_id = doctorDaoImpl.insertDiagnosis(diagnosisBean.getDisease_id(),diagnosisBean.getSymptom());
 		if (doctorDaoImpl.insertDiagnose(diagnosisBean.getDoctorId(), diagnosisBean.getPatientId(), diagnosis_id) > 0)
 			return 1;
 		return 0;

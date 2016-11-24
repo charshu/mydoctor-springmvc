@@ -19,8 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.mydoctor.model.DiagnosisBean;
 import com.mydoctor.model.MedicineBean;
 import com.mydoctor.model.Schedule;
 import com.mydoctor.service.DoctorServiceImpl;
@@ -31,7 +33,7 @@ import com.mydoctor.service.PrescriptionServiceImpl;
 
 
 @Controller
-@SessionAttributes(value={"username","medName"})
+@SessionAttributes(value={"username","medName","diagnosis"})
 public class PrescriptionController
 {
 		@Autowired
@@ -46,9 +48,9 @@ public class PrescriptionController
 		
 		
 		@RequestMapping(value = "/add-prescription", method = RequestMethod.GET)
-	    public String showPrescription(ModelMap model) throws SQLException {
-			//PrescriptionServiceImpl.setDoctor_id(1);
-			//PrescriptionServiceImpl.setPatient_id(1);
+	    public String showPrescription(@ModelAttribute("diagnosis")DiagnosisBean diagnosis,ModelMap model) throws SQLException {
+			PrescriptionServiceImpl.setDoctor_id(diagnosis.getDoctorId());
+			PrescriptionServiceImpl.setPatient_id(diagnosis.getPatientId());
 			int doctor_id = prescriptionServiceImpl.getDoctor_id();
 			int patient_id = prescriptionServiceImpl.getPatient_id();
 			String doctor_name = doctorServiceImpl.retrieveDoctorNameByID(doctor_id);

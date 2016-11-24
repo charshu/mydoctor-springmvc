@@ -9,9 +9,9 @@
 		<form:form id="DcotorFindPrescriptionHistoryForm" method="post" action="DoctorFindPrescriptionHistoryForm" commandName="Prescription">
 			<fieldset class="form-group">
 			
-				<form:label path="userid">EnterUserID</form:label>
-				<form:input path="userid" type="int" class="form-control" required="required"/><br>
-				<form:errors path="userid" cssClass="text-warning" />
+				<form:label path="hospitalNumber">Enter Patient HospitalNumber</form:label>
+				<form:input path="hospitalNumber" type="int" class="form-control" required="required"/><br>
+				<form:errors path="hospitalNumber" cssClass="text-warning" />
 				</fieldset>
 				
 			

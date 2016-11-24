@@ -8,9 +8,9 @@
 		<div class="col-md-6">
 		<form:form id="findPrescriptionHistoryForm" method="post" action="findPrescriptionHistoryForm" commandName="Prescription">
 			<fieldset class="form-group">
-				<form:label path="userid"><h3>Enter User ID</h3></form:label>
-				<form:input path="userid" type="int" class="form-control" required="required"/><br>
-				<form:errors path="userid" cssClass="text-warning" />
+				<form:label path="hospitalNumber"><h3>Enter Hospital Number</h3></form:label>
+				<form:input path="hospitalNumber" type="int" class="form-control" required="required"/><br>
+				<form:errors path="hospitalNumber" cssClass="text-warning" />
 			</fieldset>
 			<div class="background-align:right ">
 			 <button type="submit" class="btn btn-success">Submit</button>
