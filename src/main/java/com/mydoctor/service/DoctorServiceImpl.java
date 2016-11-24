@@ -62,6 +62,11 @@ public class DoctorServiceImpl {
 		int doctor_id = retrieveId(username);
 		return doctorDaoImpl.retriveAllSchedulesStatus(doctor_id,status);
 	}
+	public ArrayList<Schedule> retriveAllSchedulesStatus(String status) throws SQLException {
+		
+		return doctorDaoImpl.retriveAllSchedulesStatus(status);
+	}
+	
 
 	public ArrayList<Schedule> retriveAllDepartmentSchedules(String department) throws SQLException {
 		return doctorDaoImpl.retriveAllDepartmentSchedules(department);

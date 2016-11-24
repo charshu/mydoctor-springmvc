@@ -189,6 +189,25 @@ public class DoctorDaoImpl {
 		}
 		return schedules;
 	}
+	public ArrayList<Schedule> retriveAllSchedulesStatus(String status) throws SQLException {
+
+		String query = "SELECT schedule.sch_id,schedule.start_date,schedule.end_date FROM doctor_schedule "
+				+ "INNER JOIN schedule ON schedule.sch_id = doctor_schedule.sch_id "
+				+ "WHERE schedule.status = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, status);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+		
+		while (rs.next()) {
+			Schedule schedule = new Schedule();
+			schedule.setId(rs.getInt("sch_id"));
+			schedule.setStart(rs.getTimestamp("start_date"));
+			schedule.setEnd(rs.getTimestamp("end_date"));
+			schedules.add(schedule);
+		}
+		return schedules;
+	}
 
 
 
