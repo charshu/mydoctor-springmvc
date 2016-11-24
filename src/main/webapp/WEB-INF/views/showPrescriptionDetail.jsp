@@ -3,10 +3,10 @@
 
 <div class="container-fluid">
 <div class="container">
-	<table class="table table-reflow">
-	  <thead>
+	<table class="table table-hover">
+	  <thead style="background:#F75D59">
 	    <tr>
-	      <th>Prescription ID</th>
+	      <th>Medicines List</th>
 	      <th>amount</th>
 	      <th>Instruction</th>
 	    </tr>

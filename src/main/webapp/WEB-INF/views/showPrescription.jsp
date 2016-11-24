@@ -2,11 +2,13 @@
 
 <%@ include file="common/navigation-pharmacist.jspf"%>
 <div class="container-fluid">
+
+	
 <div class="container">
-	<div class = "well">
-		<table class="table table-reflow">
-		  <thead>
-		    <tr>
+	
+		<table class="table ">
+		  <thead style="background:#FBB917 !important">
+		    <tr style="color:white">
 		      <th>NO.</th>
 		      <th>Prescription ID</th>
 		   	  <th>Status</th>
@@ -19,13 +21,13 @@
 			<tr>
 			   <td><c:out value="${no}"/></td>
 			   <td><c:out value="${prescript.prescriptionId}"/></td>
-			   <td><a href="/detail?prescription_id=${prescript.prescriptionId}" class="btn btn-danger"><c:out value="${prescript.status}"/></a></td>
+			   <td><a href="/detail?prescription_id=${prescript.prescriptionId}" class="btn btn-danger"><c:out value="Waiting"/></a></td>
 			 </tr>
 			</c:forEach>
 	
 		  </tbody>
 		</table>
-	</div>
+	
 </div>
 </div>
 

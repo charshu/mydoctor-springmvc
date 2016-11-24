@@ -4,7 +4,7 @@
 <div class="container-fluid">
 
 <table class="table">
-<thead>
+<thead style="background:#FBB917 !important">
 		<tr>
 			<th>ID </th>
 			<th>PrescriptionID </th>

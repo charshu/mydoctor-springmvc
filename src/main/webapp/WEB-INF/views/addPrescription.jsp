@@ -6,7 +6,7 @@
 
 	<h1>Prescription</h1>
 	<table class="table">
-		<thead>
+		<thead  style="background:#008181 !important">
 			<tr>
 				<th>Patient Name</th>
 				<th>Doctor Name</th>
@@ -21,7 +21,7 @@
 <div class="container-fluid">
 	<h1>Medicine list</h1>
 	<table class="table">
-		<thead>
+		<thead  style="background:#008181!important">
 			<tr>
 				<th>Medicine ID</th>
 				<th>Medicine Name</th>

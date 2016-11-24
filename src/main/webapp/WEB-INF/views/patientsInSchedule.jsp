@@ -5,7 +5,7 @@
 
 <h2>Patients in schedule<i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
 <table class="table">
-<thead>
+<thead style="background:#008181 !important">
 		<tr>
 			<th>Appointment ID </th>
 			<th>Appointment date </th>

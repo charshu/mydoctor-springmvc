@@ -1,4 +1,4 @@
-<nav role="navigation" class="navbar navbar-default">
+<nav role="navigation" class="navbar navbar-inverse">
 
     <div class="">
         <a href="http://www.google.com" class="navbar-brand">MyDoctor</a>
@@ -6,14 +6,14 @@
 
     <div class="navbar-collapse navbar-inverse">
         <ul class="nav navbar-nav">
-            <li><a href="/welocomePharmacist">Home</a></li>
-            <li><a href="/pharmacist-profile">Profile</a></li>
-             <li><a href="/show-prescription">Prescription </a></li>
-            <li><a href="/findPrescriptionHistoryForm">Prescription History</a></li>
+            <li class="active"><a href="/welocomePharmacist">Home  <i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/pharmacist-profile">Profile  <i class="fa fa-user fa-lg" aria-hidden="true"></i></a></li>
+             <li><a href="/show-prescription">Prescription <i class="fa fa-file-text fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/findPrescriptionHistoryForm">Prescription History  <i class="fa fa-history fa-lg" aria-hidden="true"></i></a></li>
   
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="/logout">Logout  <span class="glyphicon glyphicon-log-out"></a></li>
+        <li><a href="/logout">Logout  <span class="glyphicon glyphicon-log-out"></span></a></li>
         </ul>
     </div>
 

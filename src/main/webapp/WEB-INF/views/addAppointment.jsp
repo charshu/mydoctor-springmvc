@@ -1,8 +1,8 @@
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation-patient.jspf"%>
-<h2>Your Doctor <i class="fa fa-user-md" aria-hidden="true"></i></i></h2>
+<h2>Your Doctor <i class="fa fa-user-md" aria-hidden="true"></i></h2>
 <table class="table">
-  <thead>
+  <thead style="background:#008181 !important">
     <tr>
    	<th>Name</th>
    	<th>Surname</th>

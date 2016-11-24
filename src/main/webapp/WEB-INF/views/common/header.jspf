@@ -5,8 +5,8 @@
 <head>
 <title>MyHospital Application</title>
 <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
- <link href="webjars/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-
+ <link href="webjars/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,800|Prompt" rel="stylesheet">
 <style>
 .background {
 	position: relative;
@@ -15,6 +15,86 @@
 	top: 0;
 	left: 0;
 	background-image: url("images/bg.jpg");
+	background-size: cover;
+	top: 0;
+}
+.background2 {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color:#46C7C7; 
+	background-size: cover;
+	top: 0;
+}
+.background3{
+	position: relative;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color:#F75D59;
+	background-size: cover;
+	top: 0;
+}
+.backgroundPat{
+	position: relative;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color:#E56717;
+	background-size: cover;
+	top: 0;
+}
+.backgroundStaff{
+	position: relative;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color:#A1C935;
+	background-size: cover;
+	top: 0;
+}
+body {
+	font-family: 'Alegreya Sans', sans-serif;
+}
+th {
+	font-size:25px;
+}
+td {
+	font-size:19px;
+}
+h2 {
+	font-size:30px;
+	font-weight: bold;
+}
+.headfontThai {
+	font-size:22px;
+	font-family: 'Prompt', sans-serif;
+	font-weight: bold;
+	
+}
+.fontThai{
+	font-size:20px;
+	font-family: 'Prompt', sans-serif;
+	
+}
+.fontThaiBold{
+	font-size:20px;
+	font-family: 'Prompt', sans-serif;
+	font-weight: bold;
+	
+}
+.backgroundPhar {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: #FFF380;
 	background-size: cover;
 	top: 0;
 }

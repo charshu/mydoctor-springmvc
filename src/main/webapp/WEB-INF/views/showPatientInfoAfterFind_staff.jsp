@@ -74,6 +74,7 @@
 
 
   <h2>Patient General Information</h2>
+  
 
 <table class="table table-condensed">
 <thead>
