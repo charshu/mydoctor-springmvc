@@ -422,7 +422,45 @@ public class DoctorDaoImpl {
 			return updateCount;
 		return -1;
 	}
-	
+	public ArrayList<Appointment> retrieveAllInComingAppointmentSchedule(int doctor_id,Timestamp start)throws SQLException{
+		String query = "SELECT patient.patient_id,patient.name as patient_name,patient.surname as patient_surname,"
+				+ "patient.gender as patient_gender,patient.hospitalNumber as patient_hospitalNumber,"
+				+ "doctor.doctor_id,doctor.name as doctor_name ,doctor.surname as doctor_surname ,"
+				+ "appointment.app_id,appointment.date,appointment.symptom "
+				+ "FROM make_appointment "
+				+ "INNER JOIN appointment "
+				+ "INNER JOIN doctor "
+				+ "INNER JOIN patient "
+				+ "WHERE patient.patient_id=make_appointment.patient_id "
+				+ "and make_appointment.app_id = appointment.app_id "
+				+ "and doctor.doctor_id=make_appointment.doctor_id "
+				+ "and make_appointment.doctor_id = ? and appointment.date > ? ORDER by appointment.date ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, doctor_id);
+		pstmt.setTimestamp(2, start);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+		while (rs.next()) {
+			Appointment appointment = new Appointment();
+			appointment.setId(rs.getInt("app_id"));
+			appointment.setDate(rs.getTimestamp("date"));
+			appointment.setSymptom(rs.getString("symptom"));
+			
+			appointment.setPatientId(rs.getInt("patient_id"));
+			appointment.setPatientName(rs.getString("patient_name"));
+			appointment.setPatientSurname(rs.getString("patient_surname"));
+			appointment.setPatientGender(rs.getString("patient_gender"));
+			appointment.setPatientHospitalNumber(rs.getString("patient_hospitalNumber"));
+			
+			appointment.setDoctorId(rs.getInt("doctor_id"));
+			appointment.setDoctorName(rs.getString("doctor_name"));
+			appointment.setDoctorSurname(rs.getString("doctor_surname"));
+			appointments.add(appointment);
+
+		}
+		return appointments;
+
+	}
 	
 
 	

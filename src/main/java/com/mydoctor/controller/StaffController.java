@@ -25,113 +25,98 @@ import com.mydoctor.service.NurseServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 import com.mydoctor.service.StaffServiceImpl;
 
-
 @Controller
-@SessionAttributes(value={"username","viewInfo"})
-public class StaffController
-{
+@SessionAttributes(value = { "username", "viewInfo" })
+public class StaffController {
 	@Autowired
 	private StaffServiceImpl staffServiceImpl;
 	@Autowired
 	private PatientServiceImpl patientServiceImpl;
 	@Autowired
 	private DoctorServiceImpl doctorServiceImpl;
-		
-	@RequestMapping(value="/welcomeStaff",method=RequestMethod.GET)
-	public String profile(ModelMap model) throws SQLException 
-	{
-			//model.addAttribute("staff",staffServiceImpl.retrieveStaff((String)model.get("username")));
-			return "welcomeStaff";
-	}
-	
-	@RequestMapping(value="/register-patient",method=RequestMethod.GET)
-	public String registerPatient(ModelMap model) throws SQLException 
-	{
-			Patient patient = new Patient();
-			model.addAttribute("patient",patient);
-			return "registerPatient_staff";
-	}
-	
 
-	@RequestMapping(value="/register-patient",method=RequestMethod.POST)
-	public String addPatient(ModelMap model, @Valid Patient patient, BindingResult result) throws SQLException 
-	{
+	@RequestMapping(value = "/welcomeStaff", method = RequestMethod.GET)
+	public String profile(ModelMap model) throws SQLException {
+		// model.addAttribute("staff",staffServiceImpl.retrieveStaff((String)model.get("username")));
+		return "welcomeStaff";
+	}
+
+	@RequestMapping(value = "/register-patient", method = RequestMethod.GET)
+	public String registerPatient(ModelMap model) throws SQLException {
+		Patient patient = new Patient();
+		model.addAttribute("patient", patient);
+		return "registerPatient_staff";
+	}
+
+	@RequestMapping(value = "/register-patient", method = RequestMethod.POST)
+	public String addPatient(ModelMap model, @Valid Patient patient, BindingResult result) throws SQLException {
 		System.out.println("[Request]" + patient.toString());
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			return "registerPatient_staff";
 		}
-		String hospitalNumber = staffServiceImpl.registerPatient((String)model.get("username"),patient);
-		if(hospitalNumber != ""){
+		String hospitalNumber = staffServiceImpl.registerPatient((String) model.get("username"), patient);
+		if (hospitalNumber != "") {
 			model.clear();
-			//model.addAttribute("patient",patient);
+			// model.addAttribute("patient",patient);
 			model.addAttribute("hospitalNumber", hospitalNumber);
 			return "showHospitalNumber";
-		} 
-		
-		
+		}
+
 		return "registerPatient_staff";
 
-		
 	}
-	
-	@RequestMapping(value="/view-info3",method=RequestMethod.GET)
-	public String getPatient(ModelMap model) throws SQLException 
-	{
-		model.put("viewInfo",new ViewInfo());
+
+	@RequestMapping(value = "/view-info3", method = RequestMethod.GET)
+	public String getPatient(ModelMap model) throws SQLException {
+		model.put("viewInfo", new ViewInfo());
 		return "viewPatientInfo_staff";
 	}
-	
-	@RequestMapping(value="/view-info3",method=RequestMethod.POST)
-	public String viewPatientInfo(ModelMap model,@Valid ViewInfo viewInfo, BindingResult result) throws SQLException 
-	{
+
+	@RequestMapping(value = "/view-info3", method = RequestMethod.POST)
+	public String viewPatientInfo(ModelMap model, @Valid ViewInfo viewInfo, BindingResult result) throws SQLException {
 		System.out.println("[Request]" + viewInfo.toString());
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			return "viewPatientInfo_staff";
 		}
-	    GeneralInfo generalInfo = staffServiceImpl.findPatientGenInfo(viewInfo);
-	    Patient patientInfo = staffServiceImpl.findPatientInfo(viewInfo);
+		GeneralInfo generalInfo = staffServiceImpl.findPatientGenInfo(viewInfo);
+		Patient patientInfo = staffServiceImpl.findPatientInfo(viewInfo);
 
-	    model.addAttribute("generalInfo",generalInfo);
-	    model.addAttribute("patientInfo",patientInfo);
-		return "showPatientInfoAfterFind_staff";	
+		model.addAttribute("generalInfo", generalInfo);
+		model.addAttribute("patientInfo", patientInfo);
+		return "showPatientInfoAfterFind_staff";
 	}
-	
-	@RequestMapping(value="/edit-info3",method=RequestMethod.POST)
-	public String editPatientinfo(ModelMap model,@ModelAttribute("patientInfo")Patient patientInfo,
-			@ModelAttribute("viewInfo")ViewInfo viewInfo, BindingResult result) 
-			throws SQLException
-	{
+
+	@RequestMapping(value = "/edit-info3", method = RequestMethod.POST)
+	public String editPatientinfo(ModelMap model, @ModelAttribute("patientInfo") Patient patientInfo,
+			@ModelAttribute("viewInfo") ViewInfo viewInfo, BindingResult result) throws SQLException {
 		System.out.println("[Request]" + patientInfo.toString());
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			return "showPatientInfoAfterFind_staff";
 		}
 		System.out.print(viewInfo.getHospitalNumber());
-		int updateCount = patientServiceImpl.edit_info2(viewInfo.getHospitalNumber(),patientInfo);
-	    if(updateCount > 0) {
-		   model.addAttribute("patientInfo",patientInfo);
-		   model.remove(viewInfo);
-		   return "showPatientInfoAfterEdit_staff";
-	   }
-	   return "showPatientInfoAfterFind_staff";
+		int updateCount = patientServiceImpl.edit_info2(viewInfo.getHospitalNumber(), patientInfo);
+		if (updateCount > 0) {
+			model.addAttribute("patientInfo", patientInfo);
+			model.remove(viewInfo);
+			return "showPatientInfoAfterEdit_staff";
 		}
-	
-	@RequestMapping(value="/approve-schedule",method=RequestMethod.GET)
-	public String showRequestCancelSchedule(ModelMap model) throws SQLException 
-	{
-		
+		return "showPatientInfoAfterFind_staff";
+	}
+
+	@RequestMapping(value = "/approve-schedule", method = RequestMethod.GET)
+	public String showRequestCancelSchedule(ModelMap model) throws SQLException {
+
 		ArrayList<Schedule> requestCancelSchedules = doctorServiceImpl.retriveAllSchedulesStatus("request cancel");
 		model.addAttribute("requestCancelSchedules", requestCancelSchedules);
 		return "showRequestCancelSchedule";
 	}
-	
-	@RequestMapping(value="/approve-cancel-schedule",method=RequestMethod.GET)
-	public String cancelSchedule(@RequestParam("scheduleId")String schedule_id,ModelMap model) throws SQLException 
-	{
+
+	@RequestMapping(value = "/approve-cancel-schedule", method = RequestMethod.GET)
+	public String cancelSchedule(@RequestParam("scheduleId") String schedule_id, ModelMap model) throws SQLException {
 		Schedule schedule = doctorServiceImpl.retrieveSchedule(Integer.parseInt(schedule_id));
 		doctorServiceImpl.setStatusSchedule(schedule, "cancel");
 		patientServiceImpl.postponeAppointmentInSchedule(schedule);
 		return "redirect:/approve-schedule";
 	}
-	
-	
+
 }

@@ -1,7 +1,10 @@
 package com.mydoctor.service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
+
 import com.mydoctor.dao.DoctorDaoImpl;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.DiagnosisBean;
@@ -143,6 +146,17 @@ public class DoctorServiceImpl {
 			return new ArrayList<Appointment>();
 	
 		return doctorDaoImpl.retrieveAllAppointmentInSchedule(doctor_id, currentSchedule);
+	}
+	public ArrayList<Appointment> retrieveAllInComingAppointmentSchedule(String username) throws SQLException {
+		int doctor_id = doctorDaoImpl.retrieveId(username);
+		Schedule currentSchedule = retrieveCurrentSchedule(username);
+		if (currentSchedule == null)
+			return doctorDaoImpl.retrieveAllInComingAppointmentSchedule(doctor_id, new Timestamp(new Date().getTime()));
+		else{
+			return doctorDaoImpl.retrieveAllInComingAppointmentSchedule(doctor_id, currentSchedule.getEnd());
+		}
+	
+		
 	}
 
 	public int saveDiagnosis(DiagnosisBean diagnosisBean) throws SQLException {
