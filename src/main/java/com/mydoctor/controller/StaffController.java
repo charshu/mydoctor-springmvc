@@ -1,6 +1,8 @@
 package com.mydoctor.controller;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.validation.Valid;
 
@@ -11,12 +13,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.Appointment;
+import com.mydoctor.model.Doctor;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.ViewInfo;
+import com.mydoctor.service.AppointmentServiceImpl;
+import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.NurseServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 import com.mydoctor.service.StaffServiceImpl;
@@ -30,6 +36,10 @@ public class StaffController
 	private StaffServiceImpl staffServiceImpl;
 	@Autowired
 	private PatientServiceImpl patientServiceImpl;
+	@Autowired
+	private DoctorServiceImpl doctorServiceImpl;
+	@Autowired
+	private AppointmentServiceImpl appointmentServiceImpl;
 		
 	@RequestMapping(value="/welcomeStaff",method=RequestMethod.GET)
 	public String profile(ModelMap model) throws SQLException 
@@ -108,4 +118,41 @@ public class StaffController
 	   }
 	   return "showPatientInfoAfterFind_staff";
 		}
+	
+	@RequestMapping(value="/staffMakeAppointment",method=RequestMethod.GET)
+	public String getPatientMakeAppointment(ModelMap model) throws SQLException 
+	{
+		model.put("viewInfo",new ViewInfo());
+		return "viewMakeAppointment_staff";
+	}
+	
+	@RequestMapping(value="/staffMakeAppointment",method=RequestMethod.POST)
+	public String staffMakeAppointmentPatient(ModelMap model,@Valid ViewInfo viewInfo, BindingResult result) throws SQLException 
+	{
+		System.out.println("[Request]" + viewInfo.toString());
+		if(result.hasErrors()){
+			return "viewMakeAppointment_staff";
+		}
+	    GeneralInfo generalInfo = staffServiceImpl.findPatientGenInfo(viewInfo);
+	    Patient patientInfo = staffServiceImpl.findPatientInfo(viewInfo);
+
+	    model.addAttribute("generalInfo",generalInfo);
+	    model.addAttribute("patientInfo",patientInfo);
+		return "staffPatientAppointment";	
+	}@RequestMapping(value="/staff-list-appointment",method=RequestMethod.GET)
+	public String showAppointmentList(ModelMap model,@ModelAttribute("viewInfo")ViewInfo viewInfo) throws SQLException 
+	{
+			
+			System.out.println((String)model.get("username"));
+			model.addAttribute("appointments",patientServiceImpl.retrieveAllAppointments(viewInfo.getHospitalNumber()));
+			return "staffPatientAppointment";
+	}
+	@RequestMapping(value="/staff-choose-doctor",method=RequestMethod.GET)
+	public String showDoctorListPage(ModelMap model,@ModelAttribute("viewInfo")ViewInfo viewInfo) throws SQLException 
+	{
+			System.out.println(viewInfo.getHospitalNumber());
+			System.out.println("[REQUEST] retrieve all doctors");
+			model.addAttribute("doctors",doctorServiceImpl.retrieveAllDoctors());
+			return "chooseDoctor";
+	}
 }

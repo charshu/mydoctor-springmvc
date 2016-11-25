@@ -2,6 +2,7 @@ package com.mydoctor.model;
 
 public class Staff extends User  {
 	private String name,surname;
+	private int patientId;
 	
 	public Staff(){
 		super();
@@ -34,4 +35,12 @@ public class Staff extends User  {
 		this.surname = surname;
 	}
 
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+	
 }
