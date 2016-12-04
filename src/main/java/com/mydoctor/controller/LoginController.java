@@ -25,7 +25,7 @@ public class LoginController {
 	@Autowired
 	private LoginServiceImpl loginServiceImpl;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showLoginPage(ModelMap model) {
 
 		LoginBean loginBean = new LoginBean();
@@ -34,7 +34,7 @@ public class LoginController {
 	}
 		
 		
-		@RequestMapping(value="/login",method=RequestMethod.POST)
+		@RequestMapping(value="/",method=RequestMethod.POST)
 		public String executeLogin(ModelMap model, @Valid LoginBean loginBean, BindingResult result) throws SQLException
 		{
 				
@@ -83,7 +83,7 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model, SessionStatus status) {
 		status.setComplete();
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)

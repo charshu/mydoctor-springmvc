@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.GeneralInfo;
@@ -46,10 +47,12 @@ public class NurseController
 		}
 		
 		@RequestMapping(value="/add-info",method=RequestMethod.GET)
-		public String showPatientInfoForm(ModelMap model) throws SQLException 
+		public String showPatientInfoForm(@RequestParam(required = false) String msg,ModelMap model) throws SQLException 
 		{
 				GeneralInfo generalInfo = new GeneralInfo();
 				model.addAttribute("generalInfo",generalInfo);
+				System.out.println(msg);
+				model.addAttribute("msg", msg);
 				return "addPatientInfo";
 		}
 		
@@ -63,11 +66,14 @@ public class NurseController
 			int updateCount = nurseServiceImpl.add_info((String)model.get("username"),generalInfo);
 			if(updateCount > 0){
 				model.clear();
+				model.put("msg", "success");
 				return "redirect:/add-info";
-			} 
+			}else{
+				model.clear();
+				model.put("msg", "fail");
+				return "redirect:/add-info";
+			}
 			
-			
-			return "addPatientInfo";
 
 			
 		}

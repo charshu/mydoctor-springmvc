@@ -14,7 +14,11 @@ import java.text.SimpleDateFormat;
 
 import javax.validation.Valid;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -65,17 +69,18 @@ public class DoctorController
 		    new PropertyEditorSupport() {
 		        public void setAsText(String value) {
 		            try {
-		            	DateFormat df = new SimpleDateFormat("E dd-MM-YYYY HH:mm");
-		                Date parsedDate = df.parse(value);
-		                Calendar c = Calendar.getInstance(); 
-		                c.setTime(parsedDate); 
-		              //  c.add(Calendar.DATE, -7);
-		                c.add(Calendar.MONTH, -1);
-		                c.add(Calendar.YEAR, 1);
-		                parsedDate = c.getTime();
-		               System.out.println(df.format(parsedDate));
-		                setValue(new Timestamp(parsedDate.getTime()));
-		            } catch (ParseException e) {
+		            	//System.out.println("value: "+value);
+		            	DateTimeFormatter dtf = DateTimeFormat.forPattern("E dd-MM-YYYY HH:mm");
+		                DateTime parsedDate = dtf.parseDateTime(value);
+		            //    Calendar c = Calendar.getInstance(); 
+		             //   c.setTime(parsedDate); 
+		             //   c.add(Calendar.DATE, 7);
+		             //   c.add(Calendar.MONTH, 1);
+		            //    c.add(Calendar.YEAR, 1);
+		             //   parsedDate = c.getTime();
+		             //  System.out.println("parsed Timestamp :"+ parsedDate);
+		                setValue(new Timestamp(parsedDate.getMillis()));
+		            } catch (Exception e) {
 		                setValue(null);
 		            }
 		        }
@@ -170,7 +175,7 @@ public class DoctorController
 		@RequestMapping(value="/view-info",method=RequestMethod.POST)
 		public String viewPatientInfo(ModelMap model,@Valid ViewInfo viewInfo, BindingResult result) throws SQLException 
 		{
-			System.out.println("[Request]" + viewInfo.toString());
+			//System.out.println("[Request]" + viewInfo.toString());
 			if(result.hasErrors()){
 				return "viewPatientInfo_doctor";
 			}
@@ -209,6 +214,7 @@ public class DoctorController
 			String patient_hospitalNumber = patientServiceImpl.retrieveHospitalNumberById(Integer.parseInt(patient_id));
 			GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfoByHospitalNumber(patient_hospitalNumber);
 			model.addAttribute("diagnosis",diagnosis);
+			
 			model.addAttribute("generalInfo", generalInfo);
 			return "addDiagnosis";
 		}

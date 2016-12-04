@@ -1,5 +1,6 @@
 package com.mydoctor.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
+
+import org.joda.time.DateTime;
 
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
@@ -120,6 +123,7 @@ public class PatientDaoImpl {
 	}
 
 	public ArrayList<Appointment> retrieveAllAppointments(int patient_id) throws SQLException {
+		
 		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom,appointment.status "
 				+ "FROM make_appointment "
 				+ "INNER JOIN appointment "
@@ -127,7 +131,8 @@ public class PatientDaoImpl {
 				+ "INNER JOIN patient WHERE patient.patient_id=make_appointment.patient_id "
 				+ "and make_appointment.app_id = appointment.app_id "
 				+ "and doctor.doctor_id=make_appointment.doctor_id "
-				+ "and make_appointment.patient_id = ?";
+				+ "and make_appointment.patient_id = ? "
+				+ "ORDER BY `appointment`.`date` DESC";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, patient_id);
 		ResultSet rs = pstmt.executeQuery();
@@ -248,13 +253,14 @@ public class PatientDaoImpl {
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;
 	}
-	public int editPatientInfo(String name, String surname, String gender, String birth_date, String address, String tel, String email, int patient_id) throws SQLException {
+	public int editPatientInfo(String name, String surname, String gender, DateTime birth_date, String address, String tel, String email, int patient_id) throws SQLException {
 		String query = "Update patient Set name = ?, surname = ?, gender = ?, birth_date = ?, address = ?, tel = ?, email = ? Where patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setString(1, name);
 		pstmt.setString(2, surname);
 		pstmt.setString(3, gender);
-		pstmt.setString(4, birth_date);
+		System.out.println(birth_date);
+		pstmt.setDate(4,new Date(birth_date.getMillis()));
 		pstmt.setString(5, address);
 		pstmt.setString(6, tel);
 		pstmt.setString(7, email);
@@ -263,5 +269,15 @@ public class PatientDaoImpl {
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;
 
+	}
+
+	public void cleanAppointments()throws SQLException {
+		DateTime today = new DateTime();
+		String query = "Update appointment Set appointment.status = 'timeout' "
+				+ "Where appointment.date < ? and (appointment.status != 'cancel' and appointment.status != 'done')";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setTimestamp(1, new Timestamp(today.getMillis()));
+		pstmt.executeUpdate();
+		
 	}
 }

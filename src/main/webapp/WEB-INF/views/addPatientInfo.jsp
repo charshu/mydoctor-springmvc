@@ -4,6 +4,12 @@
 
 <div class="container">
 
+		<c:if test="${msg =='success'}">
+		<div class="alert alert-success">Data have been saved.</div>
+		</c:if>
+		<c:if test="${msg =='fail'}">
+		<div class="alert alert-danger">Failed to save</div>
+		</c:if>
 		<form:form id="add-info" method="post" action="add-info" commandName="generalInfo" class="form-horizontal">
 			<fieldset class="form-group row">
 				<form:label path="hospitalNumber" class="col-sm-4 control-label" >Patient Hospital Number </form:label>

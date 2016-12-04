@@ -9,7 +9,7 @@
 		<form:form id="DcotorFindPrescriptionHistoryForm" method="post" action="DoctorFindPrescriptionHistoryForm" commandName="Prescription">
 			<fieldset class="form-group">
 			
-				<form:label path="hospitalNumber">Enter Patient HospitalNumber</form:label>
+				<form:label path="hospitalNumber">Enter Patient Hospital Number (8 digits)</form:label>
 				<form:input path="hospitalNumber" type="int" class="form-control" required="required"/><br>
 				<form:errors path="hospitalNumber" cssClass="text-warning" />
 				</fieldset>

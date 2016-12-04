@@ -7,7 +7,7 @@
     <div class="navbar-collapse navbar-inverse">
         <ul class="nav navbar-nav">
 
-            <li class="active"><a href="/welocomePharmacist">Home  <i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/welocomePharmacist">Home  <i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/pharmacist-profile">Profile  <i class="fa fa-user fa-lg" aria-hidden="true"></i></a></li>
              <li><a href="/show-prescription">Prescription <i class="fa fa-file-text fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/findPrescriptionHistoryForm">Prescription History  <i class="fa fa-history fa-lg" aria-hidden="true"></i></a></li>

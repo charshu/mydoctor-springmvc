@@ -1,6 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %> 
 <html>
 <head>
 <title>MyHospital Application</title>
@@ -81,7 +82,7 @@ overflow: hidden;
 				<div class="col-md-3"></div>
 				<div class="col-md-6">
 				<div class="logo"></div>
-					<form:form id="loginForm" method="post" action="login"
+					<form:form id="loginForm" method="post" action="/"
 						commandName="loginBean">
 						<fieldset class="form-group">
 
@@ -120,7 +121,7 @@ overflow: hidden;
 		</div>
 
 	</div>
-	<div class="bottom-text">Copyright © 2008 My Hospital All rights reserved. Power by SpringMVC 4.0</div>
+	<div class="bottom-text">Copyright Â© 2008 My Hospital All rights reserved. Power by SpringMVC 4.0</div>
 	<script>
 		function startTime() {
 			var today = new Date();

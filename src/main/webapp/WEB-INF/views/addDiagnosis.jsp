@@ -28,42 +28,62 @@
 			<fieldset class="form-group">
 				<form:label path="disease_id" class="control-label">Disease Code</form:label>
 				<form:input path="disease_id" type="text" class="form-control" />
+				<a href="http://apps.who.int/classifications/icd10/browse/2010/en#/IV" target="_blank">ICD-10 reference</a>
 				<form:errors path="disease_id" cssClass="text-warning" />
 			</fieldset>
 			<button type="submit" class="btn btn-success">Submit</button>
 
 		</form:form>
-		
-<h2>Patient General Information <i class="fa fa-heartbeat" aria-hidden="true"></i></h2>
-<table class="table table-condensed">
-<thead>
-		<tr>
-			<th>Hospital Number </th>
-			<th>Weight (kg) </th>
-			<th>Height (m)</th>
-			<th>Heart Rate (bpm)</th>
-			<th>Systolic Blood Pressure (mmHg)</th>
-			<th>Diastolic Blood Pressure (mmHg)</th>
-			<th>Congemital</th>
-			<th>Med Allergy</th>
-			<th>Symptom</th>
-			<th>Record Date</th>
-		</tr>
-	</thead>
-   <tr>
-       	<td>${generalInfo.hospitalNumber}</td>
-       	<td>${generalInfo.weight}</td>
-       	<td>${generalInfo.height}</td>
-       	<td>${generalInfo.heart_rate}</td>
-       	<td>${generalInfo.pressureH}</td>
-       	<td>${generalInfo.pressureL}</td>
-       	<td>${generalInfo.congemital}</td>
-       	<td>${generalInfo.med_allergy}</td>
-       	<td>${generalInfo.symptom}</td>
-       	<td>${generalInfo.date}</td>
-    </tr>
+<h2>Patient General Information</h2>
+			<table class="table table-condensed">
+				<c:if test="${generalInfo.hospitalNumber!=null}">
+					<tr>
+						<th>Hospital Number</th>
+						<td>${generalInfo.hospitalNumber}</td>
+					</tr>
+					<tr>
+						<th>Weight (kg)</th>
+						<td>${generalInfo.weight}</td>
+					</tr>
+					<tr>
+						<th>Height (m)</th>
+						<td>${generalInfo.height}</td>
+					</tr>
+					<tr>
+						<th>Heart Rate (bpm)</th>
+						<td>${generalInfo.heart_rate}</td>
+					</tr>
+					<tr>
+						<th>Systolic Blood Pressure (mmHg)</th>
+						<td>${generalInfo.pressureH}</td>
+					</tr>
+					<tr>
+						<th>Diastolic Blood Pressure (mmHg)</th>
+						<td>${generalInfo.pressureL}</td>
+					</tr>
+					<tr>
+						<th>Congemital</th>
+						<td>${generalInfo.congemital}</td>
+					</tr>
+					<tr>
+						<th>Med Allergy</th>
+						<td>${generalInfo.med_allergy}</td>
+					</tr>
+					<tr>
+						<th>Symptom</th>
+						<td>${generalInfo.symptom}</td>
+					</tr>
 
-</table>
+					<tr>
+						<th>Record Date</th>
+						<td>${generalInfo.date}</td>
+					</tr>
+				</c:if>
+				<c:if test="${generalInfo.hospitalNumber==null}">
+					<div class="alert alert-danger">Patient has no general
+						information.</div>
+				</c:if>
+			</table>
 	</div>
 
 

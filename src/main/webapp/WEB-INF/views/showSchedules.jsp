@@ -26,6 +26,7 @@
 
 <h2>Request for cancel</h2>
 <table class="table">
+<c:if test="${requestCancelSchedules.size()>0}">
 <thead>
 		<tr>
 			<th>ID </th>
@@ -43,7 +44,10 @@
  
     </tr>
 </c:forEach>
-
+</c:if>
+<c:if test="${requestCancelSchedules.size()==0}">
+	<div class="alert alert-info">No request.</div>
+</c:if>
 </table>
 </div>
 

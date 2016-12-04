@@ -96,7 +96,7 @@ public class NurseDaoImpl {
 
 	}
 
-	public GeneralInfo retriveGenInfo(int record_id) throws SQLException {
+	public GeneralInfo retriveGenInfo(int record_id,String hospitalNumber) throws SQLException {
 
 		String query = "Select hospitalNumber, weight, height, heart_rate, pressureH, pressureL, congemital, med_allergy, symptom, date FROM patient_info where record_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
@@ -104,7 +104,7 @@ public class NurseDaoImpl {
 		ResultSet rs = pstmt.executeQuery();
 		GeneralInfo generalInfo = new GeneralInfo();
 		if(rs.next()) {
-			generalInfo.setHospitalNumber(rs.getString("hospitalNumber"));
+			generalInfo.setHospitalNumber(hospitalNumber);
 			generalInfo.setWeight(rs.getDouble("weight"));
 			generalInfo.setHeight(rs.getInt("height"));
 			generalInfo.setHeart_rate(rs.getInt("heart_rate"));

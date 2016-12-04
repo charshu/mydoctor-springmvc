@@ -4,37 +4,28 @@
 <div class="container-fluid">
 
 
-<h2>Current schedule <i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
+<h2>Current schedule</h2>
 <table class="table">
-<thead>
-		<tr>
-			<th>Schedule ID </th>
-			<th>Start</th>
-			<th>End</th>
-			
-		</tr>
-	</thead>
-<c:if test="${currentSchedule!=null}">
-   <tr class="success">
-       <td>${currentSchedule.id}</td>
-       <td>${currentSchedule.printStart()}</td>
-       <td>${currentSchedule.printEnd()}</td>
 
-    </tr>
+<c:if test="${currentSchedule!=null}">
+ <div class="alert alert-success" style="text-align: center;">
+  <h1><i class="fa fa-clock-o" aria-hidden="true"></i>${currentSchedule.printStart()}  ~  <i class="fa fa-clock-o" aria-hidden="true"></i>${currentSchedule.printEnd()}</h1>
+</div>
+
  </c:if>
  <c:if test="${currentSchedule==null}">
-   <tr class="warning">
-       <td>none</td>
-       <td>none</td>
-       <td>none</td>
-    </tr>
+ <div class="alert alert-info">
+  You have no schedule now.
+</div>
+
  </c:if>
 
 
 </table>
 
-<h2>Patients in schedule <i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
+<h2>Patients in schedule </h2>
 <table class="table">
+<c:if test="${appointments.size() > 0}">
 <thead >
 		<tr>
 			<th>Appointment ID </th>
@@ -47,7 +38,7 @@
 			<th></th>
 		</tr>
 	</thead>
-<c:if test="${appointments.size() > 0}">
+
 <c:forEach items="${appointments}" var="appointment">
    <tr>
        <td>${appointment.id}</td>
@@ -62,23 +53,16 @@
 </c:forEach>
 </c:if>
 <c:if test="${appointments.size() == 0}">
-	   <tr>
-       <td>none</td>
-        <td>none</td>
-         <td>none</td>
-          <td>none</td>
-           <td>none</td>
-            <td>none</td>
-             <td>none</td>
-  
-        <td></td>
-    </tr>
+ <div class="alert alert-info">
+  There are no waiting patient now.
+</div>
 </c:if>
 
 </table>
 
-<h2>Next Appointment <i class="fa fa-calendar-check-o" aria-hidden="true"></i></h2>
+<h2>Your next appointments </h2>
 <table class="table">
+<c:if test="${appointmentInComings.size() > 0}">
 <thead >
 		<tr>
 			<th>Appointment ID </th>
@@ -91,7 +75,7 @@
 			<th></th>
 		</tr>
 	</thead>
-<c:if test="${appointmentInComings.size() > 0}">
+
 <c:forEach items="${appointmentInComings}" var="appointmentInComing">
    <tr>
        <td>${appointmentInComing.id}</td>
@@ -106,17 +90,9 @@
 </c:forEach>
 </c:if>
 <c:if test="${appointmentInComings.size() == 0}">
-	   <tr>
-       <td>none</td>
-        <td>none</td>
-         <td>none</td>
-          <td>none</td>
-           <td>none</td>
-            <td>none</td>
-             <td>none</td>
-  
-        <td></td>
-    </tr>
+ <div class="alert alert-info">
+  There are no incoming appointments.
+</div>
 </c:if>
 
 </table>

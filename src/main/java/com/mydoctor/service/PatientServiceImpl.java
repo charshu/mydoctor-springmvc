@@ -3,6 +3,10 @@ package com.mydoctor.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import com.mydoctor.dao.PatientDaoImpl;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
@@ -14,7 +18,7 @@ public class PatientServiceImpl
 		
 		
 		private PatientDaoImpl patientDaoImpl;
-		
+		private static DateTimeFormatter df = DateTimeFormat.forPattern("YYYY-MM-DD");
 		public PatientDaoImpl getUserDao() {
 			return patientDaoImpl;
 		}
@@ -31,8 +35,10 @@ public class PatientServiceImpl
 			return patientDaoImpl.retrieveAllPatients();
 			}
 		public ArrayList<Appointment> retrieveAllAppointments(String username)throws SQLException{
+			
 			int user_id = patientDaoImpl.retrieveUserId(username);
 			int patient_id = patientDaoImpl.retrieveIdByUserId(user_id);
+			
 			return patientDaoImpl.retrieveAllAppointments(patient_id);
 			
 		}
@@ -66,7 +72,8 @@ public class PatientServiceImpl
 			String name = patient.getName();
 			String surname = patient.getSurname();
 			String gender = patient.getGender();
-			String birthdate = patient.getBirthdate();
+			DateTime birthdate = df.parseDateTime(patient.getBirthdate());
+		
 			String address = patient.getAddress();
 			String tel = patient.getTel();
 			String email = patient.getEmail();
@@ -84,7 +91,7 @@ public class PatientServiceImpl
 			String name = patient.getName();
 			String surname = patient.getSurname();
 			String gender = patient.getGender();
-			String birthdate = patient.getBirthdate();
+			DateTime birthdate = df.parseDateTime(patient.getBirthdate());
 			String address = patient.getAddress();
 			String tel = patient.getTel();
 			String email = patient.getEmail();

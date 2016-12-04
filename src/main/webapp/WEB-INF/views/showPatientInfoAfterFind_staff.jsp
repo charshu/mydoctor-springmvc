@@ -4,107 +4,156 @@
 
 <div class="container-fluid">
 
-<a href="/view-info3" class="btn btn-success">Back to search</a>
+	<a href="/view-info3" class="btn btn-success">Back to search</a>
 
-<h2>Patient Personal Information</h2>
-
-<table class="table table-reflow">
-
-  <thead>
-    <tr>
-   	<th>name</th>
-   	<th>surname</th>
-   	<th>gender</th>
-   	<th>ssn</th>
-   	<th>birthdate</th>
-   	<th>address</th>
-   	<th>tel</th>
-   	<th>email</th>
-   	<th>HospitalNumber</th>
-    </tr>
-  </thead>
-  <tbody>
-     <tr>
-     <form:form id="edit-info3" method="post" action="edit-info3" commandName="patientInfo" class="form-horizontal">  	
-       <td><fieldset class="form-group">
-				<form:input path="name" type="text" class="form-control"  required="required" style="height:40px;"/><br>
-				<form:errors path="name" cssClass="text-warning" />
-		</fieldset></td>
-		
-		  <td><fieldset class="form-group">
-				<form:input path="surname" type="text" class="form-control" required="required" style="height:40px;"/><br>
-				<form:errors path="surname" cssClass="text-warning" />
-		</fieldset></td>
-		
-		  <td><fieldset class="form-group">
-				<form:input path="gender" type="text" class="form-control" required="required" style="height:40px;"/><br>
-				<form:errors path="gender" cssClass="text-warning" />
-		</fieldset></td>
-		
-		  <td>${patient.ssn}</td>
-		
-		  <td><fieldset class="form-group">
-				<form:input path="birthdate" type="text" class="form-control" required="required" style="height:40px;" /><br>
-				<form:errors path="birthdate" cssClass="text-warning" />
-		</fieldset></td>
-		
-		<td><fieldset class="form-group">
-				<form:textarea path="address" type="text" class="form-control" required="required" style="height:80px;"/><br>
-				<form:errors path="address" cssClass="text-warning" />
-		</fieldset></td>
-		
-		<td><fieldset class="form-group">
-				<form:input path="tel" type="text" class="form-control" required="required" style="height:40px;"/><br>
-				<form:errors path="tel" cssClass="text-warning" />
-		</fieldset></td>
-		
-		<td><fieldset class="form-group">
-				<form:textarea path="email" type="text" class="form-control" required="required" style="height:80px;" /><br>
-				<form:errors path="email" cssClass="text-warning" />
-		</fieldset></td>
-		<td>${patientInfo.hospitalNumber}</td>
-		<button class="btn btn-success">Confirm Edit Profile</button>
-		</form:form>
-     </tr>
-  
-  
-  </tbody>
-</table>
+	
 
 
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table table-reflow">
+			<h2>Patient Personal Information</h2>
+				<tr>
+					<th>HospitalNumber</th>
+					<td>${patientInfo.hospitalNumber}</td>
+				</tr>
 
-  <h2>Patient General Information</h2>
-  
+				<form:form id="edit-info" method="post" action="edit-info3"
+					commandName="patientInfo" class="form-horizontal">
 
-<table class="table table-condensed">
-<thead>
-		<tr>
-			<th>Hospital Number </th>
-			<th>Weight (kg) </th>
-			<th>Height (m)</th>
-			<th>Heart Rate (bpm)</th>
-			<th>Systolic Blood Pressure (mmHg)</th>
-			<th>Diastolic Blood Pressure (mmHg)</th>
-			<th>Congemital</th>
-			<th>Med Allergy</th>
-			<th>Symptom</th>
-			<th>Record Date</th>
-		</tr>
-	</thead>
-   <tr>
-       	<td>${generalInfo.hospitalNumber}</td>
-       	<td>${generalInfo.weight}</td>
-       	<td>${generalInfo.height}</td>
-       	<td>${generalInfo.heart_rate}</td>
-       	<td>${generalInfo.pressureH}</td>
-       	<td>${generalInfo.pressureL}</td>
-       	<td>${generalInfo.congemital}</td>
-       	<td>${generalInfo.med_allergy}</td>
-       	<td>${generalInfo.symptom}</td>
-       	<td>${generalInfo.date}</td>
-    </tr>
+					<tr>
+						<th>Name</th>
+						<td><fieldset class="form-group">
+								<form:input path="name" type="text" class="form-control"
+									required="required" style="height:40px;" />
+								<br>
+								<form:errors path="name" cssClass="text-warning" />
+							</fieldset></td>
+					</tr>
+					<tr>
+						<th>Surname</th>
+						<td><fieldset class="form-group">
+								<form:input path="surname" type="text" class="form-control"
+									required="required" style="height:40px;" />
+								<br>
+								<form:errors path="surname" cssClass="text-warning" />
+							</fieldset></td>
+					</tr>
+					<tr>
+						<th>Gender</th>
+						<td><form:radiobutton path="gender" value="M" /> Male <form:radiobutton
+								path="gender" value="F" style="margin-left:20px;" /> Female</td>
+						<td><form:errors path="gender" cssClass="error" /></td>
+					</tr>
+					<tr>
+						<th>ID card number</th>
+						<td>${patientInfo.ssn}</td>
+					</tr>
+					<tr>
+						<th>Birthdate</th>
+						<td>
+							<fieldset class="form-group">
 
-</table>
+								<div class="input-group date" id="datetimepicker1">
+									<form:input path="birthdate" class="form-control" />
+									<span class="input-group-addon"><span
+										class="glyphicon-calendar glyphicon"></span></span>
+								</div>
+								<form:errors path="birthdate" cssClass="text-warning" />
+							</fieldset>
+						</td>
+					</tr>
+					<tr>
+						<th>Address</th>
+						<td><fieldset class="form-group">
+								<form:textarea path="address" type="text" class="form-control"
+									required="required" style="height:80px;" />
+								<br>
+								<form:errors path="address" cssClass="text-warning" />
+							</fieldset></td>
+					</tr>
+					<tr>
+						<th>Tel</th>
+						<td><fieldset class="form-group">
+								<form:input path="tel" type="text" class="form-control"
+									required="required" style="height:40px;" />
+								<br>
+								<form:errors path="tel" cssClass="text-warning" />
+							</fieldset></td>
+					</tr>
+					<tr>
+						<th>E-mail</th>
+						<td><fieldset class="form-group">
+								<form:input path="email" type="text" class="form-control"
+									required="required" style="height:40px;" />
+								<br>
+								<form:errors path="email" cssClass="text-warning" />
+							</fieldset></td>
+					</tr>
+
+					<th></th>
+					<td><button class="btn btn-success">Confirm Edit
+							Profile</button></td>
+
+				</form:form>
+			</table>
+		</div>
+
+
+		<div class="col-md-5">
+			<h2>Patient General Information</h2>
+			<table class="table table-condensed">
+				<c:if test="${generalInfo.hospitalNumber!=null}">
+					<tr>
+						<th>Hospital Number</th>
+						<td>${generalInfo.hospitalNumber}</td>
+					</tr>
+					<tr>
+						<th>Weight (kg)</th>
+						<td>${generalInfo.weight}</td>
+					</tr>
+					<tr>
+						<th>Height (m)</th>
+						<td>${generalInfo.height}</td>
+					</tr>
+					<tr>
+						<th>Heart Rate (bpm)</th>
+						<td>${generalInfo.heart_rate}</td>
+					</tr>
+					<tr>
+						<th>Systolic Blood Pressure (mmHg)</th>
+						<td>${generalInfo.pressureH}</td>
+					</tr>
+					<tr>
+						<th>Diastolic Blood Pressure (mmHg)</th>
+						<td>${generalInfo.pressureL}</td>
+					</tr>
+					<tr>
+						<th>Congemital</th>
+						<td>${generalInfo.congemital}</td>
+					</tr>
+					<tr>
+						<th>Med Allergy</th>
+						<td>${generalInfo.med_allergy}</td>
+					</tr>
+					<tr>
+						<th>Symptom</th>
+						<td>${generalInfo.symptom}</td>
+					</tr>
+
+					<tr>
+						<th>Record Date</th>
+						<td>${generalInfo.date}</td>
+					</tr>
+				</c:if>
+				<c:if test="${generalInfo.hospitalNumber==null}">
+					<div class="alert alert-danger">Patient has no general
+						information.</div>
+				</c:if>
+			</table>
+		</div>
+	</div>
+
 </div>
 
 

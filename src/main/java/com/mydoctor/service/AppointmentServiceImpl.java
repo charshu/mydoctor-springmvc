@@ -76,6 +76,7 @@ public class AppointmentServiceImpl {
 	}
 
 	public void loadAllDoctorAppointment(int doctor_id) throws SQLException {
+		cleanAppointments();
 		setAppointments(patientDaoImpl.retrieveAllDoctorAppointments(doctor_id)); 
 		//System.out.println("appointments: " + appointments.toString());
 	}
@@ -107,8 +108,12 @@ public class AppointmentServiceImpl {
 	public static void setAvailableTimes(ArrayList<Timestamp> availableTimes) {
 		AppointmentServiceImpl.availableTimes = availableTimes;
 	}
-
+	public void cleanAppointments()throws SQLException{
+		patientDaoImpl.cleanAppointments();
+	}
+	
 	public int saveAppointment(Appointment appointment)throws SQLException {
+		cleanAppointments();
 		int appointment_id = patientDaoImpl.insertAppointment(appointment.getDate(), appointment.getSymptom(),"waiting");
 		if(appointment_id<0){
 			System.out.println("[ERROR] cannot insert appointment");
@@ -120,13 +125,14 @@ public class AppointmentServiceImpl {
 	}
 	
 	public ArrayList<Timestamp> findDoctorAllAvailableTime(int doctor_id) throws SQLException {
+		cleanAppointments(); // clear all timeout appointments
 		clearOldAvailableTimes();
 		loadAllDoctorSchedules(doctor_id);
 		loadAllDoctorAppointment(doctor_id);
-		System.out.println("All appointment: " + appointments);
+		//System.out.println("All appointment: " + appointments);
 		DateTimeZone timeZone = DateTimeZone.forID("Asia/Bangkok");
 		DateTime now = DateTime.now(timeZone);
-		System.out.println("Now: " + now.toString());
+		//System.out.println("Now: " + now.toString());
 		DateTime minDateTime = now.plusDays(1).withTimeAtStartOfDay(); // tomorrow
 		DateTime maxDateTime = now.plusDays(7).withTimeAtStartOfDay(); // tomorrow
 		int count = 0;		
@@ -138,27 +144,27 @@ public class AppointmentServiceImpl {
 		
 		ArrayList<Appointment> appointmentsInSchedule;
 		for (Schedule schedule : schedules) {
-			System.out.println("consider schedule: " + schedule.toString());
+		//	System.out.println("consider schedule: " + schedule.toString());
 			startTime = new DateTime(schedule.getStart(), DateTimeZone.forID("Asia/Bangkok"));
 			endTime = new DateTime(schedule.getEnd(), DateTimeZone.forID("Asia/Bangkok"));
-			System.out.println("start time is : " + startTime);
-			System.out.println("end time is : " + endTime);
+		//	System.out.println("start time is : " + startTime);
+		//	System.out.println("end time is : " + endTime);
 			if (!startTime.isBefore(endTime) || startTime.isBefore(minDateTime) || endTime.isAfter(maxDateTime))
 				continue; // skip if cannot make appointment in schedule
 
-			System.out.println("This schedule is in range");
+		//	System.out.println("This schedule is in range");
 			appointmentsInSchedule = filterAppointment(startTime, endTime); // filter
 			if (appointmentsInSchedule.size() > 15)continue;
-			System.out.println("filtered appointments : " + appointmentsInSchedule.toString());
+		//	System.out.println("filtered appointments : " + appointmentsInSchedule.toString());
 			
 			// init slot time
 			startTimeSlot = startTime;
 			endTimeSlot = startTime.plusMinutes(30); // +30mins
 
-			System.out.println("checking available slot");
+			//System.out.println("checking available slot");
 			while (startTimeSlot.isBefore(endTime)) {
-				System.out.println("start time slot = " + startTimeSlot);
-				System.out.println("end time slot = " + endTimeSlot);
+			//	System.out.println("start time slot = " + startTimeSlot);
+				//System.out.println("end time slot = " + endTimeSlot);
 				count = 0;
 				
 				for (Appointment appointment : appointmentsInSchedule) {
@@ -167,7 +173,7 @@ public class AppointmentServiceImpl {
 							&& appointmentTime.isBefore(endTimeSlot) ) {
 						count++;
 					}
-					System.out.println("count = " + count);
+			//		System.out.println("count = " + count);
 				}
 				if (count <= 4) {
 					System.out.println("This slot is available !");
@@ -181,6 +187,7 @@ public class AppointmentServiceImpl {
 		return availableTimes;
 		
 	}
+
 
 	public int cancelAppointment(String username, int appointment_id) throws SQLException {
 

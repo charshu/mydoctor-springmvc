@@ -74,10 +74,11 @@ public class PatientController
 		@RequestMapping(value="/edit-info",method=RequestMethod.POST)
 		public String editProfile(ModelMap model,@Valid Patient new_patient, BindingResult result) throws SQLException 
 		{
-			System.out.println("[Request]" + new_patient.toString());
+			//System.out.println("[Request]" + new_patient.toString());
 			if(result.hasErrors()){
 				return "patientProfile";
 			}
+			System.out.println(new_patient.getBirthdate());
 			int updateCount = patientServiceImpl.edit_info((String)model.get("username"),new_patient);
 		   if(updateCount > 0) {
 			   return "redirect:/patient-profile";
@@ -92,6 +93,7 @@ public class PatientController
 		{
 				
 				System.out.println((String)model.get("username"));
+				appointmentServiceImpl.cleanAppointments();
 				model.addAttribute("appointments",patientServiceImpl.retrieveAllAppointments((String)model.get("username")));
 				return "patientAppointment";
 		}
@@ -112,7 +114,22 @@ public class PatientController
 				appointment.setDoctorId(Integer.parseInt(doctor_id));
 				appointment.setPatientId(patientServiceImpl.retrieveId((String)model.get("username")));
 				model.put("appointment", appointment);
-				model.addAttribute("suggestDateTimes", appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id)));
+				
+				ArrayList<Timestamp> suggestDateTimes = appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id));
+				ArrayList<Appointment> patientAppointment = patientServiceImpl.retrieveAllAppointments((String)model.get("username"));
+				
+				for(Appointment apt:patientAppointment){
+					Timestamp start = apt.getDate();
+					for(int i=0;i<suggestDateTimes.size();i++){
+						
+						if(start.equals(suggestDateTimes.get(i))){
+							suggestDateTimes.remove(i);
+							System.out.println("you have another appointment in this time: "+start);
+						}
+					}
+					
+				}
+				model.addAttribute("suggestDateTimes",suggestDateTimes);
 				model.put("chosenDoctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
 				
 				return "showAvailableTime";

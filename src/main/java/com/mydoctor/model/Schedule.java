@@ -8,17 +8,19 @@ import java.text.SimpleDateFormat;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Schedule {
 	
 	private int id;
 	//Date stores in format milliseconds -> 1000022311231
 	@NotNull
-	//@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
 	private Timestamp start;
 	@NotNull
-	//@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
+	@DateTimeFormat(pattern = "E dd-MM-YYYY HH:mm")
 	private Timestamp end;
-	private final DateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
+	private final DateFormat df = new SimpleDateFormat("E dd-MM-YYYY HH:mm");
 	
 	public Schedule(){
 	

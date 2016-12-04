@@ -63,14 +63,14 @@
 			format : 'ddd DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
-			maxDate : moment().add(5, 'day')
+			minDate : moment()
 
 		});
 		$('#datetimepicker2').datetimepicker({
 			format : 'ddd DD-MM-YYYY HH:mm',
 			sideBySide : true,
 			stepping : 10,
-			maxDate : moment().add(5, 'day')
+			minDate : moment()
 		});
 	</script>
 </body>

@@ -4,73 +4,115 @@
 
 <div class="container-fluid">
 
-<a href="/view-info" class="btn btn-success">Back to search</a>
+	<a href="/view-info" class="btn btn-success">Back to search</a>
 
-<h2>Patient Personal Information</h2>
-
-<table class="table table-condensed">
-<thead>
-		<tr>
-			<th>Hospital Number </th>
-			<th>Name </th>
-			<th>Surname</th>
-			<th>SSN</th>
-			<th>Gender</th>
-			<th>Birth Date</th>
-			<th>Address</th>
-			<th>Tel.</th>
-			<th>Email</th>
-			
-		</tr>
-	</thead>
-   <tr>
-       	<td>${patientInfo.hospitalNumber}</td>
-       	<td>${patientInfo.name}</td>
-       	<td>${patientInfo.surname}</td>
-       	<td>${patientInfo.ssn}</td>
-       	<td>${patientInfo.gender}</td>
-       	<td>${patientInfo.birthdate}</td>
-       	<td>${patientInfo.address}</td>
-       	<td>${patientInfo.tel}</td>
-       	<td>${patientInfo.email}</td>
-       	
-    </tr>
-
-</table>
+	
 
 
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table table-reflow">
+			<h2>Patient Personal Information</h2>
+				<tr>
+					<th>HospitalNumber</th>
+					<td>${patientInfo.hospitalNumber}</td>
+				</tr>
 
-  <h2>Patient General Information</h2>
+					<tr>
+						<th>Name</th>
+					<td>${patientInfo.name}</td>
+					</tr>
+					<tr>
+						<th>Surname</th>
+					<td>${patientInfo.surname}</td>
+					</tr>
+					<tr>
+						<th>Gender</th>
+						<c:if test="${patientInfo.gender=='M'}">
+						<td>Male</td>
+						</c:if>
+						<c:if test="${patientInfo.gender=='F'}">
+						<td>Female</td>
+						</c:if>
+					</tr>
+					<tr>
+						<th>ID card number</th>
+						<td>${patientInfo.ssn}</td>
+					</tr>
+					<tr>
+						<th>Birthdate</th>
+						<td>${patientInfo.birthdate}</td>
+					</tr>
+					<tr>
+						<th>Address</th>
+						<td>${patientInfo.address}</td>
+					</tr>
+					<tr>
+						<th>Tel</th>
+						<td>${patientInfo.tel}</td>
+					</tr>
+					<tr>
+						<th>E-mail</th>
+						<td>${patientInfo.email}</td>
+					</tr>
+					
+			</table>
+		</div>
 
-<table class="table table-condensed">
-<thead>
-		<tr>
-			<th>Hospital Number </th>
-			<th>Weight (kg) </th>
-			<th>Height (m)</th>
-			<th>Heart Rate (bpm)</th>
-			<th>Systolic Blood Pressure (mmHg)</th>
-			<th>Diastolic Blood Pressure (mmHg)</th>
-			<th>Congemital</th>
-			<th>Med Allergy</th>
-			<th>Symptom</th>
-			<th>Record Date</th>
-		</tr>
-	</thead>
-   <tr>
-       	<td>${generalInfo.hospitalNumber}</td>
-       	<td>${generalInfo.weight}</td>
-       	<td>${generalInfo.height}</td>
-       	<td>${generalInfo.heart_rate}</td>
-       	<td>${generalInfo.pressureH}</td>
-       	<td>${generalInfo.pressureL}</td>
-       	<td>${generalInfo.congemital}</td>
-       	<td>${generalInfo.med_allergy}</td>
-       	<td>${generalInfo.symptom}</td>
-       	<td>${generalInfo.date}</td>
-    </tr>
 
-</table>
+		<div class="col-md-5">
+			<h2>Patient General Information</h2>
+			<table class="table table-condensed">
+				<c:if test="${generalInfo.hospitalNumber!=null}">
+					<tr>
+						<th>Hospital Number</th>
+						<td>${generalInfo.hospitalNumber}</td>
+					</tr>
+					<tr>
+						<th>Weight (kg)</th>
+						<td>${generalInfo.weight}</td>
+					</tr>
+					<tr>
+						<th>Height (m)</th>
+						<td>${generalInfo.height}</td>
+					</tr>
+					<tr>
+						<th>Heart Rate (bpm)</th>
+						<td>${generalInfo.heart_rate}</td>
+					</tr>
+					<tr>
+						<th>Systolic Blood Pressure (mmHg)</th>
+						<td>${generalInfo.pressureH}</td>
+					</tr>
+					<tr>
+						<th>Diastolic Blood Pressure (mmHg)</th>
+						<td>${generalInfo.pressureL}</td>
+					</tr>
+					<tr>
+						<th>Congemital</th>
+						<td>${generalInfo.congemital}</td>
+					</tr>
+					<tr>
+						<th>Med Allergy</th>
+						<td>${generalInfo.med_allergy}</td>
+					</tr>
+					<tr>
+						<th>Symptom</th>
+						<td>${generalInfo.symptom}</td>
+					</tr>
+
+					<tr>
+						<th>Record Date</th>
+						<td>${generalInfo.date}</td>
+					</tr>
+				</c:if>
+				<c:if test="${generalInfo.hospitalNumber==null}">
+					<div class="alert alert-danger">Patient has no general
+						information.</div>
+				</c:if>
+			</table>
+		</div>
+	</div>
 
 </div>
 
