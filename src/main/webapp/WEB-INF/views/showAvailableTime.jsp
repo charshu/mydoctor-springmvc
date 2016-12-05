@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 
-<h2>Doctor <i class="fa fa-user-md" aria-hidden="true"></i></i></h2>
+<h2>Doctor <i class="fa fa-user-md" aria-hidden="true"></i></h2>
 <table class="table">
   <thead>
     <tr>

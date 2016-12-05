@@ -2,7 +2,7 @@
 <nav role="navigation" class="navbar navbar-default">
 
     <div class="">
-        <a href="/login" class="navbar-brand">MyHospital    <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+        <a href="/" class="navbar-brand">MyHospital    <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
    </nav>
    
@@ -11,7 +11,10 @@
 					<h2>Patient Registration</h2><br>		
 				</div>	
  <div class="col-sm-4 col-md-offset-4">
-  			
+ 	<c:if test="${ error =='-2'}"><div class="alert alert-danger">
+Username already exists, please try again.
+</div></c:if>
+  	
 	<form:form id="register-patient-new" method="post" action="register-new" commandName="patient" class="form-horizontal"> 
 		  
  		<fieldset class="form-group inline">
@@ -57,9 +60,10 @@
 		  
 		   <fieldset class="form-group inline">
 		  <div class="input-group">
-		  <span class="input-group-addon" id="basic-addon1">Gender</span>
-			<form:input path="gender" type="text" class="form-control" placeholder="Gender" aria-describedby="basic-addon1" /><br>
-			<form:errors path="gender" cssClass="text-warning" />
+		  	<label>Gender </label>
+				<form:radiobutton path="gender" value="M" style="margin-left:20px;"/> Male <form:radiobutton
+								path="gender" value="F" style="margin-left:20px;" /> Female
+				<form:errors path="gender" cssClass="error" />
 		  </div>
 		  </fieldset>
 		  

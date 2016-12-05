@@ -1,7 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %> 
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>  
 <html>
 <head>
 <title>MyHospital Application</title>
@@ -66,14 +66,7 @@ overflow: hidden;
 </head>
 
 <body onload="startTime()">
-	<!-- <nav role="navigation" class="navbar navbar-default"
-		style="margin-bottom: 0px;">
 
-		<div class="">
-			<a href="/login" class="navbar-brand">MyHospital <i
-				class="fa fa-hospital-o" aria-hidden="true"></i></a>
-		</div>
-	</nav> -->
 	<div class="background">
 	<div id="txt" ></div>
 		<div class="container">
@@ -82,8 +75,7 @@ overflow: hidden;
 				<div class="col-md-3"></div>
 				<div class="col-md-6">
 				<div class="logo"></div>
-					<form:form id="loginForm" method="post" action="/"
-						commandName="loginBean">
+					<form:form id="loginForm" method="post" action="/" commandName="loginBean">
 						<fieldset class="form-group">
 
 							<form:label path="username" style="color:white;">Enter your username</form:label>

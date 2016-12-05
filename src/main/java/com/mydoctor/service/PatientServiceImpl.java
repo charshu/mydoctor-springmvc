@@ -47,6 +47,7 @@ public class PatientServiceImpl
 			return patientDaoImpl.retrieveIdByUserId(user_id);
 		}
 		public String retrieveHospitalNumberById(int patient_id)throws SQLException{
+			if(patient_id==0)return null;
 			return patientDaoImpl.retrieveHospitalNumberById(patient_id);
 		}
 		public int cancelAppointment(String username,int appointment_id)throws SQLException{

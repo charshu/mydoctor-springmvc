@@ -48,7 +48,9 @@
        <td>${appointment.patientGender}</td>
        <td>${appointment.patientHospitalNumber}</td>
        <td>${appointment.symptom}</td>
-       <td><a href="/diagnose?patientId=${appointment.patientId}" class="btn btn-success">Diagnose</a></td>
+       <c:if test="${appointment.status =='waiting'}"> <td><a href="/diagnose?appointmentId=${appointment.id}" class="btn btn-success">Diagnose</a></td></c:if>
+       <c:if test="${appointment.status =='done'}"> <td><button class="btn btn-default" disabled="disabled">Done</button></td></c:if>
+       
     </tr>
 </c:forEach>
 </c:if>

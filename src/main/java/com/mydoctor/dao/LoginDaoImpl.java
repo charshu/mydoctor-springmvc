@@ -76,7 +76,8 @@ public class LoginDaoImpl
 
 	}
 		
-	public int registerUserId(String username, String password)throws SQLException {
+	public int registerUserId(String username, String password) {
+		try{
 		String query = "INSERT INTO user (user_id, username, password, role) VALUES('0',?,?,'patient');";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 		pstmt.setString(1,username);
@@ -87,10 +88,15 @@ public class LoginDaoImpl
 			return rs.getInt(1);
 		}
 		return -1;
-
+		}catch(SQLException e){
+			System.out.println(e.getErrorCode());
+			return -2;
+		}
+		
 	}
 	
-	public int registerPatient( String ssn, String name, String surname, String gender, String birth_date, String address, String tel, String email, String hospitalNumber, int user_id)throws SQLException {
+	public int registerPatient( String ssn, String name, String surname, String gender, String birth_date, String address, String tel, String email, String hospitalNumber, int user_id) {
+		try{
 		String query ="INSERT INTO `patient` (`patient_id`, `ssn`, `name`, `surname`, `gender`, `birth_date`, `address`, `tel`, `email`, `hospitalNumber`,`user_id` ) "
 				+ "VALUES ('0', ?,  ?, ?, ?, ?, ?, ?, ?, ?,?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
@@ -110,6 +116,10 @@ public class LoginDaoImpl
 			return rs.getInt(1);
 		}
 		return -1;
+		}
+		catch(Exception e){
+			return -2;
+		}
 
 	}
 	

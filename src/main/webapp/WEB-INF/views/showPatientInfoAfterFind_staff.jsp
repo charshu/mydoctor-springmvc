@@ -11,8 +11,9 @@
 
 	<div class="row">
 		<div class="col-md-6">
-			<table class="table table-reflow">
 			<h2>Patient Personal Information</h2>
+			<table class="table table-reflow">
+		
 				<tr>
 					<th>HospitalNumber</th>
 					<td>${patientInfo.hospitalNumber}</td>

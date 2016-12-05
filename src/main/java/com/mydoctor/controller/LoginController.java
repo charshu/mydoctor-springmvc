@@ -11,12 +11,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+
 
 import com.mydoctor.model.LoginBean;
 import com.mydoctor.model.Patient;
 import com.mydoctor.service.LoginServiceImpl;
+import com.mydoctor.util.EmailService;
 
 @Controller
 @SessionAttributes("username")
@@ -27,7 +31,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showLoginPage(ModelMap model) {
-
+		
 		LoginBean loginBean = new LoginBean();
 		model.addAttribute("loginBean", loginBean);
 		return "login";
@@ -92,9 +96,10 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/register-new", method = RequestMethod.GET)
-	public String showRegisterNew(ModelMap model) throws SQLException{
+	public String showRegisterNew(ModelMap model,@RequestParam(value="error",required=false,defaultValue = "")String error) throws SQLException{
 		Patient patient = new Patient();
 		model.addAttribute("patient",patient);
+		model.addAttribute("error",error);
 		return "registerNewPatient";
 	}
 	
@@ -106,11 +111,15 @@ public class LoginController {
 		}
 		
 		String hospitalNumber = loginServiceImpl.registerPatient(patient);
+		if(hospitalNumber.equals("-2")){
+			return "redirect:/register-new?error=-2";
+		}
 		
 		System.out.println(hospitalNumber);
 		if(hospitalNumber != ""){
 			model.clear();
-			//model.addAttribute("patient",patient);
+			patient.setHospitalNumber(hospitalNumber);
+			EmailService.emailNewUser(patient);
 			model.addAttribute("hospitalNumber", hospitalNumber);
 			return "showHospitalNumber_new";
 		} 
@@ -144,6 +153,8 @@ public class LoginController {
 		}
 		return "registerOldPatient";
 	}
+	
+	
 	
 	
 }

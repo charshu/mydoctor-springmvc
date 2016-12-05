@@ -194,4 +194,9 @@ public class AppointmentServiceImpl {
 		return 0;
 	}
 
+	public void setStatusAppointment(int appointment_id, String status)throws SQLException {
+		patientDaoImpl.setStatusAppointment(appointment_id, status);
+		
+	}
+
 }

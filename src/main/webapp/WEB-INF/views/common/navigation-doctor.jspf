@@ -14,8 +14,7 @@
             <li><a href="/patient-in-schedule">Diagnose  <i class="fa fa-heartbeat fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/view-info">View Patient Information  <i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/DoctorFindPrescriptionHistoryForm">PrescriptionHistory  <i class="fa fa-history fa-lg" aria-hidden="true"></i></a></li>
-<!--              <li><a href="/add-prescription">Add Prescription  <i class="fa fa-plus fa-lg" aria-hidden="true"></i> -->
-             </a></li>
+
 
 
         </ul>

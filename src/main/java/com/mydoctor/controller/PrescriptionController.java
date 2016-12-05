@@ -120,13 +120,12 @@ public class PrescriptionController
 	    	
 	    	ArrayList<MedicineBean> medicineBean = medicineServiceImpl.retrieveAllMedicine();
 	    	
-	    	Map referenceData = new HashMap();
-
+	  
 			Map<Integer,String> medicine = new LinkedHashMap<Integer,String>();
 	    	for(int i=0; i<medicineBean.size(); i++){
 	    		medicine.put(medicineBean.get(i).getId(), medicineBean.get(i).getName());
 	    	}
-			referenceData.put("medicineBean", medicine);
+			
 	    	
 	        model.addAttribute("medicineBean", medicineServiceImpl.retrieveAllMedicine());
 	        

@@ -253,6 +253,17 @@ public class PatientDaoImpl {
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;
 	}
+	public int setStatusAppointment(int appointment_id,String status)throws SQLException{
+		String query = "Update appointment Set appointment.status = ? "
+				+ "Where app_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, status);
+		pstmt.setInt(2, appointment_id);
+
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		return updateCount;
+	}
 	public int editPatientInfo(String name, String surname, String gender, DateTime birth_date, String address, String tel, String email, int patient_id) throws SQLException {
 		String query = "Update patient Set name = ?, surname = ?, gender = ?, birth_date = ?, address = ?, tel = ?, email = ? Where patient_id = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);

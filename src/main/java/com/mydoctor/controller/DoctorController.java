@@ -49,7 +49,7 @@ import com.mydoctor.service.PrescriptionServiceImpl;
 
 
 @Controller
-@SessionAttributes(value={"username","diagnosis"})
+@SessionAttributes(value={"username","diagnosis","appointments","appointmentId"})
 public class DoctorController
 {
 		@Autowired
@@ -60,6 +60,8 @@ public class DoctorController
 		private PrescriptionServiceImpl prescriptionServiceImpl;
 		@Autowired
 		private PatientServiceImpl patientServiceImpl;
+		@Autowired
+		private AppointmentServiceImpl appointmentServiceImpl;
 
 
 		
@@ -204,30 +206,43 @@ public class DoctorController
 
 		
 		@RequestMapping(value="/diagnose",method=RequestMethod.GET)
-		public String showDiagnosePage(@RequestParam("patientId")String patient_id
+		public String showDiagnosePage(@RequestParam("appointmentId")String appointment_id
 				,@ModelAttribute("appointments")ArrayList<Appointment> appointments
 				,ModelMap model) throws SQLException 
 		{
+			int patient_id =0;
+			System.out.println("appointment id: "+ appointment_id);
+			for(Appointment apt:appointments){
+				if(apt.getId() == Integer.parseInt(appointment_id))
+					patient_id = apt.getPatientId();
+			}
+			System.out.println("patient id: "+patient_id);
 			DiagnosisBean diagnosis = new DiagnosisBean();
-			diagnosis.setPatientId(Integer.parseInt(patient_id));
+			diagnosis.setPatientId(patient_id);
 			diagnosis.setDoctorId(doctorServiceImpl.retrieveId((String)model.get("username")));
-			String patient_hospitalNumber = patientServiceImpl.retrieveHospitalNumberById(Integer.parseInt(patient_id));
+			String patient_hospitalNumber = patientServiceImpl.retrieveHospitalNumberById(patient_id);
+			System.out.println("hospital number: "+patient_hospitalNumber);
 			GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfoByHospitalNumber(patient_hospitalNumber);
 			model.addAttribute("diagnosis",diagnosis);
-			
 			model.addAttribute("generalInfo", generalInfo);
+			model.put("appointmentId", appointment_id);
 			return "addDiagnosis";
 		}
 		
 		@RequestMapping(value="/diagnose",method=RequestMethod.POST)
-		public String saveDiagnosis(ModelMap model,@ModelAttribute("diagnosis")DiagnosisBean diagnosisBean) throws SQLException 
+		public String saveDiagnosis(ModelMap model
+				,@ModelAttribute("appointmentId")String appointment_id
+				,@ModelAttribute("diagnosis")DiagnosisBean diagnosisBean) throws SQLException 
 		{
 			if(diagnosisBean.getPatientId() == 0 || diagnosisBean.getDoctorId() == 0){
 				System.out.println("back");
 				return "redirect:/patient-in-schedule";
 			}
 			if(doctorServiceImpl.saveDiagnosis(diagnosisBean) > 0){
-				System.out.print("go add prescription");
+				appointmentServiceImpl.setStatusAppointment(Integer.parseInt(appointment_id),"done");
+				model.remove("appointmentId");
+				model.remove("diagnosis");
+				//System.out.print("go add prescription");
 				return "redirect:/add-prescription";
 			}
 			System.out.print("error");

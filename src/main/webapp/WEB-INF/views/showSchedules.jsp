@@ -2,7 +2,7 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 <div class="container-fluid">
- <span><h2>Schedule <a href="/add-schedule" class="btn btn-success"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Add</a></h2> </span>
+ <h2>Schedule <a href="/add-schedule" class="btn btn-success"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Add</a></h2>
 <table class="table">
 <thead>
 		<tr>

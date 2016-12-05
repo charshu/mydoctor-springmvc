@@ -91,11 +91,10 @@
 				<form:errors path="email" cssClass="text-warning" />
 		</fieldset></td>
 	</tr>
-	
+	<tr>
 	<th></th>
 	<td><button class="btn btn-success">Confirm Edit Profile</button></td>
 	</tr>
-		
 		</form:form>
 </table>		
 </div>       

@@ -24,8 +24,7 @@
 	<h2>Add Appointment</h2>
 	<form:form id="appointForm" method="post" action="confirm-time"
 		commandName="appointment">
-		<fieldset class="form-group">
-
+	
 			
 		<fieldset class="form-group">
 

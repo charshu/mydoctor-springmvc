@@ -47,12 +47,18 @@ public class LoginServiceImpl
 			String tel = patient.getTel();
 			String email = patient.getEmail();
 			String hospitalNumber = Integer.toString(n);
+			
+		
 			int user_id = loginDaoImpl.registerUserId(username, password);
-			if(loginDaoImpl.registerPatient(ssn, name, surname, gender, birth_date, address, tel, email, hospitalNumber, user_id) > 0){
+	
+			int code = loginDaoImpl.registerPatient(ssn, name, surname, gender, birth_date, address, tel, email, hospitalNumber, user_id);
+			if(code > 0){
 				return hospitalNumber;
 			}
+			else return code+"";
 			
-			return null;
+			
+	
 		}
 		
 		public int createUserIdByHN(Patient patient)throws SQLException{
