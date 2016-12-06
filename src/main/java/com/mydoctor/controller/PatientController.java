@@ -40,6 +40,7 @@ import com.mydoctor.model.ViewInfo;
 import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
+import com.mydoctor.util.EmailService;
 
 
 
@@ -156,7 +157,10 @@ public class PatientController
 
 			appointmentServiceImpl.saveAppointment(validAppointment);
 			//send email
-			
+			Patient patient = patientServiceImpl.retrievePatient((String)model.get("username"));
+			Doctor doctor = doctorServiceImpl.retrieveDoctor(validAppointment.getDoctorId());
+			patient.setUsername1((String)model.get("username"));
+			EmailService.emailNewAppointment(validAppointment,patient,doctor);
 			
 			//
 			model.remove("suggestDateTimes");

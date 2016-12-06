@@ -24,6 +24,7 @@ import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.NurseServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 import com.mydoctor.service.StaffServiceImpl;
+import com.mydoctor.util.EmailService;
 
 @Controller
 @SessionAttributes(value = { "username", "viewInfo" })
@@ -51,7 +52,7 @@ public class StaffController {
 
 	@RequestMapping(value = "/register-patient", method = RequestMethod.POST)
 	public String addPatient(ModelMap model, @Valid Patient patient, BindingResult result) throws SQLException {
-		System.out.println("[Request]" + patient.toString());
+		//System.out.println("[Request]" + patient.toString());
 		if (result.hasErrors()) {
 			return "registerPatient_staff";
 		}
@@ -66,9 +67,12 @@ public class StaffController {
 			return "redirect:/register-patient?error=-4";
 		}
 		
+		
 		if (hospitalNumber != "") {
 			model.clear();
-			// model.addAttribute("patient",patient);
+			patient.setHospitalNumber(hospitalNumber);
+			EmailService.emailNewUserByStaff(patient);
+			model.addAttribute("email", patient.getEmail());
 			model.addAttribute("hospitalNumber", hospitalNumber);
 			return "showHospitalNumber";
 		}

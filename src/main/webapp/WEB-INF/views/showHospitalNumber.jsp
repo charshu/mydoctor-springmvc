@@ -2,9 +2,9 @@
 <%@ include file="common/navigation-staff.jspf"%>
 
 <div class="container-fluid">
-
-<h1>Registered Patient  Number is ${hospitalNumber}, check your email for more information.</h1>
-
+ <div class="alert alert-info">
+ 	Your Hospital Number is ${hospitalNumber}, check your mail at ('${email}') for more information.
+</div>
 </div>
 
 

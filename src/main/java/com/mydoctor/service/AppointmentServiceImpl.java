@@ -115,10 +115,12 @@ public class AppointmentServiceImpl {
 	public int saveAppointment(Appointment appointment)throws SQLException {
 		cleanAppointments();
 		int appointment_id = patientDaoImpl.insertAppointment(appointment.getDate(), appointment.getSymptom(),"waiting");
+		appointment.setId(appointment_id);
 		if(appointment_id<0){
 			System.out.println("[ERROR] cannot insert appointment");
 			return -1;
 		}
+		
 		return patientDaoImpl.insertCreateAppointment(appointment.getPatientId(),appointment.getDoctorId(),appointment_id);
 		
 		
