@@ -114,6 +114,12 @@ public class LoginController {
 		if(hospitalNumber.equals("-2")){
 			return "redirect:/register-new?error=-2";
 		}
+		if(hospitalNumber.equals("-3")){
+			return "redirect:/register-new?error=-3";
+		}
+		if(hospitalNumber.equals("-4")){
+			return "redirect:/register-new?error=-4";
+		}
 		
 		System.out.println(hospitalNumber);
 		if(hospitalNumber != ""){

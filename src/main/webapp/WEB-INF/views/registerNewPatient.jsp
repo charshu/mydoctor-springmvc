@@ -14,6 +14,12 @@
  	<c:if test="${ error =='-2'}"><div class="alert alert-danger">
 Username already exists, please try again.
 </div></c:if>
+<c:if test="${ error =='-3'}"><div class="alert alert-danger">
+SSN already exists, please try again.
+</div></c:if>
+<c:if test="${ error =='-4'}"><div class="alert alert-danger">
+Email already exists, please try again.
+</div></c:if>
   	
 	<form:form id="register-patient-new" method="post" action="register-new" commandName="patient" class="form-horizontal"> 
 		  

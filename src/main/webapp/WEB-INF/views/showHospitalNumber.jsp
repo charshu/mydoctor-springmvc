@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 
-<h1>Registered Patient  Number is ${hospitalNumber}</h1>
+<h1>Registered Patient  Number is ${hospitalNumber}, check your email for more information.</h1>
 
 </div>
 

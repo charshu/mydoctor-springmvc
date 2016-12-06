@@ -50,7 +50,7 @@ public class LoginServiceImpl
 			
 		
 			int user_id = loginDaoImpl.registerUserId(username, password);
-	
+			if(user_id == -2)return "-2";
 			int code = loginDaoImpl.registerPatient(ssn, name, surname, gender, birth_date, address, tel, email, hospitalNumber, user_id);
 			if(code > 0){
 				return hospitalNumber;

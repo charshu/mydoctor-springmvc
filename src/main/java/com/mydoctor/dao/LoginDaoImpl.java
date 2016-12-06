@@ -89,13 +89,13 @@ public class LoginDaoImpl
 		}
 		return -1;
 		}catch(SQLException e){
-			System.out.println(e.getErrorCode());
+			System.out.println(e.getMessage());
 			return -2;
 		}
 		
 	}
 	
-	public int registerPatient( String ssn, String name, String surname, String gender, String birth_date, String address, String tel, String email, String hospitalNumber, int user_id) {
+	public int registerPatient( String ssn, String name, String surname, String gender, String birth_date, String address, String tel, String email, String hospitalNumber, int user_id)throws SQLException {
 		try{
 		String query ="INSERT INTO `patient` (`patient_id`, `ssn`, `name`, `surname`, `gender`, `birth_date`, `address`, `tel`, `email`, `hospitalNumber`,`user_id` ) "
 				+ "VALUES ('0', ?,  ?, ?, ?, ?, ?, ?, ?, ?,?);";
@@ -117,12 +117,32 @@ public class LoginDaoImpl
 		}
 		return -1;
 		}
-		catch(Exception e){
-			return -2;
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+			if(e.getMessage().contains("for key 'ssn'")){
+				deleteUserId(user_id);
+				return -3;
+			}
+			else if(e.getMessage().contains("for key 'email'")){
+				deleteUserId(user_id);
+				return -4;
+			}
+			
+			else return -5;
 		}
 
 	}
-	
+	public int deleteUserId(int user_id)throws SQLException{
+		String query = "DELETE FROM user "
+				+ "WHERE user_id = ?";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1, user_id);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if (updateCount > 0)
+			return updateCount;
+		return -1;
+	}
 	public int createUserIdByHN(int user_id, String hospitalNumber) throws SQLException{
 		String query = "Update patient Set user_id = ? where hospitalNumber = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);

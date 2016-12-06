@@ -9,7 +9,7 @@
 
 <div class="container-fluid">
 
-	<h1>Your Hospital Number is ${hospitalNumber}</h1>
+	<h1>Your Hospital Number is ${hospitalNumber}, check your email for more information.</h1>
 	<br>
 
 
