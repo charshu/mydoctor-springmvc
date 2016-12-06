@@ -6,7 +6,15 @@
 					<h2>Register Patient By Staff</h2><br>	
 				</div>	
  <div class="col-sm-4 col-md-offset-4">
-  			
+  			 	<c:if test="${ error =='-2'}"><div class="alert alert-danger">
+Username already exists, please try again.
+</div></c:if>
+<c:if test="${ error =='-3'}"><div class="alert alert-danger">
+SSN already exists, please try again.
+</div></c:if>
+<c:if test="${ error =='-4'}"><div class="alert alert-danger">
+Email already exists, please try again.
+</div></c:if>
 	<form:form id="register-patient" method="post" action="register-patient" commandName="patient" class="form-horizontal">
 		
 		   <fieldset class="form-group inline">
@@ -35,9 +43,10 @@
 		  
 		   <fieldset class="form-group inline">
 		  <div class="input-group">
-		  <span class="input-group-addon" id="basic-addon1">Gender</span>
-			<form:input path="gender" type="text" class="form-control" placeholder="Gender" aria-describedby="basic-addon1" /><br>
-			<form:errors path="gender" cssClass="text-warning" />
+		  	<label>Gender </label>
+				<form:radiobutton path="gender" value="M" style="margin-left:20px;"/> Male <form:radiobutton
+								path="gender" value="F" style="margin-left:20px;" /> Female
+				<form:errors path="gender" cssClass="error" />
 		  </div>
 		  </fieldset>
 		  

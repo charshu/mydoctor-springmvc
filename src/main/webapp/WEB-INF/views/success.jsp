@@ -8,8 +8,9 @@
 
 <div class="container-fluid">
 
-<h1>Register success! You can login with your username and password now!</h1><br>
-
+ <div class="alert alert-info">
+ 	You are registered, please check your mail at ('${email}') for more information.
+</div>
 
 
 </div>
@@ -17,7 +18,7 @@
 
 
 <div class="col-sm-offset-5 col-sm-2 text-center">
-					<a href="/login" class="btn btn-success">Back to Home Page</a>	
+					<a href="/" class="btn btn-success">Back to Home Page</a>	
 				</div>	
 
 

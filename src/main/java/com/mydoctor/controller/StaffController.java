@@ -42,9 +42,10 @@ public class StaffController {
 	}
 
 	@RequestMapping(value = "/register-patient", method = RequestMethod.GET)
-	public String registerPatient(ModelMap model) throws SQLException {
+	public String registerPatient(ModelMap model,@RequestParam(value="error",required=false,defaultValue = "")String error) throws SQLException {
 		Patient patient = new Patient();
 		model.addAttribute("patient", patient);
+		model.addAttribute("error",error);
 		return "registerPatient_staff";
 	}
 
@@ -55,6 +56,16 @@ public class StaffController {
 			return "registerPatient_staff";
 		}
 		String hospitalNumber = staffServiceImpl.registerPatient((String) model.get("username"), patient);
+		if(hospitalNumber.equals("-2")){
+			return "redirect:/register-patient?error=-2";
+		}
+		if(hospitalNumber.equals("-3")){
+			return "redirect:/register-patient?error=-3";
+		}
+		if(hospitalNumber.equals("-4")){
+			return "redirect:/register-patient?error=-4";
+		}
+		
 		if (hospitalNumber != "") {
 			model.clear();
 			// model.addAttribute("patient",patient);

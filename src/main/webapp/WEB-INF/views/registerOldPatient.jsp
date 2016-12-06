@@ -11,7 +11,16 @@
 					<h2>Old Patient Registration</h2><br>		
 				</div>	
  <div class="col-sm-4 col-md-offset-4">
-  			
+  			<c:if test="${ error =='-2'}"><div class="alert alert-danger">
+Username already exists, please try again.
+</div></c:if>
+<c:if test="${ error =='-5'}"><div class="alert alert-danger">
+Wrong Hospital Number, please try again.
+</div></c:if>
+<c:if test="${ error =='-6'}"><div class="alert alert-danger">
+Wrong SSN, please try again.
+</div></c:if>
+
 	<form:form id="register-patient-old" method="post" action="register-old" commandName="patient" class="form-horizontal"> 
 		  
  		  <br><h4> Please Fill at least one in SSN or Hostpital Number </h4> 

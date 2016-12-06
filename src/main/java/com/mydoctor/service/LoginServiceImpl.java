@@ -65,15 +65,20 @@ public class LoginServiceImpl
 			String username = patient.getUsername1();
 			String password = patient.getPassword1();
 			String hospitalNumber = patient.getHospitalNumber();
+			if(loginDaoImpl.hasUserIdByHN(hospitalNumber)!=0)return -5; //user id not NULL or not found hospital number
 			int user_id = loginDaoImpl.registerUserId(username, password);
+			if(user_id == -2)return -2;
 			return loginDaoImpl.createUserIdByHN(user_id, hospitalNumber);
 		}
 
 		public int createUserIdBySSN(Patient patient)throws SQLException{
+			
 			String username = patient.getUsername1();
 			String password = patient.getPassword1();
 			String ssn = patient.getSsn();
+			if(loginDaoImpl.hasUserIdBySSN(ssn)!=0)return -6; //user id not NULL or not found ssn
 			int user_id = loginDaoImpl.registerUserId(username, password);
+			if(user_id == -2)return -2;
 			return loginDaoImpl.createUserIdBySSN(user_id, ssn);
 		}
 

@@ -48,6 +48,16 @@ public class PatientDaoImpl {
 		else
 			return -1;
 	}
+	public int retrievePatientIdBySSN(String ssn) throws SQLException {
+		String query = "Select patient_id from patient where ssn = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, ssn);
+		ResultSet resultSet = pstmt.executeQuery();
+		if (resultSet.next())
+			return resultSet.getInt("patient_id");
+		else
+			return -1;
+	}
 
 	public int retrieveIdByUserId(int user_id) throws SQLException {
 		String query = "Select patient_id from patient where user_id = ? ";

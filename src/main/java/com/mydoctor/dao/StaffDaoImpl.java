@@ -116,6 +116,7 @@ public class StaffDaoImpl {
 	}
 	
 	public int registerPatient(String ssn, String name, String surname, String gender, String birth_date, String address, String tel, String email, String hospitalNumber)throws SQLException {
+		try{
 		String query = "INSERT INTO patient (patient_id, ssn, name, surname, gender, birth_date, address, tel, email, hospitalNumber)"
 				+ "VALUES ('0',?,?,?,?,?,?,?,?,?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
@@ -134,6 +135,19 @@ public class StaffDaoImpl {
 			return rs.getInt(1);
 		}
 		return -1;
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+			if(e.getMessage().contains("for key 'ssn'")){
+				
+				return -3;
+			}
+			else if(e.getMessage().contains("for key 'email'")){
+				
+				return -4;
+			}
+			
+			else return -5;
+		}
 
 	}
 }

@@ -31,6 +31,16 @@ public class PatientServiceImpl
 			int patient_id = patientDaoImpl.retrieveIdByUserId(user_id);
 			return patientDaoImpl.retrievePatient(patient_id);
 		}
+		public Patient retrievePatientByHN(String hospitalNumber) throws SQLException {
+	
+			int patient_id = patientDaoImpl.retrievePatientIdByHN(hospitalNumber);
+			return patientDaoImpl.retrievePatient(patient_id);
+		}
+		public Patient retrievePatientBySSN(String ssn) throws SQLException {
+		
+			int patient_id = patientDaoImpl.retrievePatientIdBySSN(ssn);
+			return patientDaoImpl.retrievePatient(patient_id);
+		}
 		public ArrayList<Patient> retrieveAllPatients() throws SQLException {
 			return patientDaoImpl.retrieveAllPatients();
 			}

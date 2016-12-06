@@ -144,6 +144,7 @@ public class LoginDaoImpl
 		return -1;
 	}
 	public int createUserIdByHN(int user_id, String hospitalNumber) throws SQLException{
+		try{
 		String query = "Update patient Set user_id = ? where hospitalNumber = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, user_id);
@@ -151,9 +152,15 @@ public class LoginDaoImpl
 		pstmt.executeUpdate();
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;
+		}
+		catch(SQLException e){
+			deleteUserId(user_id);
+			return -7;
+		}
 	}
 	
 	public int createUserIdBySSN(int user_id, String ssn) throws SQLException{
+		try{
 		String query = "Update patient Set user_id = ? where ssn = ?";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, user_id);
@@ -161,5 +168,30 @@ public class LoginDaoImpl
 		pstmt.executeUpdate();
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;
+		}catch(SQLException e){
+			deleteUserId(user_id);
+			return -7;
+		}
+	}
+	public int hasUserIdByHN(String hospitalNumber)throws SQLException{
+		String query = "Select user_id from patient where hospitalNumber = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, hospitalNumber);
+		ResultSet resultSet = pstmt.executeQuery();
+		if (resultSet.next()){
+			return resultSet.getInt(1);
+		}
+		else
+			return -1;
+	}
+	public int hasUserIdBySSN(String ssn)throws SQLException{
+		String query = "Select user_id from patient where ssn = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, ssn);
+		ResultSet resultSet = pstmt.executeQuery();
+		if (resultSet.next())
+			return resultSet.getInt(1);
+		else
+			return -1;
 	}
 }

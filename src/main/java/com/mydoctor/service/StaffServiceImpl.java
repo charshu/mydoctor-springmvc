@@ -53,12 +53,11 @@ public class StaffServiceImpl
 			String tel = patient.getTel();
 			String email = patient.getEmail();
 			String hospitalNumber = Integer.toString(n);
-			
-			if(staffDaoImpl.registerPatient(ssn, name, surname, gender, birth_date, address, tel, email, hospitalNumber) > 0){
+			int code = staffDaoImpl.registerPatient(ssn, name, surname, gender, birth_date, address, tel, email, hospitalNumber);
+			if(code > 0){
 				return hospitalNumber;
-			}
-			
-			return null;
+			}else 
+			return code+"";
 		}
 
 		

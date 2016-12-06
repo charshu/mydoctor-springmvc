@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.mydoctor.model.LoginBean;
 import com.mydoctor.model.Patient;
 import com.mydoctor.service.LoginServiceImpl;
+import com.mydoctor.service.PatientServiceImpl;
 import com.mydoctor.util.EmailService;
 
 @Controller
@@ -28,7 +29,9 @@ public class LoginController {
 
 	@Autowired
 	private LoginServiceImpl loginServiceImpl;
-
+	@Autowired
+	private PatientServiceImpl patientServiceImpl;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showLoginPage(ModelMap model) {
 		
@@ -126,6 +129,7 @@ public class LoginController {
 			model.clear();
 			patient.setHospitalNumber(hospitalNumber);
 			EmailService.emailNewUser(patient);
+			model.addAttribute("email", patient.getEmail());
 			model.addAttribute("hospitalNumber", hospitalNumber);
 			return "showHospitalNumber_new";
 		} 
@@ -133,28 +137,48 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/register-old", method = RequestMethod.GET)
-	public String showRegisterOld(ModelMap model) throws SQLException{
+	public String showRegisterOld(ModelMap model,@RequestParam(value="error",required=false,defaultValue = "")String error) throws SQLException{
 		Patient patient = new Patient();
+		model.addAttribute("error", error);
 		model.addAttribute("patient",patient);
 		return "registerOldPatient";
 	}
 	
 	@RequestMapping(value = "/register-old", method = RequestMethod.POST)
-	public String RegisterOld(ModelMap model,@ModelAttribute("patient")Patient patient, BindingResult result) throws SQLException {
-		System.out.println("[Request]" + patient.toString());
+	public String RegisterOld(ModelMap model,@ModelAttribute("patient")Patient patient
+			,BindingResult result) throws SQLException {
+		//System.out.println("[Request]" + patient.toString());
 		if(result.hasErrors()){
 			return "registerOldPatient";
 		}
 		String hospitalNumber = patient.getHospitalNumber();
 		String ssn = patient.getSsn();
 		if(hospitalNumber != ""){
-			loginServiceImpl.createUserIdByHN(patient);
+			int code = loginServiceImpl.createUserIdByHN(patient);
+			if(code ==-2)return "redirect:/register-old?error=-2";
+			if(code ==-5)return "redirect:/register-old?error=-5";
+			String username = patient.getUsername1();
+			String password = patient.getPassword1();
+			patient = patientServiceImpl.retrievePatientByHN(hospitalNumber);
+			patient.setUsername1(username);
+			patient.setPassword1(password);
+			EmailService.emailOldUser(patient);
 			model.clear();
+			model.addAttribute("email", patient.getEmail());
 			return "success";
 		}
 		else if(ssn != ""){
-			loginServiceImpl.createUserIdBySSN(patient);
+			int code = loginServiceImpl.createUserIdBySSN(patient);
+			if(code ==-2)return "redirect:/register-old?error=-2";
+			if(code ==-6)return "redirect:/register-old?error=-6";
+			String username = patient.getUsername1();
+			String password = patient.getPassword1();
+			patient = patientServiceImpl.retrievePatientBySSN(ssn);
+			EmailService.emailOldUser(patient);
+			patient.setUsername1(username);
+			patient.setPassword1(password);
 			model.clear();
+			model.addAttribute("email", patient.getEmail());
 			return "success";
 		}
 		return "registerOldPatient";
