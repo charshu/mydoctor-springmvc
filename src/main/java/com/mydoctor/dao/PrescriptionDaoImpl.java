@@ -55,18 +55,25 @@ public class PrescriptionDaoImpl {
 //	}
 	
 	public int insertPrescription(int med_id, String amount, String instruction)throws SQLException{
-		String query = "INSERT INTO mydoctor.prescription (prescription_id, med_id, amount, instruction, status) "
-				+ "VALUES ('0', ?, ?, ?, 'wait');";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-		pstmt.setInt(1, med_id);
-		pstmt.setString(2, amount);
-		pstmt.setString(3, instruction);
-		pstmt.executeUpdate();
-		ResultSet rs = pstmt.getGeneratedKeys();
-		if(rs.next()){
-			return rs.getInt(1);
+		try{
+			String query = "INSERT INTO mydoctor.prescription (prescription_id, med_id, amount, instruction, status) "
+					+ "VALUES ('0', ?, ?, ?, 'wait');";
+			PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, med_id);
+			pstmt.setString(2, amount);
+			pstmt.setString(3, instruction);
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()){
+				return rs.getInt(1);
+			}
+			return -1;
 		}
-		return -1;
+		catch(SQLException e){
+			System.out.println(e.getMessage());			
+			return -5;
+		}
+		
 	}
 
 	public ArrayList<Prescription> retriveAllwaitPrescription() throws SQLException {
@@ -129,20 +136,27 @@ public class PrescriptionDaoImpl {
 	}
 	
 	public int insertCreatePrescription(int doctor_id, int patient_id, int prescription_id)throws SQLException{
-		String query = "INSERT INTO mydoctor.create_prescription (doctor_id, patient_id, prescription_id)"
-				+ "VALUES (?, ?, ?);";
-	
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-		pstmt.setInt(1, doctor_id);
-		pstmt.setInt(2, patient_id);
-		pstmt.setInt(3, prescription_id);
-		pstmt.executeUpdate();
-		ResultSet rs = pstmt.getGeneratedKeys();
-		if(rs.next()){
+		try{
+			String query = "INSERT INTO mydoctor.create_prescription (doctor_id, patient_id, prescription_id)"
+					+ "VALUES (?, ?, ?);";
 		
-			return rs.getInt(1);
+			PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, doctor_id);
+			pstmt.setInt(2, patient_id);
+			pstmt.setInt(3, prescription_id);
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()){
+			
+				return rs.getInt(1);
+			}
+			return -1;	
 		}
-		return -1;
+		catch(SQLException e){
+			System.out.println(e.getMessage());			
+			return -5;
+		}
+		
 	}
 	
 
