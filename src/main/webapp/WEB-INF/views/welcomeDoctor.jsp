@@ -3,11 +3,12 @@
 <%@ include file="common/navigation-doctor.jspf"%>
 
 	<div class="container-fluid">
-	<h2>&nbsp;&nbsp;Welcome to MyDoctor: ${username}</h2>
+	
 	<div class="container">
 		<div class="row well">
 			<div class="col-md-1"></div>
 			<div class="col-md-6">
+			<h2>Welcome to MyDoctor: ${username}</h2>
 				<p></p>
 				<p></p>
 				<p  class="headFontThai">คำแนะนำการใช้เว็บไซต์</p>
@@ -24,8 +25,7 @@
 				<p></p>
 				<p>4. Prescription History :</p>
 				<p>สำหรับตรวจสอบการประวัติการยาของผู้ป่วย</p>
-				<p>5. Add Prescription :</p>
-				<p>สำหรับบันทึกใบสั่งยาและตรวจสอบการจ่ายยา</p>
+				
 				</div>
 			</div>
 			<div class="col-md-5"></div>

@@ -1,6 +1,7 @@
 package com.mydoctor.service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
@@ -11,6 +12,7 @@ import com.mydoctor.dao.PatientDaoImpl;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
+import com.mydoctor.util.EmailService;
 
 
 public class PatientServiceImpl
@@ -72,7 +74,15 @@ public class PatientServiceImpl
 			return 0;
 		}
 		public int postponeAppointmentInSchedule(Schedule schedule)throws SQLException{
+			ArrayList<Appointment> appointments = retrieveAppointmentByTimeRange(schedule.getStart(), schedule.getEnd());
+			for(Appointment appointment:appointments){
+				String email = patientDaoImpl.retrievePatientEmail(appointment.getPatientId());
+				EmailService.emailPostponeAppointment(appointment,email,schedule);
+			}
 			return patientDaoImpl.setStatusAppointment(schedule.getStart(),schedule.getEnd(),"postpone");
+		}
+		public ArrayList<Appointment> retrieveAppointmentByTimeRange(Timestamp start,Timestamp end)throws SQLException{
+			return patientDaoImpl.retrieveAppointmentByTimeRange(start, end);
 		}
 		
 		

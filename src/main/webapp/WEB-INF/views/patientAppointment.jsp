@@ -34,6 +34,9 @@
        <c:if test="${(appointment.status == 'timeout')}">
        <td><button  class="btn btn-default" disabled="disabled">Abandoned</button></td>
        </c:if>
+       <c:if test="${(appointment.status == 'postpone')}">
+       <td><button  class="btn btn-default" disabled="disabled">Postponed</button></td>
+       </c:if>
     </tr>
 </c:forEach>
 

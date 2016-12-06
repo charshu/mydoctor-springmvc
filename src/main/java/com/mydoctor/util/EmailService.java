@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Doctor;
 import com.mydoctor.model.Patient;
+import com.mydoctor.model.Schedule;
 
 public class EmailService {
 	private static final String usernameServer = "smile.shojea@gmail.com";
@@ -236,6 +237,47 @@ public class EmailService {
 				+ "\nSymptom : "+appointment.getSymptom()
 				+ "\nAppointment Date : "+appointment.getDate()
 				+ "\n\nPlease come in 20 minutes before your appointment");
+
+			Transport.send(message);
+
+			System.out.println("Email has successfully sent !");
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+public static void emailPostponeAppointment(Appointment appointment,String email,Schedule schedule) {
+		
+		
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(usernameServer, passwordServer);
+			}
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("smile.shojea@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(email));
+			message.setSubject("Dr. "+ appointment.getDoctorName()+" "+appointment.getDoctorSurname()+" cancel his schedule at "+schedule.getStart()+" to " + schedule.getEnd() );
+			message.setText("Dear, "+appointment.getPatientName()
+				+ "\n\nThis appointment was postponed."
+				+ "\nAppointment ID : "+appointment.getId()
+				+ "\nDoctor : "+appointment.getDoctorName()+" "+appointment.getDoctorSurname()
+				+ "\nPatient : "+appointment.getPatientName()+" "+appointment.getPatientSurname()
+				+ "\nSymptom : "+appointment.getSymptom()
+				+ "\nAppointment Date : "+appointment.getDate()
+				+ "\n\nWe apologize for any inconvenience");
 
 			Transport.send(message);
 

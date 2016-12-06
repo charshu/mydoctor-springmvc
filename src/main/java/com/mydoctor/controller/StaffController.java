@@ -119,10 +119,11 @@ public class StaffController {
 	}
 
 	@RequestMapping(value = "/approve-schedule", method = RequestMethod.GET)
-	public String showRequestCancelSchedule(ModelMap model) throws SQLException {
+	public String showRequestCancelSchedule(ModelMap model,@RequestParam(value="msg",required=false,defaultValue = "")String msg) throws SQLException {
 
 		ArrayList<Schedule> requestCancelSchedules = doctorServiceImpl.retriveAllSchedulesStatus("request cancel");
 		model.addAttribute("requestCancelSchedules", requestCancelSchedules);
+		model.addAttribute("msg", msg);
 		return "showRequestCancelSchedule";
 	}
 
@@ -131,7 +132,7 @@ public class StaffController {
 		Schedule schedule = doctorServiceImpl.retrieveSchedule(Integer.parseInt(schedule_id));
 		doctorServiceImpl.setStatusSchedule(schedule, "cancel");
 		patientServiceImpl.postponeAppointmentInSchedule(schedule);
-		return "redirect:/approve-schedule";
+		return "redirect:/approve-schedule?msg=1";
 	}
 
 }

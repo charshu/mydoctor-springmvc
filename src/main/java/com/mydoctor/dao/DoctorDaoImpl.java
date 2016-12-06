@@ -377,6 +377,8 @@ public class DoctorDaoImpl {
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 		while (rs.next()) {
+			System.out.println(rs.getString("status"));
+			if(!rs.getString("status").equals("waiting"))continue;
 			Appointment appointment = new Appointment();
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setDate(rs.getTimestamp("date"));
@@ -431,7 +433,7 @@ public class DoctorDaoImpl {
 		String query = "SELECT patient.patient_id,patient.name as patient_name,patient.surname as patient_surname,"
 				+ "patient.gender as patient_gender,patient.hospitalNumber as patient_hospitalNumber,"
 				+ "doctor.doctor_id,doctor.name as doctor_name ,doctor.surname as doctor_surname ,"
-				+ "appointment.app_id,appointment.date,appointment.symptom "
+				+ "appointment.app_id,appointment.date,appointment.symptom,appointment.status "
 				+ "FROM make_appointment "
 				+ "INNER JOIN appointment "
 				+ "INNER JOIN doctor "
@@ -446,6 +448,8 @@ public class DoctorDaoImpl {
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 		while (rs.next()) {
+			System.out.println(rs.getString("status"));
+			if(!rs.getString("status").equals("waiting"))continue;
 			Appointment appointment = new Appointment();
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setDate(rs.getTimestamp("date"));
