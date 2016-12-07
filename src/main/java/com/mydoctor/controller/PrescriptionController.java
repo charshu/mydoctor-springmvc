@@ -4,13 +4,9 @@ package com.mydoctor.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +15,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.DiagnosisBean;
 import com.mydoctor.model.MedicineBean;
-import com.mydoctor.model.Schedule;
 import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.MedicineServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
@@ -49,8 +43,8 @@ public class PrescriptionController
 		
 		@RequestMapping(value = "/add-prescription", method = RequestMethod.GET)
 	    public String showPrescription(@ModelAttribute("diagnosis")DiagnosisBean diagnosis,ModelMap model) throws SQLException {
-			PrescriptionServiceImpl.setDoctor_id(diagnosis.getDoctorId());
-			PrescriptionServiceImpl.setPatient_id(diagnosis.getPatientId());
+			prescriptionServiceImpl.setDoctor_id(diagnosis.getDoctorId());
+			prescriptionServiceImpl.setPatient_id(diagnosis.getPatientId());
 			int doctor_id = prescriptionServiceImpl.getDoctor_id();
 			int patient_id = prescriptionServiceImpl.getPatient_id();
 			String doctor_name = doctorServiceImpl.retrieveDoctorNameByID(doctor_id);
@@ -98,20 +92,20 @@ public class PrescriptionController
 	    	int updateCount = -1;
 	    	for(MedicineBean medicine : medicineBean ) {
 	    		int medicine_id = medicine.getId();
-	    	    String medicine_name = medicine.getName();
+	    	    medicine.getName();
 	    	    String medicine_amount = medicine.getAmount();
 	    	    String medicine_instruction = medicine.getInstruction();
 	    	    updateCount = prescriptionServiceImpl.savePrescription(doctor_id, patient_id, medicine_id, medicine_amount, medicine_instruction);
 	    	}
-			//int updateCount = prescriptionServiceImpl.savePrescription(doctor_id, patient_id);
-			//System.out.println("pass4");
+	    	System.out.println(patient_id);
+	    	String hn = patientServiceImpl.retrieveHospitalNumberById(patient_id);
+	    	System.out.println(hn);
 			if(updateCount > 0){
-				System.out.println("pass");
 				model.clear();
-				return "welcomeDoctor";
+				return "redirect:/patient-in-schedule?msg=done&hn="+hn;
 			} 
-				//save method
-				return "welcomeDoctor";	
+				model.clear();
+				return "redirect:/patient-in-schedule?msg=error&hn="+hn;	
 		}
 	    
 	    

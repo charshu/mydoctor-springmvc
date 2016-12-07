@@ -23,9 +23,6 @@ public class AppointmentServiceImpl {
 	private static List<Schedule> schedules = new ArrayList<Schedule>();
 	private static List<Appointment> appointments = new ArrayList<Appointment>();
 	private static ArrayList<Timestamp> availableTimes = new ArrayList<Timestamp>();
-	private static final int APPOINTMENT_LIMIT = 15;
-	private static final int WALK_IN_LIMIT = 5;
-
 	static {
 		schedules.add(new Schedule(4, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime())));
 	}

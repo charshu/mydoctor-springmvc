@@ -3,32 +3,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-<title>MyDoctor Application</title>
+<title>MyHospital Application</title>
 <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
 	rel="stylesheet">
 <link
 	href="webjars/eonasdan-bootstrap-datetimepicker/4.17.43/build/css/bootstrap-datetimepicker.min.css"
 	rel="stylesheet">
+	<link href="webjars/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 
 <%@ include file="common/navigation-patient.jspf"%>
 
-<div class="container-fluid">
-<div class="well" >
-	<h2>Your profile</h2>
-</div>
-<div class = "container">
 
+<div class = "container">
+<div class="well" >
+	<h3>Your profile</h3>
+</div>
+<c:if test="${msg =='save'}">
+ <div class="alert alert-success">
+  Data saved.
+</div>
+</c:if>
+<c:if test="${msg =='err'}">
+ <div class="alert alert-danger">
+  Error to save.
+</div>
+</c:if>
 <div class="row">
+
 <div class="col-md-3"></div>
 <div class="col-md-6">
 <table class="table table-reflow">
      <tr>
      	<th>Username</th><td>${username}</td>
      </tr>
-    <tr>
-		<th>HospitalNumber</th><td>${patient.hospitalNumber}</td>
+    <tr class="active">
+		<th>HospitalNumber</th><td style="font-weight: bolder;color:#6d4546;">${patient.hospitalNumber}</td>
 	</tr>
 	
      <form:form id="edit-info" method="post" action="edit-info" commandName="new_patient" class="form-horizontal"> 
@@ -100,7 +111,7 @@
 </div>       
 </div>  
 </div>
-</div>
+
 <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
 	<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="webjars/momentjs/2.16.0/min/moment.min.js"></script>

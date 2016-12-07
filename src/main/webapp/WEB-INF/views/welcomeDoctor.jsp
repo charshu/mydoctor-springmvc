@@ -8,11 +8,8 @@
 		<div class="row well">
 			<div class="col-md-1"></div>
 			<div class="col-md-6">
-			<h2>Welcome to MyDoctor: ${username}</h2>
-				<p></p>
-				<p></p>
+				<h2>Welcome <span style="color:#6d4546;">${username} </span></h2><br>
 				<p  class="headFontThai">คำแนะนำการใช้เว็บไซต์</p>
-				<h1></h1>
 				<div class ="fontThai">
 				<p>1. Profile :</p>
 				<p>สำหรับการตรวจสอบประวัติส่วนตัว</p>

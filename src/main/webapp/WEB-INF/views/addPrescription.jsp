@@ -4,9 +4,9 @@
 <div class="container">
 <div class="container-fluid">
 
-	<h1> <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i> Prescription</h1>
-	<table class="table">
-		<thead  style="background:#008181 !important">
+	<h1> <i class="fa fa-file-text-o" aria-hidden="true"></i> Prescription</h1>
+	<table class="table table-bordered">
+		<thead  >
 			<tr>
 				<th> <i class="fa fa-male  fa-2x" aria-hidden="true"></i> Patient Name </th>
 				<th> <i class="fa fa-user-md fa-2x" aria-hidden="true"></i> Doctor Name </th>
@@ -19,11 +19,11 @@
 	</table>
 </div>
 <div class="container-fluid">
-	<h1> <i class="fa fa-medkit fa-2x" aria-hidden="true"></i> Medicine list</h1>
-	<table class="table">
-		<thead  style="background:#008181!important">
+	<h1> <i class="fa fa-medkit" aria-hidden="true"></i> Medicine list</h1>
+	<table class="table table-bordered">
+		<thead  >
 			<tr>
-				<th>Medicine ID</th>
+				
 				<th>Medicine Name</th>
 				<th>Medicine Amount</th>
 				<th>Medicine Instruction</th>
@@ -31,7 +31,7 @@
 		</thead>
 		<c:forEach items="${medicineBeans}" var="medicineBean">
 			<tr>
-				<td>${medicineBean.id}</td>
+				
 				<td>${medicineBean.name}</td>
 				<td>${medicineBean.amount}</td>
 				<td>${medicineBean.instruction}</td>

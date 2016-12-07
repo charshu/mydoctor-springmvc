@@ -5,27 +5,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import java.util.Iterator;
-import org.springframework.stereotype.Service;
 
-import com.mydoctor.dao.MedicineDaoImpl;
 import com.mydoctor.dao.PrescriptionDaoImpl;
 
-import com.mydoctor.model.Doctor;
-import com.mydoctor.model.Pharmacist;
 import com.mydoctor.model.Prescription;
 
 import com.mydoctor.model.MedicineBean;
-import com.mydoctor.model.Schedule;
 
 public class PrescriptionServiceImpl {
 
 	private PrescriptionDaoImpl prescriptionDaoImpl;
-	private MedicineDaoImpl medicineDaoImpl;
-	private MedicineServiceImpl medicineServiceImpl;
-	private static ArrayList<Prescription> prescriptionHistory = new ArrayList<Prescription>();
-	private static List<MedicineBean> medicineBeans = new ArrayList<MedicineBean>();
+	private List<MedicineBean> medicineBeans = new ArrayList<MedicineBean>();
 
-	private static int patient_id, doctor_id;
+	private int patient_id, doctor_id;
 
 //	 static {
 //	 medicineBeans.add(new MedicineBean(111, "Paracetamon", "2", "dont use"));
@@ -33,20 +25,20 @@ public class PrescriptionServiceImpl {
 //	 medicineBeans.add(new MedicineBean(333, "Paracetamon", "2", "dont use"));
 //	 }
 
-	public static int getPatient_id() {
+	public int getPatient_id() {
 		return patient_id;
 	}
 
-	public static void setPatient_id(int patient_id) {
-		PrescriptionServiceImpl.patient_id = patient_id;
+	public void setPatient_id(int patient_id) {
+		this.patient_id = patient_id;
 	}
 
-	public static int getDoctor_id() {
+	public int getDoctor_id() {
 		return doctor_id;
 	}
 
-	public static void setDoctor_id(int doctor_id) {
-		PrescriptionServiceImpl.doctor_id = doctor_id;
+	public void setDoctor_id(int doctor_id) {
+		this.doctor_id = doctor_id;
 	}
 
 	public PrescriptionDaoImpl getPrescriptionDaoImpl() {

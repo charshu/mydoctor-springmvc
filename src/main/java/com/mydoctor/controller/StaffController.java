@@ -1,6 +1,7 @@
 package com.mydoctor.controller;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.validation.Valid;
@@ -16,18 +17,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mydoctor.model.Appointment;
+import com.mydoctor.model.Doctor;
 import com.mydoctor.model.GeneralInfo;
+import com.mydoctor.model.NewUserBean;
+import com.mydoctor.model.Nurse;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.Schedule;
 import com.mydoctor.model.ViewInfo;
+import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
-import com.mydoctor.service.NurseServiceImpl;
+import com.mydoctor.service.LoginServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
 import com.mydoctor.service.StaffServiceImpl;
 import com.mydoctor.util.EmailService;
 
 @Controller
-@SessionAttributes(value = { "username", "viewInfo" })
+@SessionAttributes(value = { "username", "viewInfo","hn" })
 public class StaffController {
 	@Autowired
 	private StaffServiceImpl staffServiceImpl;
@@ -35,6 +40,10 @@ public class StaffController {
 	private PatientServiceImpl patientServiceImpl;
 	@Autowired
 	private DoctorServiceImpl doctorServiceImpl;
+	@Autowired
+	private LoginServiceImpl loginServiceImpl;
+	@Autowired
+	private AppointmentServiceImpl appointmentServiceImpl;
 
 	@RequestMapping(value = "/welcomeStaff", method = RequestMethod.GET)
 	public String profile(ModelMap model) throws SQLException {
@@ -133,6 +142,149 @@ public class StaffController {
 		doctorServiceImpl.setStatusSchedule(schedule, "cancel");
 		patientServiceImpl.postponeAppointmentInSchedule(schedule);
 		return "redirect:/approve-schedule?msg=1";
+	}
+	
+	@RequestMapping(value = "/add-user", method = RequestMethod.GET)
+	public String showAddUser(ModelMap model,@RequestParam(value="msg",required=false,defaultValue = "")String msg) throws SQLException {
+		model.addAttribute("msg", msg);
+		return "addHospitalUser";
+	}
+	@RequestMapping(value = "/add-nurse", method = RequestMethod.GET)
+	public String showAddNurse(ModelMap model) throws SQLException {
+		Nurse nurse = new Nurse();
+		model.addAttribute("nurse", nurse);
+		return "addNurse";
+	}
+	@RequestMapping(value = "/add-nurse", method = RequestMethod.POST)
+	public String addNurse(ModelMap model,@Valid Nurse nurse) throws SQLException {
+		int code = loginServiceImpl.addNurse(nurse);
+		if(code < 0){
+			return "redirect:/add-user?msg=err";
+		}
+		return "redirect:/add-user?msg=nursedone";
+	}
+	@RequestMapping(value = "/add-doctor", method = RequestMethod.GET)
+	public String showAddDoctor(ModelMap model) throws SQLException {
+		Doctor doctor = new Doctor();
+		model.addAttribute("doctor", doctor);
+		return "addDoctor";
+	}
+	@RequestMapping(value = "/add-doctor", method = RequestMethod.POST)
+	public String addDoctor(ModelMap model,@Valid Doctor doctor) throws SQLException {
+		int code = loginServiceImpl.addDoctor(doctor);
+		if(code < 0){
+			return "redirect:/add-user?msg=err";
+		}
+		return "redirect:/add-user?msg=doctordone";
+		
+	}
+	@RequestMapping(value = "/add-staff", method = RequestMethod.GET)
+	public String showAddStaff(ModelMap model) throws SQLException {
+		NewUserBean newUserBean = new NewUserBean();
+		model.addAttribute("newUserBean", newUserBean);
+		return "addStaff";
+	}
+	@RequestMapping(value = "/add-staff", method = RequestMethod.POST)
+	public String addStaff(ModelMap model,@Valid NewUserBean newUserBean) throws SQLException {
+		int code = loginServiceImpl.registerUserId(newUserBean.getUsername(),newUserBean.getPassword(),"staff");
+		if(code < 0){
+			return "redirect:/add-user?msg=err";
+		}
+		return "redirect:/add-user?msg=staffdone";
+		
+	}
+	@RequestMapping(value = "/add-pharmacist", method = RequestMethod.GET)
+	public String showAddPharmacist(ModelMap model) throws SQLException {
+		NewUserBean newUserBean = new NewUserBean();
+		model.addAttribute("newUserBean", newUserBean);
+		return "addPharmacist";
+	}
+	@RequestMapping(value = "/add-pharmacist", method = RequestMethod.POST)
+	public String addPharmacist(ModelMap model,@Valid NewUserBean newUserBean) throws SQLException {
+		int code = loginServiceImpl.registerUserId(newUserBean.getUsername(),newUserBean.getPassword(),"pharmacist");
+		if(code < 0){
+			return "redirect:/add-user?msg=err";
+		}
+		return "redirect:/add-user?msg=pharmacistdone";
+		
+	}
+	@RequestMapping(value="/make-appointment",method=RequestMethod.GET)
+	public String showDoctorListPage(ModelMap model,@RequestParam(value="hn",required=false,defaultValue = "")String hn) throws SQLException 
+	{
+			model.clear();
+			model.put("hn",hn);
+			return "redirect:/staff-choose-doctor";
+	}
+	
+	@RequestMapping(value="/staff-choose-doctor",method=RequestMethod.GET)
+	public String showDoctorListPage(ModelMap model) throws SQLException 
+	{
+			model.addAttribute("doctors",doctorServiceImpl.retrieveAllDoctors());
+			return "chooseDoctorStaff";
+	}
+	
+	
+	@RequestMapping(value="/staff-list-doctor-time",method=RequestMethod.GET)
+	public String showAvailableTime(@RequestParam("doctorId") String doctor_id,ModelMap model) throws SQLException 
+	{
+			Appointment appointment =  new Appointment();
+			appointment.setDoctorId(Integer.parseInt(doctor_id));
+			appointment.setPatientId(patientServiceImpl.retrieveId((String)model.get("username")));
+			model.put("appointment", appointment);
+			
+			ArrayList<Timestamp> suggestDateTimes = appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id));
+			ArrayList<Appointment> patientAppointment = patientServiceImpl.retrieveAllAppointments((String)model.get("username"));
+			
+			for(Appointment apt:patientAppointment){
+				Timestamp start = apt.getDate();
+				for(int i=0;i<suggestDateTimes.size();i++){
+					
+					if(start.equals(suggestDateTimes.get(i))){
+						suggestDateTimes.remove(i);
+						System.out.println("you have another appointment in this time: "+start);
+					}
+				}
+				
+			}
+			model.addAttribute("suggestDateTimes",suggestDateTimes);
+			model.put("chosenDoctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
+			
+			return "showAvailableTime";
+			
+	}
+	@RequestMapping(value="/staff-confirm-time",method=RequestMethod.GET)
+	public String confirmDoctorAndTimePage(@ModelAttribute("appointment")Appointment appointment,
+			@ModelAttribute("suggestDateTimes")ArrayList<Timestamp> availableTimes,
+			@ModelAttribute("chosenDoctor")Doctor choosenDoctor,
+			@RequestParam("index") String index,ModelMap model) throws SQLException 
+	{
+			if(appointment == null){
+				return "redirect:/list-appointment";
+			}
+			appointment.setDate(availableTimes.get(Integer.parseInt(index)));
+			return "addAppointment";
+			
+	}
+	
+	@RequestMapping(value="/staff-confirm-time",method=RequestMethod.POST)
+	public String saveAppointment(
+			ModelMap model,@Valid Appointment validAppointment,BindingResult result) throws SQLException 
+	{
+
+		appointmentServiceImpl.saveAppointment(validAppointment);
+		//send email
+		Patient patient = patientServiceImpl.retrievePatient((String)model.get("username"));
+		Doctor doctor = doctorServiceImpl.retrieveDoctor(validAppointment.getDoctorId());
+		patient.setUsername1((String)model.get("username"));
+		EmailService.emailNewAppointment(validAppointment,patient,doctor);
+		
+		//
+		model.remove("suggestDateTimes");
+		model.remove("chosenDoctor");
+		model.remove("appointment");
+		model.clear();
+		return "redirect:/list-appointment?msg=done";
+			
 	}
 
 }

@@ -4,7 +4,6 @@ package com.mydoctor.service;
 import java.sql.SQLException;
 
 import com.mydoctor.dao.NurseDaoImpl;
-import com.mydoctor.model.Doctor;
 import com.mydoctor.model.GeneralInfo;
 import com.mydoctor.model.Nurse;
 import com.mydoctor.model.Patient;
@@ -15,8 +14,6 @@ public class NurseServiceImpl
 {
 		
 		private NurseDaoImpl nurseDaoImpl;
-		private GeneralInfo generalInfo;
-
 		public NurseDaoImpl getNurseDaoImpl() {
 			return nurseDaoImpl;
 		}
@@ -85,6 +82,8 @@ public class NurseServiceImpl
 			System.out.println(patient_id);
 			return nurseDaoImpl.retriveInfo(patient_id);
 		}
+
+		
 		
 
 }

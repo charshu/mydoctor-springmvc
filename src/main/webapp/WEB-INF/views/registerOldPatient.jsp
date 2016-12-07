@@ -28,9 +28,9 @@ Wrong SSN, please try again.
 		 <fieldset class="form-group inline">
 		  <br>
 		  <div class="input-group">
-		  <span class="input-group-addon" id="basic-addon1">SSN</span>
+		  <span class="input-group-addon" id="basic-addon1">ID card number</span>
 			<form:input path="ssn" type="text" class="form-control" placeholder="SSN" aria-describedby="basic-addon1" /><br>
-			<form:errors path="ssn" cssClass="text-warning" />
+			<form:errors path="ssn" cssClass="text-warning" maxlength="13"/>
 		  </div>
 		  </fieldset>
 		  
@@ -38,7 +38,7 @@ Wrong SSN, please try again.
 		    <fieldset class="form-group inline">
 		  <div class="input-group">
 		  <span class="input-group-addon" id="basic-addon1">Hospital Number</span>
-			<form:input path="hospitalNumber" type="text" class="form-control" placeholder="Hospital Number" aria-describedby="basic-addon1" /><br>
+			<form:input path="hospitalNumber" type="text" class="form-control" placeholder="Hospital Number" aria-describedby="basic-addon1" maxlength="8"/><br>
 		  </div>
 		  </fieldset>
 		  <div class="text-center">

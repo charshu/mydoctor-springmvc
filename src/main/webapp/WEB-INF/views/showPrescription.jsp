@@ -11,7 +11,7 @@
 		    <tr style="color:white">
 		      <th>NO.</th>
 		      <th>Patient Name</th>
-		   	  <th>Status</th>
+		   	  <th></th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -21,7 +21,7 @@
 			<tr>
 			   <td><c:out value="${no}"/></td>
 			   <td><c:out value="${prescript.patientName}"/> <c:out value="${prescript.patientSurname}"/></td>
-			   <td><a href="/detail?prescription_id=${prescript.prescriptionId}" class="btn btn-danger"><c:out value="Waiting"/></a></td>
+			   <td><a href="/detail?prescription_id=${prescript.prescriptionId}" class="btn btn-info">Dispense</a></td>
 			 </tr>
 			</c:forEach>
 	

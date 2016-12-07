@@ -1,8 +1,5 @@
 package com.mydoctor.dao;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,9 +7,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import com.mydoctor.model.GeneralInfo;
-import com.mydoctor.model.Nurse;
 import com.mydoctor.model.Patient;
-import com.mydoctor.model.Schedule;
 import com.mydoctor.model.Staff;
 import com.mysql.jdbc.Statement;
 

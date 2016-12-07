@@ -4,9 +4,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 public class Appointment {
 	private int id;
 	private Timestamp date;
@@ -23,9 +20,16 @@ public class Appointment {
 	private int doctorId;
 	private String doctorName;
 	private String doctorSurname;
+	private String department;
 	
 	private final DateFormat df = new SimpleDateFormat("dd-MM-YYYY HH:mm");
 	
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 	public int getId() {
 		return id;
 	}

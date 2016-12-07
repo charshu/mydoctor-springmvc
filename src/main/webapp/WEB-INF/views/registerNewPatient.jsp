@@ -42,8 +42,8 @@ Email already exists, please try again.
 		  
 		 <fieldset class="form-group inline">
 		  <div class="input-group">
-		  <span class="input-group-addon" id="basic-addon1">SSN</span>
-			<form:input path="ssn" type="text" class="form-control" placeholder="SSN" aria-describedby="basic-addon1" /><br>
+		  <span class="input-group-addon" id="basic-addon1">ID card number</span>
+			<form:input path="ssn" type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" maxlength="13" /><br>
 			<form:errors path="ssn" cssClass="text-warning" />
 		  </div>
 		  </fieldset>
@@ -94,7 +94,7 @@ Email already exists, please try again.
 		   <fieldset class="form-group inline">
 		  <div class="input-group">
 		  <span class="input-group-addon" id="basic-addon1">Telephone Number</span>
-			<form:input path="tel" type="text" class="form-control" placeholder="Tel." aria-describedby="basic-addon1" /><br>
+			<form:input path="tel" type="text" class="form-control" placeholder="Tel." aria-describedby="basic-addon1" maxlength="10"/><br>
 			<form:errors path="tel" cssClass="text-warning" />
 		  </div>
 		  </fieldset>

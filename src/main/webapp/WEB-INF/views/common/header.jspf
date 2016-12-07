@@ -23,7 +23,7 @@
 	background-size: cover;
 	top: 0;
 }
-.background2 {
+/* .background2 {
 	position: relative;
 	height: 100%;
 	width: 100%;
@@ -62,7 +62,7 @@
 	background-color:#A1C935;
 	background-size: cover;
 	top: 0;
-}
+} */
 body {
 	font-family: 'Segoe UI', sans-serif; 
 }
@@ -102,6 +102,9 @@ h2 {
 	background-color: #FFF380;
 	background-size: cover;
 	top: 0;
+}
+.well{
+	padding:10px;
 }
 </style>
 

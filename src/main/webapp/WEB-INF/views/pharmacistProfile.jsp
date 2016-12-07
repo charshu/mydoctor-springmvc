@@ -2,8 +2,8 @@
 <%@ include file="common/navigation-pharmacist.jspf"%>
 
 <div class="container-fluid">
-<div class = "well" style=" background:#FBB917" >
- 		<div style="font-weight:bold"><h2>Your profile</h2></div>
+<div class = "well" >
+ 		<h3>Your profile</h3>
 </div>
 
 	<div class="row">
@@ -13,9 +13,6 @@
 	  
 	    <tr>
 	      <th>username</th><td>${username}</td>
-	    </tr>
-	    <tr>
-	      <th>password</th><td>${patient.password}</td>
 	    </tr>
 	    <tr>
 	      <th>name</th><td>${patient.name}</td>

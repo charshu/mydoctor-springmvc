@@ -1,26 +1,17 @@
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation-patient.jspf"%>
-<h2>Your Doctor <i class="fa fa-user-md" aria-hidden="true"></i></h2>
-<table class="table">
-  <thead style="background:#008181 !important">
-    <tr>
-   	<th>Name</th>
-   	<th>Surname</th>
-   	<th>Department</th>
-   	<th>Tel</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="info">
-      <td>${chosenDoctor.name}</td>
-      <td>${chosenDoctor.surname}</td>
-      <td>${chosenDoctor.department}</td>
-      <td>${chosenDoctor.tel}</td>
-    </tr>
-  
-  </tbody>
-</table>
+
+
 <div class="container">
+<h2>Your Doctor <i class="fa fa-user-md" aria-hidden="true"></i></h2>
+	<table class="table table-bordered">
+
+      <tr><th>Name</th><td>${chosenDoctor.name}</td></tr>
+      <tr><th>Surname</th><td>${chosenDoctor.surname}</td></tr>
+      <tr><th>Department</th><td>${chosenDoctor.department}</td></tr>
+      <tr><th>Tel</th><td>${chosenDoctor.tel}</td></tr>
+
+</table>
 	<h2>Add Appointment</h2>
 	<form:form id="appointForm" method="post" action="confirm-time"
 		commandName="appointment">

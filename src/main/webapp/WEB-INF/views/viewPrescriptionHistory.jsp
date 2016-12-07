@@ -4,7 +4,8 @@
 <div class="container-fluid">
 
 <table class="table">
-<thead style="background:#FBB917 !important">
+<c:if test="${prescriptionHistorys.size() > 0}">
+<thead>
 		<tr>
 			<th>ID </th>
 			<th>PrescriptionID </th>
@@ -13,6 +14,7 @@
 			<th>Dose</th>
 		</tr>
 	</thead>
+	
 <c:forEach items="${prescriptionHistorys}" var="prescriptionHistory">
    <tr>
        <td>${prescriptionHistory.userid}</td>
@@ -22,7 +24,12 @@
        <td>${prescriptionHistory.amount}</td>
     </tr>
 </c:forEach>
-
+</c:if>
+<c:if test="${prescriptionHistorys.size() == 0}">
+ <div class="alert alert-info">
+  No prescription found.
+</div>
+</c:if>
 </table>
 </div>
 

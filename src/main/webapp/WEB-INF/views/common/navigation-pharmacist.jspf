@@ -1,14 +1,14 @@
 <nav role="navigation" class="navbar navbar-inverse">
 
-    <div class="">
-        <a href="http://www.google.com" class="navbar-brand">MyDoctor</a>
+     <div class="">
+        <a href="/welcomePharmacist" class="navbar-brand ">MyHospital <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
 
     <div class="navbar-collapse navbar-inverse">
         <ul class="nav navbar-nav">
 
-            <li><a href="/welocomePharmacist">Home  <i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
-            <li><a href="/pharmacist-profile">Profile  <i class="fa fa-user fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="/welcomePharmacist">Home  <i class="fa fa-home fa-lg" aria-hidden="true"></i></a></li>
+<!--             <li><a href="/pharmacist-profile">Profile  <i class="fa fa-user fa-lg" aria-hidden="true"></i></a></li> -->
              <li><a href="/show-prescription">Prescription <i class="fa fa-file-text fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/findPrescriptionHistoryForm">Prescription History  <i class="fa fa-history fa-lg" aria-hidden="true"></i></a></li>
 

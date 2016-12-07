@@ -3,7 +3,6 @@ package com.mydoctor.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import com.mydoctor.dao.MedicineDaoImpl;
 import com.mydoctor.model.Medicine;
 import com.mydoctor.model.MedicineBean;

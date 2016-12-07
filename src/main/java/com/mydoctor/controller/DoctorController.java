@@ -4,21 +4,14 @@ package com.mydoctor.controller;
 
 import java.beans.PropertyEditorSupport;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import javax.validation.Valid;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -31,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.mydoctor.dao.DoctorDaoImpl;
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.DiagnosisBean;
 import com.mydoctor.model.GeneralInfo;
@@ -193,7 +185,8 @@ public class DoctorController
 
 
 		@RequestMapping(value="/patient-in-schedule",method=RequestMethod.GET)
-		public String showPatientInSlot(ModelMap model) throws SQLException 
+		public String showPatientInSlot(ModelMap model,@RequestParam(value="msg",required=false,defaultValue = "")String msg
+				,@RequestParam(value="hn",required=false,defaultValue = "")String hn) throws SQLException 
 		{
 			Schedule currentSchedule = doctorServiceImpl.retrieveCurrentSchedule((String)model.get("username"));
 			model.addAttribute("currentSchedule",currentSchedule);
@@ -201,6 +194,8 @@ public class DoctorController
 			model.addAttribute("appointments",appointments);
 			ArrayList<Appointment> appointmentInComings = doctorServiceImpl.retrieveAllInComingAppointmentSchedule((String)model.get("username"));
 			model.addAttribute("appointmentInComings", appointmentInComings);
+			model.addAttribute("msg", msg);
+			model.addAttribute("hn", hn);
 			return "patientsInSchedule";
 		}
 
@@ -268,11 +263,9 @@ public class DoctorController
 				if(result.hasErrors()){
 					return "prescription";
 				}
-				// prescriptionId, medicineId, instruction, amount
-				int medicineId = prescription.getMedicineId();
-				//String medicine = prescription.
-				String instruction = prescription.getInstruction();
-				int amount = prescription.getAmount();
+				prescription.getMedicineId();
+				prescription.getInstruction();
+				prescription.getAmount();
 
 				
 				return "prescription";

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import java.sql.Connection;
 import com.mysql.jdbc.Statement;
 
 /**
@@ -27,9 +28,12 @@ public class LoginDaoImpl
 	}
 
 
-	public boolean isValidUser(String username, String password) throws SQLException {
+	public boolean isValidUser(String username, String password) {
+		Connection conn = null;
+		try{
+		conn = dataSource.getConnection();
 		String query = "Select * from user where username = ? and password = ?";
-		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		PreparedStatement pstmt = conn.prepareStatement(query);
 		pstmt.setString(1, username);
 		pstmt.setString(2, password);
 		ResultSet resultSet = pstmt.executeQuery();
@@ -37,6 +41,17 @@ public class LoginDaoImpl
 			return (resultSet.getInt(1) > 0);
 		else
 			return false;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+		finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
 	}
 
 	
@@ -76,12 +91,13 @@ public class LoginDaoImpl
 
 	}
 		
-	public int registerUserId(String username, String password) {
+	public int registerUserId(String username, String password,String role) {
 		try{
-		String query = "INSERT INTO user (user_id, username, password, role) VALUES('0',?,?,'patient');";
+		String query = "INSERT INTO user (user_id, username, password, role) VALUES('0',?,?,?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 		pstmt.setString(1,username);
 		pstmt.setString(2,password);
+		pstmt.setString(3,role);
 		pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if(rs.next()){
@@ -193,5 +209,49 @@ public class LoginDaoImpl
 			return resultSet.getInt(1);
 		else
 			return -1;
+	}
+	public int insertNurse(int nurse_id,String name,String surname) {
+		try{
+		String query = "INSERT INTO nurse (nurse_id, name,surname)" + "VALUES (?,?,?);";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setInt(1,nurse_id);
+		pstmt.setString(2,name);
+		pstmt.setString(3,surname);
+		pstmt.executeUpdate();
+		int updateCount = pstmt.getUpdateCount();
+		if(updateCount>0)return updateCount;
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if(rs.next()){
+			return rs.getInt(1);
+		}
+		return -1;
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+			return -8; //insert nurse problem
+		}
+	}
+
+
+	public int insertDoctor(int doctor_id, String name, String surname, String department, String tel) {
+		try{
+			String query = "INSERT INTO doctor (doctor_id, name,surname,department,tel)" + "VALUES (?,?,?,?,?);";
+			PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+			pstmt.setInt(1,doctor_id);
+			pstmt.setString(2,name);
+			pstmt.setString(3,surname);
+			pstmt.setString(4,department);
+			pstmt.setString(5,tel);
+			pstmt.executeUpdate();
+			int updateCount = pstmt.getUpdateCount();
+			if(updateCount>0)return updateCount;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()){
+				return rs.getInt(1);
+			}
+			return -1;
+			}catch(SQLException e){
+				System.out.println(e.getMessage());
+				return -9; //insert doctor problem
+			}
 	}
 }

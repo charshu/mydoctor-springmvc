@@ -3,8 +3,8 @@
 
 <div class="container-fluid">
 
-<div class = "well" style=" background:#008181" >
- 		<div style="font-weight:bold"><h2>Profile</h2></div>
+<div class = "well">
+ 		<h3>Profile</h3>
 </div>
 
 <div class="row">

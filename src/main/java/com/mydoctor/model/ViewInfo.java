@@ -2,8 +2,6 @@ package com.mydoctor.model;
 
 
 import javax.validation.constraints.Size;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 
 

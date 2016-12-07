@@ -13,7 +13,6 @@ import org.joda.time.DateTime;
 
 import com.mydoctor.model.Appointment;
 import com.mydoctor.model.Patient;
-import com.mydoctor.model.Schedule;
 import com.mysql.jdbc.Statement;
 
 public class PatientDaoImpl {
@@ -131,7 +130,7 @@ public class PatientDaoImpl {
 	}
 	
 	public String retrievePatientNameByID(int patient_id)throws SQLException {
-		//////////pls check attribute of patient name in database 
+		//please check attribute of patient name in database 
 		String query = "Select name from patient where patient_id = ? ";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, patient_id);
@@ -145,7 +144,9 @@ public class PatientDaoImpl {
 
 	public ArrayList<Appointment> retrieveAllAppointments(int patient_id) throws SQLException {
 		
-		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,doctor.name as doctor_name ,appointment.app_id,appointment.date,appointment.symptom,appointment.status "
+		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,"
+				+ "doctor.name as doctor_name,doctor.surname as doctor_surname ,doctor.department as doctor_department,"
+				+ "appointment.app_id,appointment.date,appointment.symptom,appointment.status "
 				+ "FROM make_appointment "
 				+ "INNER JOIN appointment "
 				+ "INNER JOIN doctor "
@@ -165,6 +166,8 @@ public class PatientDaoImpl {
 			appointment.setId(rs.getInt("app_id"));
 			appointment.setPatientName(rs.getString("patient_name"));
 			appointment.setDoctorName(rs.getString("doctor_name"));
+			appointment.setDoctorSurname(rs.getString("doctor_surname"));
+			appointment.setDepartment(rs.getString("doctor_department"));
 			appointment.setDate(rs.getTimestamp("date"));
 			appointment.setSymptom(rs.getString("symptom"));
 			appointment.setStatus(rs.getString("status"));

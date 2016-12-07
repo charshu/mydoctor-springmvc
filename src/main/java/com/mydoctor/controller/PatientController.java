@@ -2,41 +2,26 @@ package com.mydoctor.controller;
 
 
 
-import java.beans.PropertyEditorSupport;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionAttributeStore;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.request.WebRequest;
-
 import com.mydoctor.model.Appointment;
 
 import com.mydoctor.model.Doctor;
 
 import com.mydoctor.model.Patient;
-import com.mydoctor.model.Schedule;
-import com.mydoctor.model.ViewInfo;
-
 import com.mydoctor.service.AppointmentServiceImpl;
 import com.mydoctor.service.DoctorServiceImpl;
 import com.mydoctor.service.PatientServiceImpl;
@@ -63,9 +48,10 @@ public class PatientController
 		}
 		
 		@RequestMapping(value="/patient-profile",method=RequestMethod.GET)
-		public String profile(ModelMap model) throws SQLException 
+		public String profile(ModelMap model,@RequestParam(value="msg",required=false,defaultValue = "")String msg) throws SQLException 
 		{
 			Patient patient = patientServiceImpl.retrievePatient((String)model.get("username"));
+				model.addAttribute("msg", msg);
 				model.addAttribute("patient",patient); //for ssn,hospitalNumber
 				model.addAttribute("new_patient",patient);
 				return "patientProfile";
@@ -82,27 +68,25 @@ public class PatientController
 			System.out.println(new_patient.getBirthdate());
 			int updateCount = patientServiceImpl.edit_info((String)model.get("username"),new_patient);
 		   if(updateCount > 0) {
-			   return "redirect:/patient-profile";
+			   model.clear();
+			   return "redirect:/patient-profile?msg=save";
 		   }
-		   return "redirect:/patient-profile";
+		   return "redirect:/patient-profile?msg=err";
 			}
 		
 		
 
 		@RequestMapping(value="/list-appointment",method=RequestMethod.GET)
-		public String showAppointmentList(ModelMap model) throws SQLException 
+		public String showAppointmentList(ModelMap model,@RequestParam(value="msg",required=false,defaultValue = "")String msg) throws SQLException 
 		{
-				
-				System.out.println((String)model.get("username"));
-				appointmentServiceImpl.cleanAppointments();
+				appointmentServiceImpl.cleanAppointments();		
 				model.addAttribute("appointments",patientServiceImpl.retrieveAllAppointments((String)model.get("username")));
+				model.addAttribute("msg", msg);
 				return "patientAppointment";
 		}
 		@RequestMapping(value="/choose-doctor",method=RequestMethod.GET)
 		public String showDoctorListPage(ModelMap model) throws SQLException 
 		{
-				System.out.println((String)model.get("username"));
-				System.out.println("[REQUEST] retrieve all doctors");
 				model.addAttribute("doctors",doctorServiceImpl.retrieveAllDoctors());
 				return "chooseDoctor";
 		}
@@ -166,7 +150,8 @@ public class PatientController
 			model.remove("suggestDateTimes");
 			model.remove("chosenDoctor");
 			model.remove("appointment");
-			return "redirect:/list-appointment";
+			model.clear();
+			return "redirect:/list-appointment?msg=done";
 				
 		}
 		@RequestMapping(value="/cancel-appointment",method=RequestMethod.GET)
@@ -180,10 +165,12 @@ public class PatientController
 					model.remove("suggestDateTimes");
 					model.remove("chosenDoctor");
 					model.remove("appointment");
+					model.clear();
 					return "redirect:/list-appointment";
 				}
 				else{
 //					model.addAttribute("error", "Delete error please try again.");
+					model.clear();
 					return "redirect:/list-appointment";
 				}
 				

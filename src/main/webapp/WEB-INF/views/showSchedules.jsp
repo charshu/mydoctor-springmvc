@@ -3,6 +3,7 @@
 
 <div class="container-fluid">
  <h2>Schedule <a href="/add-schedule" class="btn btn-success"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Add</a></h2>
+ <c:if test="${schedules.size()>0}">
 <table class="table">
 <thead>
 		<tr>
@@ -22,9 +23,12 @@
 </c:forEach>
 
 </table>
+</c:if>
+<c:if test="${schedules.size()==0}">
+	<div class="alert alert-info">No schedules.</div>
+</c:if>
 
-
-<h2>Request for cancel</h2>
+<h2>Request for cancel <small>(waiting for approval from staff)</small></h2>
 <table class="table">
 <c:if test="${requestCancelSchedules.size()>0}">
 <thead>

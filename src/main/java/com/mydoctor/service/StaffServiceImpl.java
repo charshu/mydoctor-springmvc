@@ -4,11 +4,8 @@ package com.mydoctor.service;
 import java.sql.SQLException;
 import java.util.Random;
 
-import com.mydoctor.dao.NurseDaoImpl;
 import com.mydoctor.dao.StaffDaoImpl;
-import com.mydoctor.model.Doctor;
 import com.mydoctor.model.GeneralInfo;
-import com.mydoctor.model.Nurse;
 import com.mydoctor.model.Patient;
 import com.mydoctor.model.ViewInfo;
 

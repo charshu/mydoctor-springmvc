@@ -5,6 +5,7 @@
 <div class="container-fluid">
 
 	<a href="/view-info3" class="btn btn-success">Back to search</a>
+	<a href="/make-appointment?hn=${patientInfo.hospitalNumber}" class="btn btn-danger">Make Appointment</a>
 
 	
 

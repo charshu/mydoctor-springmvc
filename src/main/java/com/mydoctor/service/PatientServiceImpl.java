@@ -66,8 +66,8 @@ public class PatientServiceImpl
 			int user_id = patientDaoImpl.retrieveUserId(username);
 			int patient_id = patientDaoImpl.retrieveIdByUserId(user_id);
 			if(patientDaoImpl.hasAppointmentId(patient_id,appointment_id)){
-				patientDaoImpl.deleteMakeAppointment(patient_id,appointment_id);
-				patientDaoImpl.deleteAppointment(appointment_id);
+//				patientDaoImpl.deleteMakeAppointment(patient_id,appointment_id);
+				patientDaoImpl.setStatusAppointment(appointment_id, "cancel");
 				return 1;
 			}
 			System.out.println("error");
@@ -119,6 +119,7 @@ public class PatientServiceImpl
 			
 			return patientDaoImpl.editPatientInfo(name, surname, gender, birthdate, address, tel,email, patient_id);
 	}
+		
 
 
 }

@@ -11,6 +11,7 @@
             <li><a href="/view-info3">View/Edit Patient Information  <i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/register-patient">Register Patient  <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i></a></li>
             <li><a href="/approve-schedule">Approved schedule</a></li>
+             <li><a href="/add-user">Add hospital user</a></li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right">

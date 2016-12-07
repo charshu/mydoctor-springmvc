@@ -2,8 +2,6 @@ package com.mydoctor.service;
 
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import com.mydoctor.dao.PharmacistDaoImpl;
 import com.mydoctor.model.Pharmacist;
 import com.mydoctor.model.Prescription;

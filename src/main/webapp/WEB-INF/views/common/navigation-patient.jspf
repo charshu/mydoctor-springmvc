@@ -1,7 +1,7 @@
 <nav role="navigation" class="navbar navbar-inverse">
 
     <div class="">
-        <a href="/welcomePatient" class="navbar-brand">MyHospital<i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+        <a href="/welcomePatient" class="navbar-brand">MyHospital <i class="fa fa-hospital-o" aria-hidden="true"></i></a>
     </div>
 
     <div class="navbar-collapse">

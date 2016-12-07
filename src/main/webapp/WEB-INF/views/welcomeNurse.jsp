@@ -3,14 +3,13 @@
 <%@ include file="common/navigation-nurse.jspf"%>
 
 <div class="container-fluid">
-<h1> Welcome to MyDoctor : ${username} <i class="fa fa-stethoscope" aria-hidden="true"></i> </h1>
+
 
 	<div class="container">
 		<div class="row well">
 			<div class="col-md-1"></div>
 			<div class="col-md-6">
-				<p></p>
-				<p></p>
+			<h1> Welcome ${username} </h1>
 				<p  class="headFontThai">คำแนะนำการใช้เว็บไซต์</p>
 				<h1></h1>
 				<div class ="fontThai">

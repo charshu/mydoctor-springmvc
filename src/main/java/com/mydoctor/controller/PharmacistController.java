@@ -16,13 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 
-import com.mydoctor.dao.MedicineDaoImpl;
-import com.mydoctor.dao.PharmacistDaoImpl;
-import com.mydoctor.model.LoginBean;
 import com.mydoctor.model.Prescription;
 import com.mydoctor.service.MedicineServiceImpl;
-import com.mydoctor.service.NurseServiceImpl;
-
 import com.mydoctor.service.PharmacistServiceImpl;
 import com.mydoctor.service.PrescriptionServiceImpl;
 
@@ -99,7 +94,7 @@ public class PharmacistController
 				return "pharmacistProfile";
 		}
 		
-		@RequestMapping(value="/welocomePharmacist",method=RequestMethod.GET)
+		@RequestMapping(value="/welcomePharmacist",method=RequestMethod.GET)
 		public String welcomePharmacist(ModelMap model) throws SQLException 
 		{				
 				return "welcomePharmacist";
