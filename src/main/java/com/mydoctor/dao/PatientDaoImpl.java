@@ -141,7 +141,21 @@ public class PatientDaoImpl {
 		return "null";
 
 	}
-
+	public int retrieveIdByHn(String hn) {
+		try{
+		String query = "Select patient_id from patient where hospitalNumber = ? ";
+		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+		pstmt.setString(1, hn);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return rs.getInt(1);
+		}
+		return -1;
+		}catch(SQLException e){
+			return -9;
+		}
+	}
+	
 	public ArrayList<Appointment> retrieveAllAppointments(int patient_id) throws SQLException {
 		
 		String query = "SELECT patient.patient_id,patient.name as patient_name,doctor.doctor_id,"
@@ -202,6 +216,7 @@ public class PatientDaoImpl {
 	}
 
 	public int insertAppointment(Timestamp date, String symptom,String status) throws SQLException {
+		try{
 		String query = "INSERT INTO mydoctor.appointment (app_id, date, symptom,status) VALUES (NULL, ?, ? ,?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		pstmt.setTimestamp(1, date);
@@ -213,9 +228,15 @@ public class PatientDaoImpl {
 			return rs.getInt(1);
 		}
 		return -1;
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+			return -10; //cannot insert appointment
+		}
 	}
 
-	public int insertCreateAppointment(int patient_id, int doctor_id, int appointment_id) throws SQLException {
+	public int insertCreateAppointment(int patient_id, int doctor_id, int appointment_id) {
+		System.out.println("pid: "+patient_id+"did: "+doctor_id+"appid: "+appointment_id);
+		try{
 		String query = "INSERT INTO mydoctor.make_appointment (patient_id, doctor_id, app_id) VALUES (?, ?, ?);";
 		PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
 		pstmt.setInt(1, patient_id);
@@ -224,6 +245,10 @@ public class PatientDaoImpl {
 		pstmt.executeUpdate();
 		int updateCount = pstmt.getUpdateCount();
 		return updateCount;
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+			return -11;//error insert make appointment
+		}
 	}
 
 	public boolean hasAppointmentId(int patient_id,int appointment_id) throws SQLException {
@@ -241,6 +266,7 @@ public class PatientDaoImpl {
 
 	}
 	public int deleteMakeAppointment(int patient_id,int appointment_id) throws SQLException {
+		
 		System.out.println("delete make_appointment -> patient : "+ patient_id+" appointment id : "+appointment_id);
 		String query = "DELETE FROM make_appointment "
 				+ "WHERE make_appointment.patient_id = ? and make_appointment.app_id = ?";
@@ -358,4 +384,6 @@ public class PatientDaoImpl {
 		pstmt.executeUpdate();
 		
 	}
+
+	
 }

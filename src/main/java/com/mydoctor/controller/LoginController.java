@@ -60,20 +60,20 @@ public class LoginController {
 							return "welcomePatient";
 						}
 						else if("doctor".equals(role)){
-							return "welcomeDoctor";
+							return "redirect:/welcomeDoctor";
 						}
 						else if("staff".equals(role)){
-							return "welcomeStaff";
+							return "redirect:/welcomeStaff";
 						}
 						else if("nurse".equals(role)){
-							return "welcomeNurse";
+							return "redirect:/welcomeNurse";
 						}
 
 						else if("staff".equals(role)){
-							return "welcomeStaff";
+							return "redirect:/welcomeStaff";
 						}
 						else if("pharmacist".equals(role)){
-							return "welcomePharmacist";
+							return "redirect:/welcomePharmacist";
 
 						}
 				}

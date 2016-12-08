@@ -3,12 +3,19 @@
 
 
 <div class="container-fluid">
-
+	
+	<c:if test="${msg=='error'}">
+ <div class="alert alert-danger">
+  Failed to save.
+</div>
+ </c:if>
+ <c:if test="${msg=='done'}">
+ <div class="alert alert-success">
+  New appointment is successfully added to patient ${hn}.
+</div>
+ </c:if>
 	<a href="/view-info3" class="btn btn-success">Back to search</a>
 	<a href="/make-appointment?hn=${patientInfo.hospitalNumber}" class="btn btn-danger">Make Appointment</a>
-
-	
-
 
 	<div class="row">
 		<div class="col-md-6">

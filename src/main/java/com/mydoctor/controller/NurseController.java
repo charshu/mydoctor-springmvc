@@ -92,8 +92,8 @@ public class NurseController
 				return "viewPatientInfo_nurse";
 			}
 			
-		    GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfo(viewInfo);
-		    Patient patientInfo = nurseServiceImpl.findPatientInfo(viewInfo);
+		    GeneralInfo generalInfo = nurseServiceImpl.findPatientGenInfo(viewInfo.getHospitalNumber());
+		    Patient patientInfo = nurseServiceImpl.findPatientInfo(viewInfo.getHospitalNumber());
 
 		   // System.out.println(generalInfo.getCongemital());
 		    model.addAttribute("generalInfo",generalInfo);

@@ -32,7 +32,7 @@ import com.mydoctor.service.StaffServiceImpl;
 import com.mydoctor.util.EmailService;
 
 @Controller
-@SessionAttributes(value = { "username", "viewInfo","hn" })
+@SessionAttributes(value = { "username", "viewInfo","hn","appointment","suggestDateTimes","chosenDoctor","requestCancelSchedules" })
 public class StaffController {
 	@Autowired
 	private StaffServiceImpl staffServiceImpl;
@@ -44,10 +44,14 @@ public class StaffController {
 	private LoginServiceImpl loginServiceImpl;
 	@Autowired
 	private AppointmentServiceImpl appointmentServiceImpl;
+	
+	private static ArrayList<Schedule> requestCancelSchedules = new ArrayList<Schedule>();
 
 	@RequestMapping(value = "/welcomeStaff", method = RequestMethod.GET)
 	public String profile(ModelMap model) throws SQLException {
 		// model.addAttribute("staff",staffServiceImpl.retrieveStaff((String)model.get("username")));
+		requestCancelSchedules = doctorServiceImpl.retriveAllSchedulesStatus("request cancel");
+		model.put("requestCancelSchedules", requestCancelSchedules);
 		return "welcomeStaff";
 	}
 
@@ -102,14 +106,15 @@ public class StaffController {
 		if (result.hasErrors()) {
 			return "viewPatientInfo_staff";
 		}
-		GeneralInfo generalInfo = staffServiceImpl.findPatientGenInfo(viewInfo);
-		Patient patientInfo = staffServiceImpl.findPatientInfo(viewInfo);
+		GeneralInfo generalInfo = staffServiceImpl.findPatientGenInfo(viewInfo.getHospitalNumber());
+		Patient patientInfo = staffServiceImpl.findPatientInfo(viewInfo.getHospitalNumber());
 
 		model.addAttribute("generalInfo", generalInfo);
 		model.addAttribute("patientInfo", patientInfo);
 		return "showPatientInfoAfterFind_staff";
 	}
-
+	
+	
 	@RequestMapping(value = "/edit-info3", method = RequestMethod.POST)
 	public String editPatientinfo(ModelMap model, @ModelAttribute("patientInfo") Patient patientInfo,
 			@ModelAttribute("viewInfo") ViewInfo viewInfo, BindingResult result) throws SQLException {
@@ -227,14 +232,16 @@ public class StaffController {
 	@RequestMapping(value="/staff-list-doctor-time",method=RequestMethod.GET)
 	public String showAvailableTime(@RequestParam("doctorId") String doctor_id,ModelMap model) throws SQLException 
 	{
+			System.out.println("hn: "+(String)model.get("hn"));
+			int patient_id = patientServiceImpl.retrieveIdByHn((String)model.get("hn"));
 			Appointment appointment =  new Appointment();
 			appointment.setDoctorId(Integer.parseInt(doctor_id));
-			appointment.setPatientId(patientServiceImpl.retrieveId((String)model.get("username")));
+			appointment.setPatientId(patient_id);
 			model.put("appointment", appointment);
-			
+			System.out.println("pid:"+patient_id+" did: "+doctor_id);
 			ArrayList<Timestamp> suggestDateTimes = appointmentServiceImpl.findDoctorAllAvailableTime(Integer.parseInt(doctor_id));
-			ArrayList<Appointment> patientAppointment = patientServiceImpl.retrieveAllAppointments((String)model.get("username"));
-			
+			ArrayList<Appointment> patientAppointment = patientServiceImpl.retrieveAllAppointmentsByPatientId(patient_id);
+			System.out.println("sdt: "+suggestDateTimes);
 			for(Appointment apt:patientAppointment){
 				Timestamp start = apt.getDate();
 				for(int i=0;i<suggestDateTimes.size();i++){
@@ -249,7 +256,7 @@ public class StaffController {
 			model.addAttribute("suggestDateTimes",suggestDateTimes);
 			model.put("chosenDoctor", doctorServiceImpl.retrieveDoctor(Integer.parseInt(doctor_id)));
 			
-			return "showAvailableTime";
+			return "showAvailableTimeStaff";
 			
 	}
 	@RequestMapping(value="/staff-confirm-time",method=RequestMethod.GET)
@@ -259,10 +266,11 @@ public class StaffController {
 			@RequestParam("index") String index,ModelMap model) throws SQLException 
 	{
 			if(appointment == null){
-				return "redirect:/list-appointment";
+				model.clear();
+				return "redirect:/view-info-direct?msg=error&hn="+(String)model.get("hn");
 			}
 			appointment.setDate(availableTimes.get(Integer.parseInt(index)));
-			return "addAppointment";
+			return "addAppointmentStaff";
 			
 	}
 	
@@ -270,21 +278,39 @@ public class StaffController {
 	public String saveAppointment(
 			ModelMap model,@Valid Appointment validAppointment,BindingResult result) throws SQLException 
 	{
-
-		appointmentServiceImpl.saveAppointment(validAppointment);
+		String hn = (String)model.get("hn");
+		int code = appointmentServiceImpl.saveAppointment(validAppointment);
+		if(code<0){
+			model.clear();
+			return "redirect:/view-info-direct?msg=error&hn="+hn;
+		}
 		//send email
-		Patient patient = patientServiceImpl.retrievePatient((String)model.get("username"));
-		Doctor doctor = doctorServiceImpl.retrieveDoctor(validAppointment.getDoctorId());
-		patient.setUsername1((String)model.get("username"));
-		EmailService.emailNewAppointment(validAppointment,patient,doctor);
-		
+		Patient patient = patientServiceImpl.retrievePatientByHN((String)model.get("hn"));
+		Doctor doctor = doctorServiceImpl.retrieveDoctor(validAppointment.getDoctorId());		
+		EmailService.emailNewAppointmentByStaff(validAppointment,patient,doctor);
 		//
 		model.remove("suggestDateTimes");
 		model.remove("chosenDoctor");
 		model.remove("appointment");
 		model.clear();
-		return "redirect:/list-appointment?msg=done";
+		return "redirect:/view-info-direct?msg=done&hn="+hn;
 			
+	}
+	@RequestMapping(value = "/view-info-direct", method = RequestMethod.GET)
+	public String viewPatientInfoDirect(ModelMap model,@RequestParam(value="hn",required=false,defaultValue = "")String hn
+			,@RequestParam(value="msg",required=false,defaultValue = "")String msg) throws SQLException {
+		
+		if (hn.isEmpty()) {
+			return "redirect:/view-info3";
+		}
+		GeneralInfo generalInfo = staffServiceImpl.findPatientGenInfo(hn);
+		Patient patientInfo = staffServiceImpl.findPatientInfo(hn);
+
+		model.addAttribute("generalInfo", generalInfo);
+		model.addAttribute("patientInfo", patientInfo);
+		model.addAttribute("msg", msg);
+		model.addAttribute("hn", hn);
+		return "showPatientInfoAfterFind_staff";
 	}
 
 }

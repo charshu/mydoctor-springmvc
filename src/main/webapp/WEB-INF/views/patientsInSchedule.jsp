@@ -4,7 +4,7 @@
 <div class="container-fluid">
  <div class="alert alert-success">
   หมายเหตุ : เนื่องจากการเข้าสู่ขั้นตอนการตรวจผู้ป่วยสามารถทำได้เฉพาะในช่วงเวลาที่แพทย์อยู่ในเวลาออกตรวจจริงๆเท่านั้น และผู้ป่วยไม่สามารถกดจองนัดแพทย์ได้ภายในวันเดียวกัน ทำให้เกิดปัญหาไม่สามารถทดสอบระบบได้จนกว่าจะถึงเวลานัดแพทย์ซึ่งต้องใช้เวลานาน ผู้จัดทำจึงใส่ข้อมูลช่วงเวลาการออกตรวจเพื่อการทดสอบ ซึ่งจบวันที่ 31 มกราคม 2017 ไว้เพื่อประโยชน์ในการทดสอบระบบ (เฉพาะแพทย์สูติ-นรีเวชกรรม username:doctor1 password:doctor1)
-  ผู้ทดสอบสามารถนัดหมายแพทย์ในช่วงเวลาดังกล่าวเพื่อทำการทดสอบระบบตรวจผู้ป่วย
+  ผู้ทดสอบสามารถนัดหมายแพทย์ได้ตามปกติโดย 1. ทำการเพิ่มตารางการออกตรวจแพทย์ตามปกติ โดยตารางการออกตรวจที่อยู่ภายในวันเวลาทดสอบดังกล่าวจะสามารถเข้าตรวจกับแพทย์ได้ทันที 2. เข้า account ผู้ป่วยเพื่อทำการนัดหมายแพทย์ 3. กลับมาที่ account แพทย์คลิกที่ปุ่ม diagnose เพื่อเริ่มการตรวจ
 </div>
  <c:if test="${msg=='done'}">
  <div class="alert alert-success">
@@ -43,7 +43,7 @@
 			<th>Appointment ID </th>
 			<th>Appointment date </th>
 			<th>Patient Name</th>
-			<th>Patient Surname</th>
+			
 			<th>Patient Gender</th>
 			<th>Hospital Number</th>
 			<th>Symptom</th>
@@ -55,9 +55,9 @@
    <tr>
        <td>${appointment.id}</td>
        <td>${appointment.printDate()}</td>
-       <td>${appointment.patientName}</td>
-       <td>${appointment.patientSurname}</td>
-       <td>${appointment.patientGender}</td>
+       <td>${appointment.patientName} ${appointment.patientSurname}</td>
+       <c:if test="${appointment.patientGender =='F'}"><td>Female</td></c:if>
+        <c:if test="${appointment.patientGender =='M'}"><td>Male</td></c:if>
        <td>${appointment.patientHospitalNumber}</td>
        <td>${appointment.symptom}</td>
        <c:if test="${appointment.status =='waiting'}"> <td><a href="/diagnose?appointmentId=${appointment.id}" class="btn btn-success">Diagnose</a></td></c:if>

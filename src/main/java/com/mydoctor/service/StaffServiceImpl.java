@@ -25,14 +25,14 @@ public class StaffServiceImpl
 		
 	
 		
-		public GeneralInfo findPatientGenInfo(ViewInfo viewinfo) throws SQLException{
-			int record_id = staffDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
+		public GeneralInfo findPatientGenInfo(String hn) throws SQLException{
+			int record_id = staffDaoImpl.retrieveRecordId(hn);
 			System.out.println(record_id);
 			return staffDaoImpl.retriveGenInfo(record_id);
 		}
 		
-		public Patient findPatientInfo(ViewInfo viewinfo) throws SQLException{
-			int patient_id = staffDaoImpl.retrievePatientId(viewinfo.getHospitalNumber());
+		public Patient findPatientInfo(String hn) throws SQLException{
+			int patient_id = staffDaoImpl.retrievePatientId(hn);
 			System.out.println(patient_id);
 			return staffDaoImpl.retriveInfo(patient_id);
 		}

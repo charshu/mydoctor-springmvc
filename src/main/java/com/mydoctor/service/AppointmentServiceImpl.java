@@ -114,10 +114,9 @@ public class AppointmentServiceImpl {
 		int appointment_id = patientDaoImpl.insertAppointment(appointment.getDate(), appointment.getSymptom(),"waiting");
 		appointment.setId(appointment_id);
 		if(appointment_id<0){
-			System.out.println("[ERROR] cannot insert appointment");
-			return -1;
+			return appointment_id;
 		}
-		
+	
 		return patientDaoImpl.insertCreateAppointment(appointment.getPatientId(),appointment.getDoctorId(),appointment_id);
 		
 		

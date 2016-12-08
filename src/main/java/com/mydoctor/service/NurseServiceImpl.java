@@ -66,10 +66,10 @@ public class NurseServiceImpl
 			
 		}
 		
-		public GeneralInfo findPatientGenInfo(ViewInfo viewinfo) throws SQLException{
-			int record_id = nurseDaoImpl.retrieveRecordId(viewinfo.getHospitalNumber());
+		public GeneralInfo findPatientGenInfo(String hn) throws SQLException{
+			int record_id = nurseDaoImpl.retrieveRecordId(hn);
 			System.out.println(record_id);
-			return nurseDaoImpl.retriveGenInfo(record_id,viewinfo.getHospitalNumber());
+			return nurseDaoImpl.retriveGenInfo(record_id,hn);
 		}
 		public GeneralInfo findPatientGenInfoByHospitalNumber(String hospitalNumber) throws SQLException{
 			int record_id = nurseDaoImpl.retrieveRecordId(hospitalNumber);
@@ -77,8 +77,8 @@ public class NurseServiceImpl
 			return nurseDaoImpl.retriveGenInfo(record_id,hospitalNumber);
 		}
 		
-		public Patient findPatientInfo(ViewInfo viewinfo) throws SQLException{
-			int patient_id = nurseDaoImpl.retrievePatientId(viewinfo.getHospitalNumber());
+		public Patient findPatientInfo(String hn) throws SQLException{
+			int patient_id = nurseDaoImpl.retrievePatientId(hn);
 			System.out.println(patient_id);
 			return nurseDaoImpl.retriveInfo(patient_id);
 		}

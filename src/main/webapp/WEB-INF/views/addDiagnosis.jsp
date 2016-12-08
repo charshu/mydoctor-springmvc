@@ -1,10 +1,10 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %> 
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
-<title>MyDoctor Application</title>
+<title>MyHospital Application</title>
 <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
 	rel="stylesheet">
 <link
@@ -25,7 +25,7 @@
 				<form:textarea path="symptom" type="text" class="form-control" />
 				<form:errors path="symptom" cssClass="text-warning" />
 			</fieldset>
-		
+
 			<fieldset class="form-group">
 				<form:label path="disease_id" class="control-label">Disease Code</form:label>
 				<form:input path="disease_id" type="text" class="form-control" />
@@ -89,7 +89,7 @@
 
 
 
-	
+
 
 	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
 	<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
